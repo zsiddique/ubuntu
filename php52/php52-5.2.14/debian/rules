@@ -255,7 +255,7 @@ clean: unprepared unpatch
 	dh_testdir
 	dh_testroot
 	rm -f configure-apache2-stamp build-apache2-stamp
-	rm -f configure-cli-stamp build-cli-stampa
+	rm -f configure-cli-stamp build-cli-stamp
 	rm -f build-pear-stamp
 	rm -f install-stamp
 	rm -rf apache2-build

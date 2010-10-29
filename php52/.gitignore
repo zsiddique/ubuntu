@@ -1,3 +1,4 @@
+*.deb
 *.dsc
 *_source.build
 *_source.changes
