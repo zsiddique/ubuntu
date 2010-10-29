@@ -1,0 +1,5 @@
+10_defaults.patch
+20_no_configure_command.patch
+30_pear_paths.patch
+40_remove_recode_conflict.patch
+50_suhosin-patch-5.3.3-0.9.10.patch

@@ -1,0 +1,31 @@
+Source: php53
+Section: php
+Priority: optional
+Maintainer: Sascha Kettler <kettler@gmx.net>
+Build-Depends: autoconf, autoconf2.13, bison, libtool, libbz2-dev,
+ libcurl4-openssl-dev, libdb-dev, libedit-dev, libexpat1-dev, 
+ libfreetype6-dev, libgcrypt11-dev, libgd2-xpm-dev, libgmp3-dev,
+ libjpeg62-dev, libmhash-dev, libmysqlclient-dev, libncurses5-dev,
+ libpng12-dev, libpspell-dev, librecode-dev, libsqlite0-dev,
+ libssl-dev, libt1-dev, libtidy-dev, libxml2-dev, libxmltok1-dev,
+ libxslt1-dev, zlib1g-dev, libmcrypt-dev, libldap2-dev, 
+ libreadline5-dev, shtool, chrpath, flex, apache2-prefork-dev,
+ debhelper (>= 5), hardening-wrapper, quilt
+Build-Conflicts: bind-dev
+Standards-Version: 3.8.3
+Homepage: http://www.php.net/
+
+Package: php53
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, mime-support, apache2-mpm-prefork, 
+ apache2.2-common, libmagic1, ucf
+Conflicts: php5, php5-cli, libapache2-mod-php5, php5-cgi, php5-common, php5-dev, php52
+Replaces: php5, php5-cli, libapache2-mod-php5, php5-cgi, php5-common, php5-dev
+Provides: php5, php5-cli, libapache2-mod-php5, php5-cgi, php5-common, php5-dev
+Description: server-side, HTML-embedded scripting language
+ PHP5 is an HTML-embedded scripting language. Much of its syntax is borrowed
+ from C, Java and Perl with a couple of unique PHP-specific features thrown
+ in. The goal of the language is to allow web developers to write dynamically
+ generated pages quickly.
+ .
+ Homepage: http://www.php.net/
