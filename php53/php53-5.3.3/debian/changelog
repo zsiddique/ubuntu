@@ -1,3 +1,9 @@
+php53 (5.3.3~ppa1~lucid2) lucid; urgency=low
+
+  * Fixed build failures due to suhosin patch compiler warnings
+
+ -- Sascha Kettler <kettler@gmx.net>  Fri, 29 Oct 2010 17:34:23 +0200
+
 php53 (5.3.3~ppa1~lucid1) lucid; urgency=low
 
   * Initial release
