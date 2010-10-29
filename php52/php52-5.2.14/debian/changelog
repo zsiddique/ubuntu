@@ -1,0 +1,17 @@
+php52 (5.2.14~ppa1~lucid3) lucid; urgency=low
+
+  * Updated some default PHP settings
+
+ -- Sascha Kettler <kettler@gmx.net>  Fri, 29 Oct 2010 11:46:12 +0200
+
+php52 (5.2.14~ppa1~lucid2) lucid; urgency=low
+
+  * Removed configure string from phpinfo
+
+ -- Sascha Kettler <kettler@gmx.net>  Thu, 28 Oct 2010 16:43:22 +0200
+
+php52 (5.2.14~ppa1~lucid1) lucid; urgency=low
+
+  * Initial Release.
+
+ -- Sascha Kettler <kettler@gmx.net>  Thu, 28 Oct 2010 13:06:46 +0200
