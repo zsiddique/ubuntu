@@ -1,0 +1,17 @@
+Source: php52-apc
+Section: php
+Priority: optional
+Maintainer: Sascha Kettler <kettler@gmx.net>
+Build-Depends: php52
+Standards-Version: 3.8.3
+Homepage: http://www.php.net/
+
+Package: php52-apc
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, php52
+Description: Alternative PHP Cache
+ The Alternative PHP Cache (APC) is a free and open opcode cache for PHP. 
+ Its goal is to provide a free, open, and robust framework for caching and 
+ optimizing PHP intermediate code. 
+ .
+ Homepage: http://pecl.php.net/package/APC

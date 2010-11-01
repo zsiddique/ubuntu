@@ -1,0 +1,5 @@
+php52-apc (3.1.4~ppa1~lucid1) lucid; urgency=low
+
+  * Initial Release.
+
+ -- Sascha Kettler <kettler@gmx.net>  Mon, 01 Nov 2010 11:42:04 +0100
