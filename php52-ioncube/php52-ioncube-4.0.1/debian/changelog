@@ -1,0 +1,5 @@
+php52-ioncube (4.0.1~ppa~lucid1) lucid; urgency=low
+
+  * Initial release.
+
+ -- Sascha Kettler <kettler@gmx.net>  Mon, 01 Nov 2010 16:21:26 +0100
