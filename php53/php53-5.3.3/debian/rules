@@ -194,7 +194,7 @@ install: build
 	mkdir -p debian/php53/$(EXTENSION_DIR)
 	mkdir -p debian/php53/var/log/php5
 	chown root:www-data debian/php53/var/log/php5
-	chmod 775 debian/php53/var/log/php5
+	chmod 0750 debian/php53/var/log/php5
 	
 	# install apache2 DSO module
 	mkdir -p debian/php53/`apxs2 -q LIBEXECDIR`
