@@ -1,3 +1,2 @@
-etc/php5/conf.d etc/php5/apache2/conf.d
-etc/php5/conf.d etc/php5/cli/conf.d
-usr/bin/php usr/bin/php5
+etc/php52/conf.d etc/php52/apache2/conf.d
+etc/php52/conf.d etc/php52/cli/conf.d

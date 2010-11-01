@@ -56,6 +56,7 @@ endif
 
 COMMON_CONFIG=--build=$(DEB_BUILD_GNU_TYPE) \
 		--host=$(DEB_HOST_GNU_TYPE) \
+		--program-suffix=52 \
 		--sysconfdir=/etc \
 		--mandir=/usr/share/man \
 		--disable-debug \
@@ -168,8 +169,8 @@ configure-apache2-stamp: prepared-stamp
 	cd apache2-build && \
 	CFLAGS="$(CFLAGS)" PROG_SENDMAIL="$(PROG_SENDMAIL)" ../configure \
 		--prefix=/usr --with-apxs2=/usr/bin/apxs2 \
-		--with-config-file-path=/etc/php5/apache2 \
-		--with-config-file-scan-dir=/etc/php5/apache2/conf.d \
+		--with-config-file-path=/etc/php52/apache2 \
+		--with-config-file-scan-dir=/etc/php52/apache2/conf.d \
 		$(COMMON_CONFIG)
 	touch configure-apache2-stamp
 
@@ -180,8 +181,8 @@ configure-cli-stamp: prepared-stamp
 	cd cli-build && \
 	CFLAGS="$(CFLAGS)" PROG_SENDMAIL="$(PROG_SENDMAIL)" ../configure \
 		--prefix=/usr --disable-cgi \
-		--with-config-file-path=/etc/php5/cli \
-		--with-config-file-scan-dir=/etc/php5/cli/conf.d \
+		--with-config-file-path=/etc/php52/cli \
+		--with-config-file-scan-dir=/etc/php52/cli/conf.d \
 		$(COMMON_CONFIG)
 	touch configure-cli-stamp
 
@@ -192,40 +193,40 @@ install: build
 	dh_clean -k
 	dh_installdirs
 	cd apache2-build && $(MAKE) install-sapi install-cli install-build install-headers install-programs INSTALL_IT=/bin/true INSTALL_ROOT=$(PWD)/debian/php52
-	mkdir -p debian/php52/var/lib/php5
-	chmod 01733 debian/php52/var/lib/php5
+	mkdir -p debian/php52/var/lib/php52
+	chmod 01733 debian/php52/var/lib/php52
 	mkdir -p debian/php52/$(EXTENSION_DIR)
-	mkdir -p debian/php52/var/log/php5
-	chown root:www-data debian/php52/var/log/php5
-	chmod 0750 debian/php52/var/log/php5
+	mkdir -p debian/php52/var/log/php52
+	chown root:www-data debian/php52/var/log/php52
+	chmod 0750 debian/php52/var/log/php52
 	
 	# install apache2 DSO module
 	mkdir -p debian/php52/`apxs2 -q LIBEXECDIR`
-	cp apache2-build/.libs/libphp5.so debian/php52/`apxs2 -q LIBEXECDIR`/
+	cp apache2-build/.libs/libphp5.so debian/php52/`apxs2 -q LIBEXECDIR`/libphp52.so
 	mkdir -p debian/php52/etc/apache2/mods-available
-	cp debian/apache2-php5.load debian/php52/etc/apache2/mods-available/php5.load
-	cp debian/apache2-php5.conf debian/php52/etc/apache2/mods-available/php5.conf
-	mkdir -p debian/php52/etc/php5/apache2
-	cp php.ini-recommended debian/php52/etc/php5/apache2/php.ini
-	sed -i "s#^extension_dir = \"./\"#extension_dir = \"$(EXTENSION_DIR)\"#" debian/php52/etc/php5/apache2/php.ini
+	cp debian/apache2-php52.load debian/php52/etc/apache2/mods-available/php52.load
+	cp debian/apache2-php52.conf debian/php52/etc/apache2/mods-available/php52.conf
+	mkdir -p debian/php52/etc/php52/apache2
+	cp php.ini-recommended debian/php52/etc/php52/apache2/php.ini
+	sed -i "s#^extension_dir = \"./\"#extension_dir = \"$(EXTENSION_DIR)\"#" debian/php52/etc/php52/apache2/php.ini
 	
 	# install CLI
 	cp cli-build/sapi/cli/php debian/php52/usr/bin/php
 	cp cli-build/sapi/cli/php.1 debian/php52/usr/share/man/man1/php5.1
-	mkdir -p debian/php52/etc/php5/cli
-	cp php.ini-recommended debian/php52/etc/php5/cli/php.ini
-	sed -i 's#^display_errors = Off#display_errors = stderr#' debian/php52/etc/php5/cli/php.ini
-	sed -i "s#^extension_dir = \"./\"#extension_dir = \"$(EXTENSION_DIR)\"#" debian/php52/etc/php5/cli/php.ini
-	sed -i "s#^output_buffering = 4096#output_buffering = Off#" debian/php52/etc/php5/cli/php.ini
+	mkdir -p debian/php52/etc/php52/cli
+	cp php.ini-recommended debian/php52/etc/php52/cli/php.ini
+	sed -i 's#^display_errors = Off#display_errors = stderr#' debian/php52/etc/php52/cli/php.ini
+	sed -i "s#^extension_dir = \"./\"#extension_dir = \"$(EXTENSION_DIR)\"#" debian/php52/etc/php52/cli/php.ini
+	sed -i "s#^output_buffering = 4096#output_buffering = Off#" debian/php52/etc/php52/cli/php.ini
 	
 	# Install PEAR
 	cp -r pear-build/* debian/php52/
 	
-	# Instal configuration
-	mkdir -p debian/php52/etc/php5/conf.d
-	cp debian/php5-logging.ini debian/php52/etc/php5/conf.d/logging.ini
-	cp debian/php5-limits.ini debian/php52/etc/php5/conf.d/limits.ini
-	cp debian/php5-environment.ini debian/php52/etc/php5/conf.d/environment.ini
+	# Install configuration
+	mkdir -p debian/php52/etc/php52/conf.d
+	cp debian/php52-logging.ini debian/php52/etc/php52/conf.d/logging.ini
+	cp debian/php52-limits.ini debian/php52/etc/php52/conf.d/limits.ini
+	cp debian/php52-environment.ini debian/php52/etc/php52/conf.d/environment.ini
 	
 	touch install-stamp
 
@@ -236,12 +237,12 @@ binary-indep:
 binary-arch: build install
 	dh_testdir
 	dh_testroot
-	dh_installcron --name=php5
+	dh_installcron --name=php52
 	dh_installchangelogs NEWS
 	dh_strip -s
 	dh_link -s
 	dh_compress -s -X.ini
-	dh_fixperms -s -X /var/lib/php5
+	dh_fixperms -s -X /var/lib/php52
 	mkdir -p debian/php52/usr/share/linda/overrides
 	echo "Tag: non-standard-dir-perm" >> debian/php52/usr/share/linda/overrides/php52
 	echo "Data: /var/lib/php5.*" >> debian/php52/usr/share/linda/overrides/php52
