@@ -18,10 +18,13 @@ set -e
 
 
 case "$1" in
-    remove|upgrade|deconfigure)
+    remove|deconfigure)
         if [ -e /etc/apache2/apache2.conf ]; then
             a2dismod php5 || true
         fi
+    ;;
+
+    upgrade)
     ;;
 
     failed-upgrade)

@@ -2,7 +2,7 @@ Source: php52-apc
 Section: php
 Priority: optional
 Maintainer: Sascha Kettler <kettler@gmx.net>
-Build-Depends: php52
+Build-Depends: php52, shtool, chrpath, debhelper (>= 5), hardening-wrapper
 Standards-Version: 3.8.3
 Homepage: http://www.php.net/
 

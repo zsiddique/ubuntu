@@ -19,7 +19,7 @@ Package: php52
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}, mime-support, apache2-mpm-prefork, 
  apache2.2-common, libmagic1, ucf, autoconf, autoconf2.13, automake, libssl-dev, 
- libtool, shtool, m4, build-essential
+ libtool, shtool, m4, build-essential, libpcre3-dev
 Conflicts: php5, php5-cli, libapache2-mod-php5, php5-cgi, php5-common, php5-dev
 Replaces: php5, php5-cli, libapache2-mod-php5, php5-cgi, php5-common, php5-dev
 Provides: php5, php5-cli, libapache2-mod-php5, php5-cgi, php5-common, php5-dev

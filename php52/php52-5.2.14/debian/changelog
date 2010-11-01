@@ -1,3 +1,9 @@
+php52 (5.2.14~ppa2~lucid1) lucid; urgency=low
+
+  * Fixed module deactivation on upgrade
+
+ -- Sascha Kettler <kettler@gmx.net>  Mon, 01 Nov 2010 13:59:28 +0100
+
 php52 (5.2.14~ppa1~lucid4) lucid; urgency=low
 
   * Fixed permissions of logging destination
