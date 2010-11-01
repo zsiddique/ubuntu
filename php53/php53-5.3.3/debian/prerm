@@ -1,5 +1,5 @@
 #!/bin/sh
-# prerm script for php52
+# prerm script for php53
 #
 # see: dh_installdeb(1)
 
