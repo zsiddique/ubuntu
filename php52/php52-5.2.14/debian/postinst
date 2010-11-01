@@ -31,7 +31,7 @@ case "$1" in
         sed -i "s#@@DEFAULT_TIMEZONE@@#$TIMEZONE#" /etc/php5/conf.d/environment.ini
         touch /var/log/php5/php_error.log
         chown root:www-data /var/log/php5
-	chmod 0750 /var/log/php5
+        chmod 0750 /var/log/php5
         chmod 0664 /var/log/php5/php_error.log
         if [ -n "$2" ]; then
             # Upgrading
