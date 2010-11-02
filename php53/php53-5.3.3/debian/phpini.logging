@@ -1,0 +1,2 @@
+error_log = /var/log/php53/php_error.log
+log_errors = On

@@ -6,7 +6,7 @@ diff -ur php53-5.3.3/configure php53-5.3.3-pear/configure
  "
  ac_help="$ac_help
 -  --with-pear=DIR         Install PEAR in DIR [PREFIX/lib/php]
-+  --with-pear=DIR         Install PEAR in DIR [PREFIX/lib/php5]
++  --with-pear=DIR         Install PEAR in DIR [PREFIX/lib/php53]
    --without-pear          Do not install PEAR"
  ac_help="$ac_help
  
@@ -15,7 +15,7 @@ diff -ur php53-5.3.3/configure php53-5.3.3-pear/configure
      case $PHP_LAYOUT in
        GNU) PEAR_INSTALLDIR=$datadir/pear;;
 -      *)   PEAR_INSTALLDIR=$libdir/php;;
-+      *)   PEAR_INSTALLDIR=$libdir/php5;;
++      *)   PEAR_INSTALLDIR=$libdir/php53;;
      esac
    fi
  
@@ -24,13 +24,13 @@ diff -ur php53-5.3.3/configure php53-5.3.3-pear/configure
  case $libdir in
    '${exec_prefix}/lib')
 -    libdir=$libdir/php
-+    libdir=$libdir/php5
++    libdir=$libdir/php53
      ;;
  esac
  case $datadir in
    '${prefix}/share')
 -    datadir=$datadir/php
-+    datadir=$datadir/php5
++    datadir=$datadir/php53
      ;;
  esac
  
@@ -51,7 +51,7 @@ diff -ur php53-5.3.3/configure.in php53-5.3.3-pear/configure.in
  
  PHP_ARG_WITH(pear, [whether to install PEAR],
 -[  --with-pear=DIR         Install PEAR in DIR [PREFIX/lib/php]
-+[  --with-pear=DIR         Install PEAR in DIR [PREFIX/lib/php5]
++[  --with-pear=DIR         Install PEAR in DIR [PREFIX/lib/php53]
    --without-pear          Do not install PEAR], DEFAULT, yes)
  
  if test "$PHP_PEAR" != "no"; then
@@ -60,7 +60,7 @@ diff -ur php53-5.3.3/configure.in php53-5.3.3-pear/configure.in
      case $PHP_LAYOUT in
        GNU) PEAR_INSTALLDIR=$datadir/pear;;
 -      *)   PEAR_INSTALLDIR=$libdir/php;;
-+      *)   PEAR_INSTALLDIR=$libdir/php5;;
++      *)   PEAR_INSTALLDIR=$libdir/php53;;
      esac
    fi
  
@@ -69,13 +69,13 @@ diff -ur php53-5.3.3/configure.in php53-5.3.3-pear/configure.in
  case $libdir in
    '${exec_prefix}/lib')
 -    libdir=$libdir/php
-+    libdir=$libdir/php5
++    libdir=$libdir/php53
      ;;
  esac
  case $datadir in
    '${prefix}/share')
 -    datadir=$datadir/php
-+    datadir=$datadir/php5
++    datadir=$datadir/php53
      ;;
  esac
  

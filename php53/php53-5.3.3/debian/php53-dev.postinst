@@ -1,5 +1,5 @@
 #!/bin/sh
-# postinst script for php53
+# postinst script for php53-dev
 #
 # see: dh_installdeb(1)
 
@@ -27,24 +27,12 @@ reload_apache() {
 
 case "$1" in
     configure)
-        TIMEZONE=`cat /etc/timezone`
-        sed -i "s#@@DEFAULT_TIMEZONE@@#$TIMEZONE#" /etc/php5/conf.d/environment.ini
-        touch /var/log/php5/php_error.log
-        chown root:www-data /var/log/php5
-        chmod 0750 /var/log/php5
-        chmod 0664 /var/log/php5/php_error.log
-        if [ -n "$2" ]; then
-            # Upgrading
-            if [ -e /etc/apache2/mods-enabled/php5.load ]; then
-                reload_apache
-            fi
-        else
-            if [ -e /etc/apache2/apache2.conf ]; then
-                # Enable the module
-                a2enmod php5 >/dev/null || true
-                reload_apache
-            fi
-        fi
+	update-alternatives \
+		--install /usr/bin/phpize phpize /usr/bin/phpize53 50 \
+		--slave /usr/share/man/man1/phpize.1.gz phpize.1.gz /usr/share/man/man1/phpize53.1.gz
+	update-alternatives \
+		--install /usr/bin/php-config php-config /usr/bin/php-config53 50 \
+		--slave /usr/share/man/man1/php-config.1.gz php-config.1.gz /usr/share/man/man1/php-config53.1.gz
     ;;
 
     abort-upgrade|abort-remove|abort-deconfigure)

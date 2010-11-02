@@ -20,7 +20,7 @@ set -e
 case "$1" in
     remove|deconfigure)
         if [ -e /etc/apache2/apache2.conf ]; then
-            a2dismod php5 || true
+            a2dismod php53 || true
         fi
     ;;
 

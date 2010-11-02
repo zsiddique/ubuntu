@@ -29,11 +29,10 @@ DEB_BUILD_HARDENING_PIE = 0
 export DEB_BUILD_HARDENING DEB_BUILD_HARDENING_PIE
 
 # Set PHP extension dir
-EXTENSION_DIR=/usr/lib/php5/20060613
-export EXTENSION_DIR
+ZEND_MODULE_API_NO	= $(shell grep '\#define ZEND_MODULE_API_NO ' Zend/zend_modules.h | sed 's/\#define ZEND_MODULE_API_NO //')
+EXTENSION_DIR		= /usr/lib/php52/$(ZEND_MODULE_API_NO)
 
 PROG_SENDMAIL	= /usr/sbin/sendmail
-TIMEZONE	= $(shell cat /etc/timezone)
 
 CFLAGS = -O2 -Wall -fsigned-char -fno-strict-aliasing
 # LFS support
@@ -45,17 +44,9 @@ ifneq (nostrip, $(findstring nostrip, $(DEB_BUILD_OPTIONS)))
         install_strip = -s
 endif
 
-# Old magic.mime location:
-ifeq ($(wildcard /usr/share/misc/file/magic.mime), /usr/share/misc/file/magic.mime)
-MAGIC_MIME = /usr/share/misc/file/magic.mime
-endif
-# New magic.mime location:
-ifeq ($(wildcard /usr/share/file/magic.mime), /usr/share/file/magic.mime)
-MAGIC_MIME = /usr/share/file/magic.mime
-endif
-
 COMMON_CONFIG=--build=$(DEB_BUILD_GNU_TYPE) \
 		--host=$(DEB_HOST_GNU_TYPE) \
+		--program-suffix=53 \
 		--sysconfdir=/etc \
 		--mandir=/usr/share/man \
 		--disable-debug \
@@ -88,7 +79,7 @@ COMMON_CONFIG=--build=$(DEB_BUILD_GNU_TYPE) \
 		--with-openssl=/usr \
 		--enable-soap \
 		--enable-zip \
-		--with-exec-dir=/usr/lib/php5/libexec \
+		--with-exec-dir=/usr/lib/php53/libexec \
 		--enable-libxml \
 		--with-curl \
 		--with-curlwrappers \
@@ -131,12 +122,55 @@ unprepared:
 	dh_testdir
 	rm -f prepared-stamp
 
-build: build-apache2-stamp build-cli-stamp build-pear-stamp
+configure: configure-apache2-stamp configure-cgi-stamp configure-cli-stamp
+
+configure-apache2-stamp: prepared-stamp
+	dh_testdir
+	if [ -d apache2-build ]; then rm -rf apache2-build; fi
+	-mkdir apache2-build
+	cd apache2-build && \
+	CFLAGS="$(CFLAGS)" PROG_SENDMAIL="$(PROG_SENDMAIL)" ../configure \
+		--prefix=/usr --with-apxs2=/usr/bin/apxs2 \
+		--with-config-file-path=/etc/php53/apache2 \
+		--with-config-file-scan-dir=/etc/php53/apache2/conf.d \
+		$(COMMON_CONFIG)
+	touch configure-apache2-stamp
+
+configure-cgi-stamp: prepared-stamp
+	dh_testdir
+	if [ -d cgi-build ]; then rm -rf cgi-build; fi
+	-mkdir cgi-build
+	cd cgi-build && \
+	CFLAGS="$(CFLAGS)" PROG_SENDMAIL="$(PROG_SENDMAIL)" ../configure \
+		--prefix=/usr --enable-force-cgi-redirect --enable-fastcgi \
+		--with-config-file-path=/etc/php53/cgi \
+		--with-config-file-scan-dir=/etc/php53/cgi/conf.d \
+		$(COMMON_CONFIG)
+	touch configure-cgi-stamp
+
+configure-cli-stamp: prepared-stamp
+	dh_testdir
+	if [ -d cli-build ]; then rm -rf cli-build; fi
+	-mkdir cli-build
+	cd cli-build && \
+	CFLAGS="$(CFLAGS)" PROG_SENDMAIL="$(PROG_SENDMAIL)" ../configure \
+		--prefix=/usr --disable-cgi \
+		--with-config-file-path=/etc/php53/cli \
+		--with-config-file-scan-dir=/etc/php53/cli/conf.d \
+		$(COMMON_CONFIG)
+	touch configure-cli-stamp
+
+build: build-apache2-stamp build-cgi-stamp build-cli-stamp build-pear-stamp
 
 build-apache2-stamp: configure-apache2-stamp
 	dh_testdir
 	cd apache2-build && $(MAKE)
 	touch build-apache2-stamp
+
+build-cgi-stamp: configure-cgi-stamp
+	dh_testdir
+	cd cgi-build && $(MAKE)
+	touch build-cgi-stamp
 
 build-cli-stamp: configure-cli-stamp
 	dh_testdir
@@ -156,92 +190,87 @@ build-pear-stamp: build-cli-stamp
 		$(CURDIR)/pear-build/usr/bin/peardev
 	touch build-pear-stamp
 
-configure: configure-apache2-stamp configure-cli-stamp
-
-configure-apache2-stamp: prepared-stamp
-	dh_testdir
-	if [ -d apache2-build ]; then rm -rf apache2-build; fi
-	-mkdir apache2-build
-	cd apache2-build && \
-	CFLAGS="$(CFLAGS)" PROG_SENDMAIL="$(PROG_SENDMAIL)" ../configure \
-		--prefix=/usr --with-apxs2=/usr/bin/apxs2 \
-		--with-config-file-path=/etc/php5/apache2 \
-		--with-config-file-scan-dir=/etc/php5/apache2/conf.d \
-		$(COMMON_CONFIG)
-	touch configure-apache2-stamp
-
-configure-cli-stamp: prepared-stamp
-	dh_testdir
-	if [ -d cli-build ]; then rm -rf cli-build; fi
-	-mkdir cli-build
-	cd cli-build && \
-	CFLAGS="$(CFLAGS)" PROG_SENDMAIL="$(PROG_SENDMAIL)" ../configure \
-		--prefix=/usr --disable-cgi \
-		--with-config-file-path=/etc/php5/cli \
-		--with-config-file-scan-dir=/etc/php5/cli/conf.d \
-		$(COMMON_CONFIG)
-	touch configure-cli-stamp
-
 install: DH_OPTIONS=
 install: build
 	dh_testdir
 	dh_testroot
 	dh_clean -k
 	dh_installdirs
-	cd apache2-build && $(MAKE) install-sapi install-cli install-build install-headers install-programs INSTALL_IT=/bin/true INSTALL_ROOT=$(PWD)/debian/php53
-	mkdir -p debian/php53/var/lib/php5
-	chmod 01733 debian/php53/var/lib/php5
+	mkdir -p debian/php53/var/lib/php53
+	chmod 01733 debian/php53/var/lib/php53
 	mkdir -p debian/php53/$(EXTENSION_DIR)
-	mkdir -p debian/php53/var/log/php5
-	chown root:www-data debian/php53/var/log/php5
-	chmod 0750 debian/php53/var/log/php5
+	mkdir -p debian/php53/var/log/php53
+	chown root:www-data debian/php53/var/log/php53
+	chmod 0750 debian/php53/var/log/php53
 	
 	# install apache2 DSO module
 	mkdir -p debian/php53/`apxs2 -q LIBEXECDIR`
-	cp apache2-build/.libs/libphp5.so debian/php53/`apxs2 -q LIBEXECDIR`/
+	cp apache2-build/.libs/libphp5.so debian/php53/`apxs2 -q LIBEXECDIR`/lubphp53.so
 	mkdir -p debian/php53/etc/apache2/mods-available
-	cp debian/apache2-php5.load debian/php53/etc/apache2/mods-available/php5.load
-	cp debian/apache2-php5.conf debian/php53/etc/apache2/mods-available/php5.conf
-	mkdir -p debian/php53/etc/php5/apache2
-	cp php.ini-production debian/php53/etc/php5/apache2/php.ini
-	sed -i "s#^extension_dir = \"./\"#extension_dir = \"$(EXTENSION_DIR)\"#" debian/php53/etc/php5/apache2/php.ini
+	cp debian/apache2-php53.load debian/php53/etc/apache2/mods-available/php53.load
+	cp debian/apache2-php53.conf debian/php53/etc/apache2/mods-available/php53.conf
+	mkdir -p debian/php53/etc/php53/apache2
+	cp php.ini-production debian/php53/etc/php53/apache2/php.ini
+	sed -i "s#^extension_dir = \"./\"#extension_dir = \"$(EXTENSION_DIR)\"#" debian/php53/etc/php53/apache2/php.ini
+	
+	# install CGI
+	cd cgi-build && $(MAKE) install-sapi INSTALL_ROOT=$(PWD)/debian/php53
+	mkdir -p debian/php53/etc/php53/cgi
+	cp php.ini-production debian/php53/etc/php53/cgi/php.ini
+	sed -i "s#^extension_dir = \"./\"#extension_dir = \"$(EXTENSION_DIR)\"#" debian/php53/etc/php53/cgi/php.ini
 	
 	# install CLI
-	cp cli-build/sapi/cli/php debian/php53/usr/bin/php
-	cp cli-build/sapi/cli/php.1 debian/php53/usr/share/man/man1/php5.1
-	mkdir -p debian/php53/etc/php5/cli
-	cp php.ini-production debian/php53/etc/php5/cli/php.ini
-	sed -i 's#^display_errors = Off#display_errors = stderr#' debian/php53/etc/php5/cli/php.ini
-	sed -i "s#^extension_dir = \"./\"#extension_dir = \"$(EXTENSION_DIR)\"#" debian/php53/etc/php5/cli/php.ini
-	sed -i "s#^output_buffering = 4096#output_buffering = Off#" debian/php53/etc/php5/cli/php.ini
+	cd cli-build && $(MAKE) install-cli INSTALL_ROOT=$(PWD)/debian/php52
+	mkdir -p debian/php53/etc/php53/cli
+	cp php.ini-production debian/php53/etc/php53/cli/php.ini
+	sed -i 's#^display_errors = Off#display_errors = stderr#' debian/php53/etc/php53/cli/php.ini
+	sed -i "s#^extension_dir = \"./\"#extension_dir = \"$(EXTENSION_DIR)\"#" debian/php53/etc/php53/cli/php.ini
+	sed -i "s#^output_buffering = 4096#output_buffering = Off#" debian/php53/etc/php53/cli/php.ini
 	
-	# Install PEAR
-	cp -r pear-build/* debian/php53/
+	# Install alternate paths
+	cd cli-build && $(MAKE) install-build install-headers install-programs INSTALL_ROOT=$(PWD)/debian/php52-dev
+	mv debian/php52-dev/usr/include/php debian/php52-dev/usr/include/php52
+	sed -i 's~/include/php~/include/php52~g' debian/php52-dev/usr/bin/php-config52
+	sed -i 's~/include`/php~/include`/php52~g' debian/php52-dev/usr/bin/phpize52
 	
 	# Instal configuration
-	mkdir -p debian/php53/etc/php5/conf.d
-	cp debian/php5-logging.ini debian/php53/etc/php5/conf.d/logging.ini
-	cp debian/php5-limits.ini debian/php53/etc/php5/conf.d/limits.ini
-	cp debian/php5-environment.ini debian/php53/etc/php5/conf.d/environment.ini
+	mkdir -p debian/php53/etc/php53/conf.d
+	cp debian/phpini.logging debian/php53/etc/php53/conf.d/logging.ini
+	cp debian/phpini.limits debian/php53/etc/php53/conf.d/limits.ini
+	cp debian/phpini.environment debian/php53/etc/php53/conf.d/environment.ini
+	
+	# Install PEAR
+	cp -r pear-build/* debian/php53-pear/
 	
 	touch install-stamp
 
 binary: binary-arch binary-indep
 
-binary-indep:
+binary-indep: DH_OPTIONS=-i
+	dh_testdir
+	dh_testroot
+	dh_installdocs
+	dh_link
+	dh_compress -X.ini
+	dh_fixperms
+	dh_installdeb
+	dh_gencontrol
+	dh_md5sums
+	dh_builddeb
+
 
 binary-arch: build install
 	dh_testdir
 	dh_testroot
-	dh_installcron --name=php5
+	dh_installcron --name=php53
 	dh_installchangelogs NEWS
 	dh_strip -s
 	dh_link -s
 	dh_compress -s -X.ini
-	dh_fixperms -s -X /var/lib/php5
+	dh_fixperms -s -X /var/lib/php53
 	mkdir -p debian/php53/usr/share/linda/overrides
 	echo "Tag: non-standard-dir-perm" >> debian/php53/usr/share/linda/overrides/php53
-	echo "Data: /var/lib/php5.*" >> debian/php53/usr/share/linda/overrides/php53
+	echo "Data: /var/lib/php53.*" >> debian/php53/usr/share/linda/overrides/php53
 	dh_installdeb -s
 	dh_shlibdeps -s
 	dh_gencontrol -s
@@ -251,10 +280,12 @@ binary-arch: build install
 clean: unprepared unpatch
 	dh_testdir
 	rm -f configure-apache2-stamp build-apache2-stamp
+	rm -f configure-cgi-stamp build-cgi-stamp
 	rm -f configure-cli-stamp build-cli-stamp
 	rm -f build-pear-stamp
 	rm -f install-stamp
 	rm -rf apache2-build
+	rm -rf cgi-build
 	rm -rf cli-build
 	rm -rf pear-build
 	dh_clean
