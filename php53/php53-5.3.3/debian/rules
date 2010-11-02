@@ -247,6 +247,7 @@ install: build
 binary: binary-arch binary-indep
 
 binary-indep: DH_OPTIONS=-i
+binary-indep:
 	dh_testdir
 	dh_testroot
 	dh_installdocs
