@@ -30,7 +30,7 @@ export DEB_BUILD_HARDENING DEB_BUILD_HARDENING_PIE
 
 # Set PHP extension dir
 ZEND_MODULE_API_NO	= $(shell grep '\#define ZEND_MODULE_API_NO ' Zend/zend_modules.h | sed 's/\#define ZEND_MODULE_API_NO //')
-EXTENSION_DIR		= /usr/lib/php52/$(ZEND_MODULE_API_NO)
+EXTENSION_DIR		= /usr/lib/php53/$(ZEND_MODULE_API_NO)
 
 PROG_SENDMAIL	= /usr/sbin/sendmail
 
@@ -220,7 +220,7 @@ install: build
 	sed -i "s#^extension_dir = \"./\"#extension_dir = \"$(EXTENSION_DIR)\"#" debian/php53/etc/php53/cgi/php.ini
 	
 	# install CLI
-	cd cli-build && $(MAKE) install-cli INSTALL_ROOT=$(PWD)/debian/php52
+	cd cli-build && $(MAKE) install-cli INSTALL_ROOT=$(PWD)/debian/php53
 	mkdir -p debian/php53/etc/php53/cli
 	cp php.ini-production debian/php53/etc/php53/cli/php.ini
 	sed -i 's#^display_errors = Off#display_errors = stderr#' debian/php53/etc/php53/cli/php.ini
@@ -228,10 +228,10 @@ install: build
 	sed -i "s#^output_buffering = 4096#output_buffering = Off#" debian/php53/etc/php53/cli/php.ini
 	
 	# Install alternate paths
-	cd cli-build && $(MAKE) install-build install-headers install-programs INSTALL_ROOT=$(PWD)/debian/php52-dev
-	mv debian/php52-dev/usr/include/php debian/php52-dev/usr/include/php52
-	sed -i 's~/include/php~/include/php52~g' debian/php52-dev/usr/bin/php-config52
-	sed -i 's~/include`/php~/include`/php52~g' debian/php52-dev/usr/bin/phpize52
+	cd cli-build && $(MAKE) install-build install-headers install-programs INSTALL_ROOT=$(PWD)/debian/php53-dev
+	mv debian/php53-dev/usr/include/php debian/php53-dev/usr/include/php53
+	sed -i 's~/include/php~/include/php53~g' debian/php53-dev/usr/bin/php-config53
+	sed -i 's~/include`/php~/include`/php53~g' debian/php53-dev/usr/bin/phpize53
 	
 	# Instal configuration
 	mkdir -p debian/php53/etc/php53/conf.d
