@@ -39,12 +39,17 @@ case "$1" in
                 reload_apache
             fi
         else
-            if [ -e /etc/apache2/apache2.conf -a ! -E /etc/apache2/mods-enabled/php53.load ]; then
+            if [ -e /etc/apache2/apache2.conf -a ! -e /etc/apache2/mods-enabled/php53.load ]; then
                 # Enable the module
                 a2enmod php52 >/dev/null || true
                 reload_apache
             fi
         fi
+	update-alternatives \
+		--install /usr/bin/php php /usr/bin/php52 50 \
+		--slave /usr/share/man/man1/php.1.gz php.1.gz /usr/share/man/man1/php52.1.gz
+	update-alternatives \
+		--install /usr/bin/php-cgi php-cgi /usr/bin/php52-cgi 50
     ;;
 
     abort-upgrade|abort-remove|abort-deconfigure)

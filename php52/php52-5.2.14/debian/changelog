@@ -1,3 +1,9 @@
+php52 (5.2.14~ppa3) lucid; urgency=low
+
+  * Improved packging to allow PHP 5.2 and 5.3 to be installed
+
+ -- Sascha Kettler <kettler@gmx.net>  Tue, 02 Nov 2010 17:56:06 +0100
+
 php52 (5.2.14~ppa2~lucid2) lucid; urgency=low
 
   * Fixed postinstall script

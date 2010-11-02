@@ -16,14 +16,46 @@ Standards-Version: 3.8.3
 Homepage: http://www.php.net/
 
 Package: php52
-Architecture: any
+Architecture: i386 amd64
 Depends: ${shlibs:Depends}, ${misc:Depends}, mime-support, apache2-mpm-prefork, 
- apache2.2-common, libmagic1, ucf, autoconf, autoconf2.13, automake, libssl-dev, 
- libtool, shtool, m4, build-essential, libpcre3-dev
+ apache2.2-common, libmagic1, ucf
 Conflicts: php5, php5-cli, libapache2-mod-php5, php5-cgi, php5-common, php5-dev
 Replaces: php5, php5-cli, libapache2-mod-php5, php5-cgi, php5-common, php5-dev
 Provides: php5, php5-cli, libapache2-mod-php5, php5-cgi, php5-common, php5-dev
 Description: server-side, HTML-embedded scripting language
+ PHP5 is an HTML-embedded scripting language. Much of its syntax is borrowed
+ from C, Java and Perl with a couple of unique PHP-specific features thrown
+ in. The goal of the language is to allow web developers to write dynamically
+ generated pages quickly.
+ .
+ Homepage: http://www.php.net/
+
+Package: php52-dev
+Architecture: i386 amd64
+Depends: php52, autoconf, autoconf2.13, automake, libssl-dev, libtool, shtool, 
+ m4, build-essential, libpcre3-dev
+Description: Files for PHP5 module development
+ This package provides the files from the PHP5 source needed for compiling
+ additional modules.
+ .
+ PHP5 is an HTML-embedded scripting language. Much of its syntax is borrowed
+ from C, Java and Perl with a couple of unique PHP-specific features thrown
+ in. The goal of the language is to allow web developers to write dynamically
+ generated pages quickly.
+ .
+ Homepage: http://www.php.net/
+
+Package: php52-pear
+Architecture: all
+Depends: php52
+Conflicts: php53-pear
+Description: PEAR - PHP Extension and Application Repository
+ This package contains the base PEAR classes for PHP, as well as the PEAR
+ installer.  Many PEAR classes are already packaged for Debian, and can be
+ easily identified by names beginning with "php-", such as php-db and
+ php-auth.  Note: to build and install precompiled PECL extensions, you
+ will need one of the php development packages installed.
+ .
  PHP5 is an HTML-embedded scripting language. Much of its syntax is borrowed
  from C, Java and Perl with a couple of unique PHP-specific features thrown
  in. The goal of the language is to allow web developers to write dynamically
