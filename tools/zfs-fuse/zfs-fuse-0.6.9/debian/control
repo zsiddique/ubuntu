@@ -6,7 +6,7 @@ Build-Depends: debhelper (>= 5), scons, libfuse-dev, zlib1g-dev, libaio-dev, xsl
 Standards-Version: 3.8.0.1
 
 Package: zfs-fuse
-Architecture: any
+Architecture: i386 amd64
 Depends: ${shlibs:Depends}, ${misc:Depends}, fuse-utils, lsb-base
 Description: ZFS on FUSE
  ZFS is an advanced filesystem from Sun Microsystems, originally developed
