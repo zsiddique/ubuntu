@@ -1,5 +1,3 @@
- -- Sascha Kettler <kettler@gmx.net>  Wed, 03 Nov 2010 17:43:53 +0100
-
 php52 (5.2.14~lucid~ppa6) lucid; urgency=low
 
   * Added PHP mail_log and originating script patch
