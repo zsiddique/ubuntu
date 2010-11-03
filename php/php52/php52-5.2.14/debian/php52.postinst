@@ -29,7 +29,7 @@ case "$1" in
 		--install /usr/bin/php php /usr/bin/php52 50 \
 		--slave /usr/share/man/man1/php.1.gz php.1.gz /usr/share/man/man1/php52.1.gz
 	update-alternatives \
-		--install /usr/bin/php-cgi php-cgi /usr/bin/php52-cgi 50
+		--install /usr/bin/php-cgi php-cgi /usr/bin/php-cgi52 50
     ;;
 
     abort-upgrade|abort-remove|abort-deconfigure)
