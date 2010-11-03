@@ -1,36 +1,5 @@
-php53 (5.3.3~ppa3) lucid; urgency=low
+php53 (5.3.3~lucid~ppa) lucid; urgency=low
 
-  * Improved packging to allow PHP 5.2 and 5.3 to be installed
+  * Initial release after updating version numbering
 
- -- Sascha Kettler <kettler@gmx.net>  Tue, 02 Nov 2010 18:07:18 +0100
-
-php53 (5.3.3~ppa2~lucid2) lucid; urgency=low
-
-  * Fixed postinstall script 
-
- -- Sascha Kettler <kettler@gmx.net>  Mon, 01 Nov 2010 15:54:49 +0100
-
-php53 (5.3.3~ppa2~lucid1) lucid; urgency=low
-
-  * Fixed module deactivation on upgrade 
-
- -- Sascha Kettler <kettler@gmx.net>  Mon, 01 Nov 2010 13:59:03 +0100
-
-php53 (5.3.3~ppa1~lucid3) lucid; urgency=low
-
-  * Fixed permissions of logging destination
-  * Added dependancies for phpize
-
- -- Sascha Kettler <kettler@gmx.net>  Mon, 01 Nov 2010 10:59:48 +0100
-
-php53 (5.3.3~ppa1~lucid2) lucid; urgency=low
-
-  * Fixed build failures due to suhosin patch compiler warnings
-
- -- Sascha Kettler <kettler@gmx.net>  Fri, 29 Oct 2010 17:34:23 +0200
-
-php53 (5.3.3~ppa1~lucid1) lucid; urgency=low
-
-  * Initial release
-
- -- Sascha Kettler <kettler@gmx.net>  Fri, 29 Oct 2010 15:03:54 +0200
+ -- Sascha Kettler <kettler@gmx.net>  Wed, 03 Nov 2010 17:41:30 +0100

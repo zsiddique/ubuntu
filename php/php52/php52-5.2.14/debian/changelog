@@ -1,3 +1,11 @@
+ -- Sascha Kettler <kettler@gmx.net>  Wed, 03 Nov 2010 17:43:53 +0100
+
+php52 (5.2.14~lucid~ppa6) lucid; urgency=low
+
+  * Added PHP mail_log and originating script patch
+
+ -- Sascha Kettler <kettler@gmx.net>  Wed, 03 Nov 2010 17:40:48 +0100
+
 php52 (5.2.14~lucid~ppa5) lucid; urgency=low
 
   * Reenabled lpia build due to build errors 
@@ -6,49 +14,6 @@ php52 (5.2.14~lucid~ppa5) lucid; urgency=low
 
 php52 (5.2.14~lucid~ppa4) lucid; urgency=low
 
-  * Need to have distribution name in package version
+  * Initial release after version numbering change
 
  -- Sascha Kettler <kettler@gmx.net>  Wed, 03 Nov 2010 14:27:33 +0100
-
-php52 (5.2.14~ppa3) lucid; urgency=low
-
-  * Improved packging to allow PHP 5.2 and 5.3 to be installed
-
- -- Sascha Kettler <kettler@gmx.net>  Tue, 02 Nov 2010 17:56:06 +0100
-
-php52 (5.2.14~ppa2~lucid2) lucid; urgency=low
-
-  * Fixed postinstall script
-
- -- Sascha Kettler <kettler@gmx.net>  Mon, 01 Nov 2010 15:55:22 +0100
-
-php52 (5.2.14~ppa2~lucid1) lucid; urgency=low
-
-  * Fixed module deactivation on upgrade
-
- -- Sascha Kettler <kettler@gmx.net>  Mon, 01 Nov 2010 13:59:28 +0100
-
-php52 (5.2.14~ppa1~lucid4) lucid; urgency=low
-
-  * Fixed permissions of logging destination
-  * Added dependancies for phpize
-
- -- Sascha Kettler <kettler@gmx.net>  Mon, 01 Nov 2010 10:57:02 +0100
-
-php52 (5.2.14~ppa1~lucid3) lucid; urgency=low
-
-  * Updated some default PHP settings
-
- -- Sascha Kettler <kettler@gmx.net>  Fri, 29 Oct 2010 11:46:12 +0200
-
-php52 (5.2.14~ppa1~lucid2) lucid; urgency=low
-
-  * Removed configure string from phpinfo
-
- -- Sascha Kettler <kettler@gmx.net>  Thu, 28 Oct 2010 16:43:22 +0200
-
-php52 (5.2.14~ppa1~lucid1) lucid; urgency=low
-
-  * Initial Release.
-
- -- Sascha Kettler <kettler@gmx.net>  Thu, 28 Oct 2010 13:06:46 +0200
