@@ -193,7 +193,6 @@ build-pear-stamp: build-cli-stamp
 install: DH_OPTIONS=
 install: build
 	dh_testdir
-	dh_testroot
 	dh_clean -k
 	dh_installdirs
 	mkdir -p debian/php53/var/lib/php53
@@ -204,14 +203,14 @@ install: build
 	chmod 0750 debian/php53/var/log/php53
 	
 	# install apache2 DSO module
-	mkdir -p debian/php53/`apxs2 -q LIBEXECDIR`
-	cp apache2-build/.libs/libphp5.so debian/php53/`apxs2 -q LIBEXECDIR`/lubphp53.so
-	mkdir -p debian/php53/etc/apache2/mods-available
-	cp debian/apache2-php53.load debian/php53/etc/apache2/mods-available/php53.load
-	cp debian/apache2-php53.conf debian/php53/etc/apache2/mods-available/php53.conf
-	mkdir -p debian/php53/etc/php53/apache2
-	cp php.ini-production debian/php53/etc/php53/apache2/php.ini
-	sed -i "s#^extension_dir = \"./\"#extension_dir = \"$(EXTENSION_DIR)\"#" debian/php53/etc/php53/apache2/php.ini
+	mkdir -p debian/libapache2-mod-php53/`apxs2 -q LIBEXECDIR`
+	cp apache2-build/.libs/libphp5.so debian/libapache2-mod-php53/`apxs2 -q LIBEXECDIR`/libphp53.so
+	mkdir -p debian/libapache2-mod-php53/etc/apache2/mods-available
+	cp debian/apache2-php53.load debian/libapache2-mod-php53/etc/apache2/mods-available/php53.load
+	cp debian/apache2-php53.conf debian/libapache2-mod-php53/etc/apache2/mods-available/php53.conf
+	mkdir -p debian/libapache2-mod-php53/etc/php53/apache2
+	cp php.ini-production debian/libapache2-mod-php53/etc/php53/apache2/php.ini
+	sed -i "s#^extension_dir = \"./\"#extension_dir = \"$(EXTENSION_DIR)\"#" debian/libapache2-mod-php53/etc/php53/apache2/php.ini
 	
 	# install CGI
 	cd cgi-build && $(MAKE) install-sapi INSTALL_ROOT=$(PWD)/debian/php53
