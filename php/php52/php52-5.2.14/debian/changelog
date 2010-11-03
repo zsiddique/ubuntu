@@ -1,3 +1,9 @@
+php52 (5.2.14~lucid~ppa5) lucid; urgency=low
+
+  * Reenabled lpia build due to build errors 
+
+ -- Sascha Kettler <kettler@gmx.net>  Wed, 03 Nov 2010 16:10:03 +0100
+
 php52 (5.2.14~lucid~ppa4) lucid; urgency=low
 
   * Need to have distribution name in package version
