@@ -51,7 +51,7 @@ configure-stamp:
 	dh_testdir
 	if [ -d pecl-build ]; then rm -rf pecl-build; fi
 	-mkdir pecl-build
-	phpize
+	phpize53
 	cd pecl-build && \
 	CFLAGS="$(CFLAGS)" ../configure \
 		--prefix=/usr \
@@ -94,7 +94,7 @@ clean:
 	rm -f build-stamp
 	rm -f install-stamp
 	rm -rf pecl-build
-	phpize --clean
+	phpize53 --clean
 	dh_clean
 
 .PHONY: build clean binary-indep binary-arch binary install configure

@@ -1,23 +1,5 @@
-php52-apc (3.1.4~ppa2~lucid1) lucid; urgency=low
+php52-apc (3.1.4~lucid1~ppa1) lucid; urgency=low
 
-  * Updated build requirements 
+  * Initial release after versioning change
 
- -- Sascha Kettler <kettler@gmx.net>  Mon, 01 Nov 2010 14:01:56 +0100
-
-php52-apc (3.1.4~ppa1~lucid3) lucid; urgency=low
-
-  * Added missing libpcre-dev build depandancy
-
- -- Sascha Kettler <kettler@gmx.net>  Mon, 01 Nov 2010 13:48:07 +0100
-
-php52-apc (3.1.4~ppa1~lucid2) lucid; urgency=low
-
-  * Fixed missing build dependancies
-
- -- Sascha Kettler <kettler@gmx.net>  Mon, 01 Nov 2010 13:37:51 +0100
-
-php52-apc (3.1.4~ppa1~lucid1) lucid; urgency=low
-
-  * Initial Release.
-
- -- Sascha Kettler <kettler@gmx.net>  Mon, 01 Nov 2010 11:42:04 +0100
+ -- Sascha Kettler <kettler@gmx.net>  Wed, 03 Nov 2010 16:51:18 +0100
