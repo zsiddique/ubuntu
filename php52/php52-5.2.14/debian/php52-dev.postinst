@@ -1,5 +1,5 @@
 #!/bin/sh
-# postinst script for php52
+# postinst script for php52-dev
 #
 # see: dh_installdeb(1)
 
@@ -27,24 +27,6 @@ reload_apache() {
 
 case "$1" in
     configure)
-        TIMEZONE=`cat /etc/timezone`
-        sed -i "s#@@DEFAULT_TIMEZONE@@#$TIMEZONE#" /etc/php52/conf.d/environment.ini
-        touch /var/log/php52/php_error.log
-        chown root:www-data /var/log/php52
-        chmod 0750 /var/log/php52
-        chmod 0664 /var/log/php52/php_error.log
-        if [ -n "$2" ]; then
-            # Upgrading
-            if [ -e /etc/apache2/mods-enabled/php52.load ]; then
-                reload_apache
-            fi
-        else
-            if [ -e /etc/apache2/apache2.conf -a ! -e /etc/apache2/mods-enabled/php53.load ]; then
-                # Enable the module
-                a2enmod php52 >/dev/null || true
-                reload_apache
-            fi
-        fi
 	update-alternatives \
 		--install /usr/bin/phpize phpize /usr/bin/phpize52 50 \
 		--slave /usr/share/man/man1/phpize.1.gz phpize.1.gz /usr/share/man/man1/phpize52.1.gz

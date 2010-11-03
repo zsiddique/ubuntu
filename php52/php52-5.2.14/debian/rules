@@ -215,14 +215,14 @@ install: build
 	chmod 0750 debian/php52/var/log/php52
 	
 	# install apache2 DSO module
-	mkdir -p debian/php52/`apxs2 -q LIBEXECDIR`
-	cp apache2-build/.libs/libphp5.so debian/php52/`apxs2 -q LIBEXECDIR`/libphp52.so
-	mkdir -p debian/php52/etc/apache2/mods-available
-	cp debian/apache2-php52.load debian/php52/etc/apache2/mods-available/php52.load
-	cp debian/apache2-php52.conf debian/php52/etc/apache2/mods-available/php52.conf
-	mkdir -p debian/php52/etc/php52/apache2
-	cp php.ini-recommended debian/php52/etc/php52/apache2/php.ini
-	sed -i "s#^extension_dir = \"./\"#extension_dir = \"$(EXTENSION_DIR)\"#" debian/php52/etc/php52/apache2/php.ini
+	mkdir -p debian/libapache2-mod-php52/`apxs2 -q LIBEXECDIR`
+	cp apache2-build/.libs/libphp5.so debian/libapache2-mod-php52/`apxs2 -q LIBEXECDIR`/libphp52.so
+	mkdir -p debian/libapache2-mod-php52/etc/apache2/mods-available
+	cp debian/apache2-php52.load debian/libapache2-mod-php52/etc/apache2/mods-available/php52.load
+	cp debian/apache2-php52.conf debian/libapache2-mod-php52/etc/apache2/mods-available/php52.conf
+	mkdir -p debian/php52/etc/libapache2-mod-php52/apache2
+	cp php.ini-recommended debian/php52/etc/libapache2-mod-php52/apache2/php.ini
+	sed -i "s#^extension_dir = \"./\"#extension_dir = \"$(EXTENSION_DIR)\"#" debian/libapache2-mod-php52/etc/php52/apache2/php.ini
 	
 	# install CGI
 	cd cgi-build && $(MAKE) install-sapi INSTALL_ROOT=$(PWD)/debian/php52
