@@ -1,3 +1,9 @@
+php52 (5.2.14~lucid~ppa4) lucid; urgency=low
+
+  * Need to have distribution name in package version
+
+ -- Sascha Kettler <kettler@gmx.net>  Wed, 03 Nov 2010 14:27:33 +0100
+
 php52 (5.2.14~ppa3) lucid; urgency=low
 
   * Improved packging to allow PHP 5.2 and 5.3 to be installed
