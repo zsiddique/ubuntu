@@ -94,7 +94,7 @@ clean:
 	rm -f build-stamp
 	rm -f install-stamp
 	rm -rf pecl-build
-	phpize53 --clean
+	[ -x /usr/bin/phpize53 ] && phpize53 --clean
 	dh_clean
 
 .PHONY: build clean binary-indep binary-arch binary install configure
