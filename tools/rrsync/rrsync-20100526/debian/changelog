@@ -1,0 +1,5 @@
+rrsync (20100526~lucid~ppa1) lucid; urgency=low
+
+  * Initial version after versioning change
+
+ -- Sascha Kettler <kettler@gmx.net>  Wed, 03 Nov 2010 14:58:23 +0100

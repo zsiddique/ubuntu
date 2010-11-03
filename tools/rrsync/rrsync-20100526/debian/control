@@ -1,0 +1,14 @@
+Source: rrsync
+Section: admin
+Priority: extra
+Maintainer: Sascha Kettler <kettler@gmx.net>
+Build-Depends: debhelper (>= 6), perl
+Homepage: https://launchpad.net/~skettler/+archive/tools
+Standards-Version: 3.8.2
+
+Package: rrsync
+Architecture: all
+Depends: ${misc:Depends}, perl, rsync
+Description: Restrict access based on SSH key
+ Rrsync allows you to restrict rsync to a subdirectory declared 
+ in a user's authorized_keys file by using the command option.
