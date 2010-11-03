@@ -28,7 +28,7 @@ reload_apache() {
 case "$1" in
     configure)
         # Upgrading
-        if [ -e /etc/apache2/mods-enabled/php5.load ]; then
+        if [ -e /etc/apache2/mods-enabled/php52.load ]; then
             reload_apache
         fi
     ;;
