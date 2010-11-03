@@ -220,8 +220,8 @@ install: build
 	mkdir -p debian/libapache2-mod-php52/etc/apache2/mods-available
 	cp debian/apache2-php52.load debian/libapache2-mod-php52/etc/apache2/mods-available/php52.load
 	cp debian/apache2-php52.conf debian/libapache2-mod-php52/etc/apache2/mods-available/php52.conf
-	mkdir -p debian/php52/etc/libapache2-mod-php52/apache2
-	cp php.ini-recommended debian/php52/etc/libapache2-mod-php52/apache2/php.ini
+	mkdir -p debian/libapache2-mod-php52/etc/php52/apache2
+	cp php.ini-recommended debian/libapache2-mod-php52/etc/php52/apache2/php.ini
 	sed -i "s#^extension_dir = \"./\"#extension_dir = \"$(EXTENSION_DIR)\"#" debian/libapache2-mod-php52/etc/php52/apache2/php.ini
 	
 	# install CGI
