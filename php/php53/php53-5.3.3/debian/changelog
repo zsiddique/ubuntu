@@ -1,4 +1,4 @@
-php53 (5.3.3~lucid~ppa) lucid; urgency=low
+php53 (5.3.3~lucid~ppa1) lucid; urgency=low
 
   * Initial release after updating version numbering
 
