@@ -28,7 +28,6 @@ build-stamp:
 
 clean:
 	dh_testdir
-	dh_testroot
 	rm -f build-stamp configure-stamp
 
 	# Add here commands to clean up after the build process.
@@ -42,7 +41,6 @@ install: install-stamp
 
 install-stamp: build-stamp
 	dh_testdir
-	dh_testroot
 	dh_clean -k 
 	dh_installdirs
 
