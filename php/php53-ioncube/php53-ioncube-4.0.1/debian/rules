@@ -47,11 +47,11 @@ install: build
 	dh_testroot
 	dh_clean -k
 	dh_installdirs
-	mkdir -p $(EXTENSION_DIR)
-	cp ioncube/ioncube_loader_lin_5.3.so debian/php53-ioncube/
+	mkdir -p debian/php53-ioncube/$(EXTENSION_DIR)
+	cp ioncube/ioncube_loader_lin_5.3.so debian/php53-ioncube/$(EXTENSION_DIR)
 	# Instal configuration
 	mkdir -p debian/php53-ioncube/etc/php53/conf.d
-	cp debian/php5-ioncube.ini debian/php53-ioncube/etc/php53/conf.d/ioncube.ini
+	cp debian/phpini.ioncube debian/php53-ioncube/etc/php53/conf.d/ioncube.ini
 	sed -i 's#@@EXTENSION_DIR@@#$(EXTENSION_DIR)#g' debian/php53-ioncube/etc/php53/conf.d/ioncube.ini
 	
 	touch install-stamp
