@@ -66,8 +66,8 @@ install: build
 	dh_installdirs
 	cd pecl-build && $(MAKE) install INSTALL_IT=/bin/true INSTALL_ROOT=$(PWD)/debian/php52-apc
 	# Instal configuration
-	mkdir -p debian/php52-apc/etc/php5/conf.d
-	cp debian/php5-apc.ini debian/php52-apc/etc/php5/conf.d/apc.ini
+	mkdir -p debian/php52-apc/etc/php52/conf.d
+	cp debian/php5-apc.ini debian/php52-apc/etc/php52/conf.d/apc.ini
 	
 	touch install-stamp
 

@@ -50,9 +50,9 @@ install: build
 	mkdir -p $(EXTENSION_DIR)
 	cp ioncube/ioncube_loader_lin_5.2.so debian/php52-ioncube/
 	# Instal configuration
-	mkdir -p debian/php52-ioncube/etc/php5/conf.d
-	cp debian/php5-ioncube.ini debian/php52-ioncube/etc/php5/conf.d/ioncube.ini
-	sed -i 's#@@EXTENSION_DIR@@#$(EXTENSION_DIR)#g' debian/php52-ioncube/etc/php5/conf.d/ioncube.ini
+	mkdir -p debian/php52-ioncube/etc/php52/conf.d
+	cp debian/php5-ioncube.ini debian/php52-ioncube/etc/php52/conf.d/ioncube.ini
+	sed -i 's#@@EXTENSION_DIR@@#$(EXTENSION_DIR)#g' debian/php52-ioncube/etc/php52/conf.d/ioncube.ini
 	
 	touch install-stamp
 

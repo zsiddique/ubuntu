@@ -1,3 +1,9 @@
+php52-apc (3.1.4~lucid~ppa2) lucid; urgency=low
+
+  * Fixed config file directory location 
+
+ -- Sascha Kettler <kettler@gmx.net>  Thu, 04 Nov 2010 10:54:10 +0100
+
 php52-apc (3.1.4~lucid~ppa1) lucid; urgency=low
 
   * Initial release after versioning change
