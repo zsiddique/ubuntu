@@ -1,3 +1,9 @@
+php52-apc (3.1.4~lucid~ppa3) lucid; urgency=low
+
+  * apc.shm_size now uses M/G suffixes
+
+ -- Sascha Kettler <kettler@gmx.net>  Thu, 04 Nov 2010 13:08:53 +0100
+
 php52-apc (3.1.4~lucid~ppa2) lucid; urgency=low
 
   * Fixed config file directory location 

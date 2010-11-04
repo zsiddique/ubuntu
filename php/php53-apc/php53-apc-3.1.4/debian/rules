@@ -67,7 +67,7 @@ install: build
 	cd pecl-build && $(MAKE) install INSTALL_IT=/bin/true INSTALL_ROOT=$(PWD)/debian/php53-apc
 	# Instal configuration
 	mkdir -p debian/php53-apc/etc/php53/conf.d
-	cp debian/php5-apc.ini debian/php53-apc/etc/php53/conf.d/apc.ini
+	cp debian/phpini.apc debian/php53-apc/etc/php53/conf.d/apc.ini
 	
 	touch install-stamp
 
