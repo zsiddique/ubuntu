@@ -1,3 +1,9 @@
+php53-apc (3.1.4~lucid~ppa4) lucid; urgency=low
+
+  * Do not compile PHP extensions using hardening-wrapper
+
+ -- root <root@ubuntu.aoemedia.lan>  Thu, 04 Nov 2010 13:38:32 +0100
+
 php53-apc (3.1.4~lucid~ppa3) lucid; urgency=low
 
   * apc.shm_size now uses M/G suffixes

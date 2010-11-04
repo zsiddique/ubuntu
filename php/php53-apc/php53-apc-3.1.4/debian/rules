@@ -22,12 +22,6 @@ PHP5_BUILD_GNU_TYPE	= $(subst gnulp,gnu,$(DEB_BUILD_GNU_TYPE))
 PHP5_HOST_GNU_TYPE	:= $(shell echo $(PHP5_HOST_GNU_TYPE) | sed 's/-gnu$$//')
 PHP5_BUILD_GNU_TYPE	:= $(shell echo $(PHP5_BUILD_GNU_TYPE) | sed 's/-gnu$$//')
 
-# enable the hardening wrapper
-DEB_BUILD_HARDENING = 1
-# but disable PIE
-DEB_BUILD_HARDENING_PIE = 0
-export DEB_BUILD_HARDENING DEB_BUILD_HARDENING_PIE
-
 CFLAGS = -O2 -Wall -fsigned-char -fno-strict-aliasing
 # LFS support
 ifneq (yes,$(PHP5_COMPAT))
