@@ -1,1 +1,1 @@
-extension = cairowrapper.so
+extension = cairo_wrapper.so
