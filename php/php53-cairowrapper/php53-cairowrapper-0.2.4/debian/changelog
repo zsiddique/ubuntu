@@ -1,0 +1,5 @@
+php53-cairowrapper (0.2.4~lucid~ppa1) lucid; urgency=low
+
+  * Initial release
+
+ -- Sascha Kettler <kettler@gmx.net>  Tue, 09 Nov 2010 15:27:23 +0100

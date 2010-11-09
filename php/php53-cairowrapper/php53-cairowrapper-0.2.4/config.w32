@@ -1,0 +1,9 @@
+// $ Id: $
+// vim:ft=javascript
+
+ARG_ENABLE('cairo_wrapper' , 'Cairo Wrapper Extension', 'no');
+if (PHP_CAIRO_WRAPPER == "yes") {
+  EXTENSION("cairo_wrapper", "cairo_wrapper.c");
+  AC_DEFINE("HAVE_CAIRO_WRAPPER", 1, "cairo_wrapper support");
+  AC_DEFINE("_CAIROINT_H_", 1, "do not include BC definitions")
+}

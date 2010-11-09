@@ -1,0 +1,15 @@
+Source: php53-cairowrapper
+Section: php
+Priority: optional
+Maintainer: Sascha Kettler <kettler@gmx.net>
+Build-Depends: php53, php53-dev, shtool, chrpath, debhelper (>= 5), libcairo2-dev
+Standards-Version: 3.8.3
+Homepage: http://www.php.net/
+
+Package: php53-cairowrapper
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, php53
+Description: Cairo Wrapper Extension
+ A cairo API wrapper. For details about cairo see http://cairographics.org/
+ .
+ Homepage: http://pecl.php.net/package/cairo_wrapper
