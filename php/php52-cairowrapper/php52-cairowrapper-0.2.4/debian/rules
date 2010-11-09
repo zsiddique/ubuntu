@@ -71,7 +71,7 @@ binary-indep:
 binary-arch: build install
 	dh_testdir
 	dh_testroot
-	dh_installchangelogs CHANGELOG
+	dh_installchangelogs
 	dh_strip -s
 	dh_link -s
 	dh_compress -s -X.ini
