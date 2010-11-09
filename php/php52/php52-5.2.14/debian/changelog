@@ -1,3 +1,9 @@
+php52 (5.2.14~lucid~ppa7) lucid; urgency=low
+
+  * Updated debian/control to allow installation of php52 and php53 
+
+ -- root <root@ubuntu.aoemedia.lan>  Tue, 09 Nov 2010 16:16:15 +0100
+
 php52 (5.2.14~lucid~ppa6) lucid; urgency=low
 
   * Added PHP mail_log and originating script patch

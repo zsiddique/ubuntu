@@ -21,7 +21,6 @@ Depends: ${shlibs:Depends}, ${misc:Depends}, mime-support, apache2-mpm-prefork,
  apache2.2-common, libmagic1, ucf
 Conflicts: php5, php5-cli, php5-cgi, php5-common
 Replaces: php5, php5-cli, php5-cgi, php5-common
-Provides: php5, php5-cli, php5-cgi, php5-common
 Description: server-side, HTML-embedded scripting language
  PHP5 is an HTML-embedded scripting language. Much of its syntax is borrowed
  from C, Java and Perl with a couple of unique PHP-specific features thrown
@@ -36,7 +35,6 @@ Depends: ${shlibs:Depends}, ${misc:Depends}, php53, apache2-mpm-prefork,
  apache2.2-common
 Conflicts: libapache2-mod-php5, libapache2-mod-php52
 Replaces: libapache2-mod-php5
-Provides: libapache2-mod-php5
 Description: server-side, HTML-embedded scripting language (Apache 2 module)
  This package provides the PHP5 module for the Apache 2 webserver (as
  found in the apache2-mpm-prefork package).  Please note that this package
@@ -54,7 +52,6 @@ Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}, php53, autoconf, autoconf2.13, 
  automake, libssl-dev, libtool, shtool, m4, build-essential, libpcre3-dev
 Replaces: php5-dev
-Provides: php5-dev
 Description: Files for PHP5 module development
  This package provides the files from the PHP5 source needed for compiling
  additional modules.
@@ -70,6 +67,7 @@ Package: php53-pear
 Architecture: all
 Depends: php53
 Conflicts: php52-pear
+Replaces: php-pear
 Provides: php-pear
 Description: PEAR - PHP Extension and Application Repository
  This package contains the base PEAR classes for PHP, as well as the PEAR
