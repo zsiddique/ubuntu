@@ -1,0 +1,9 @@
+zend_extension = @@EXTENSION_DIR@@/xdebug.so
+
+[xdebug]
+[xdebug]
+xdebug.default_enable = 0
+xdebug.profiler_append = 0
+xdebug.profiler_enable = 0
+xdebug.profiler_enable_trigger = 0
+xdebug.max_nesting_level = 2000
