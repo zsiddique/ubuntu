@@ -59,7 +59,7 @@ install: build
 	dh_clean -k
 	dh_installdirs
 	cd pecl-build && $(MAKE) install INSTALL_IT=/bin/true INSTALL_ROOT=$(PWD)/debian/php53-apc
-	# Instal configuration
+	# Install configuration
 	mkdir -p debian/php53-apc/etc/php53/conf.d
 	cp debian/phpini.apc debian/php53-apc/etc/php53/conf.d/apc.ini
 	
@@ -72,10 +72,11 @@ binary-indep:
 binary-arch: build install
 	dh_testdir
 	dh_testroot
-	dh_installchangelogs CHANGELOG
+	dh_installchangelogs CHANGELOGa
+	dh_installdocs
 	dh_strip -s
 	dh_link -s
-	dh_compress -s -X.ini
+	dh_compress -s -X.ini -X.php
 	dh_installdeb -s
 	dh_shlibdeps -s
 	dh_gencontrol -s
