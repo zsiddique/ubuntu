@@ -72,6 +72,7 @@ binary-arch: build install
 	dh_testdir
 	dh_testroot
 	dh_installchangelogs
+	dh_installdocs
 	dh_strip -s
 	dh_link -s
 	dh_compress -s -X.ini

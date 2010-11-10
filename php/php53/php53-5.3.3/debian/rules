@@ -265,6 +265,7 @@ binary-arch: build install
 	dh_testroot
 	dh_installcron --name=php53
 	dh_installchangelogs NEWS
+	dh_installdocs
 	dh_strip -s
 	dh_link -s
 	dh_compress -s -X.ini
