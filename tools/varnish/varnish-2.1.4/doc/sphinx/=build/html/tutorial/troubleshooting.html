@@ -1,0 +1,174 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Troubleshooting Varnish &mdash; Varnish v-trunk documentation</title>
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '-trunk',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Varnish v-trunk documentation" href="../index.html" />
+    <link rel="up" title="Using Varnish" href="index.html" />
+    <link rel="next" title="The Varnish Reference Manual" href="../reference/index.html" />
+    <link rel="prev" title="Advanced topics" href="advanced_topics.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../reference/index.html" title="The Varnish Reference Manual"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="advanced_topics.html" title="Advanced topics"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">Varnish v-trunk documentation</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Using Varnish</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="troubleshooting-varnish">
+<h1>Troubleshooting Varnish<a class="headerlink" href="#troubleshooting-varnish" title="Permalink to this headline">¶</a></h1>
+<p>Sometimes Varnish misbehaves. In order for you to understand whats
+going on there are a couple of places you can check. varnishlog,
+/var/log/syslog, /var/log/messages are all places where varnish might
+leave clues of whats going on.</p>
+<div class="section" id="when-varnish-won-t-start">
+<h2>When Varnish won&#8217;t start<a class="headerlink" href="#when-varnish-won-t-start" title="Permalink to this headline">¶</a></h2>
+<p>Sometimes Varnish wont start. There is a pletphora of reasons why
+Varnish wont start on your machine. We&#8217;ve seen everything from wrong
+permissions on /dev/null to other processses blocking the ports.</p>
+<p>Starting Varnish in debug mode to see what is going on.</p>
+<p>Try to start varnish by:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># varnishd -f /usr/local/etc/varnish/default.vcl -s malloc,1G -T 127.0.0.1:2000  -a 0.0.0.0:8080 -d</span>
+</pre></div>
+</div>
+<p>Notice the -d option. It will give you some more information on what
+is going on. Let us see how Varnish will react to something else
+listening on its port.:</p>
+<div class="highlight-python"><pre># varnishd -n foo -f /usr/local/etc/varnish/default.vcl -s malloc,1G -T 127.0.0.1:2000  -a 0.0.0.0:8080 -d
+storage_malloc: max size 1024 MB.
+Using old SHMFILE
+Platform: Linux,2.6.32-21-generic,i686,-smalloc,-hcritbit
+200 193
+-----------------------------
+Varnish HTTP accelerator CLI.
+-----------------------------
+Type 'help' for command list.
+Type 'quit' to close CLI session.
+Type 'start' to launch worker process.</pre>
+</div>
+<p>Now Varnish is running. Only the master process is running, in debug
+mode the cache does not start. Now you&#8217;re on the console. You can
+instruct the master process to start the cache by issuing &#8220;start&#8221;.:</p>
+<div class="highlight-python"><pre>start
+bind(): Address already in use
+300 22
+Could not open sockets</pre>
+</div>
+<p>And here we have our problem. Something else is bound to the HTTP port
+of Varnish. If this doesn&#8217;t help try strace or truss or come find us
+on IRC.</p>
+</div>
+<div class="section" id="varnish-is-crashing">
+<h2>Varnish is crashing<a class="headerlink" href="#varnish-is-crashing" title="Permalink to this headline">¶</a></h2>
+<p>When varnish goes bust.</p>
+</div>
+<div class="section" id="varnish-gives-me-guru-meditation">
+<h2>Varnish gives me Guru meditation<a class="headerlink" href="#varnish-gives-me-guru-meditation" title="Permalink to this headline">¶</a></h2>
+<p>First find the relevant log entries in varnishlog. That will probably
+give you a clue.</p>
+</div>
+<div class="section" id="varnish-doesn-t-cache">
+<h2>Varnish doesn&#8217;t cache<a class="headerlink" href="#varnish-doesn-t-cache" title="Permalink to this headline">¶</a></h2>
+<p>See <a class="reference external" href="increasing_your_hitrate.html#tutorial-increasing-your-hitrate"><em>Achieving a high hitrate</em></a>.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="../index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference external" href="#">Troubleshooting Varnish</a><ul>
+<li><a class="reference external" href="#when-varnish-won-t-start">When Varnish won&#8217;t start</a></li>
+<li><a class="reference external" href="#varnish-is-crashing">Varnish is crashing</a></li>
+<li><a class="reference external" href="#varnish-gives-me-guru-meditation">Varnish gives me Guru meditation</a></li>
+<li><a class="reference external" href="#varnish-doesn-t-cache">Varnish doesn&#8217;t cache</a></li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="advanced_topics.html"
+                                  title="previous chapter">Advanced topics</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="../reference/index.html"
+                                  title="next chapter">The Varnish Reference Manual</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../_sources/tutorial/troubleshooting.txt"
+                     rel="nofollow">Show Source</a></li>
+            </ul>
+          <div id="searchbox" style="display: none">
+            <h3>Quick search</h3>
+              <form class="search" action="../search.html" method="get">
+                <input type="text" name="q" size="18" />
+                <input type="submit" value="Go" />
+                <input type="hidden" name="check_keywords" value="yes" />
+                <input type="hidden" name="area" value="default" />
+              </form>
+              <p class="searchtip" style="font-size: 90%">
+              Enter search terms or a module, class or function name.
+              </p>
+          </div>
+          <script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../reference/index.html" title="The Varnish Reference Manual"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="advanced_topics.html" title="Advanced topics"
+             >previous</a> |</li>
+        <li><a href="../index.html">Varnish v-trunk documentation</a> &raquo;</li>
+          <li><a href="index.html" >Using Varnish</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2010, Varnish Project.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.6.6.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,252 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>varnishncsa &mdash; Varnish v-trunk documentation</title>
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '-trunk',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Varnish v-trunk documentation" href="../index.html" />
+    <link rel="up" title="The Varnish Reference Manual" href="index.html" />
+    <link rel="next" title="varnishreplay" href="varnishreplay.html" />
+    <link rel="prev" title="varnishlog" href="varnishlog.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="varnishreplay.html" title="varnishreplay"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="varnishlog.html" title="varnishlog"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">Varnish v-trunk documentation</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">The Varnish Reference Manual</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="varnishncsa">
+<h1>varnishncsa<a class="headerlink" href="#varnishncsa" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="display-varnish-logs-in-apache-ncsa-combined-log-format">
+<h2>Display Varnish logs in Apache / NCSA combined log format<a class="headerlink" href="#display-varnish-logs-in-apache-ncsa-combined-log-format" title="Permalink to this headline">¶</a></h2>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Author:</th><td class="field-body">Dag-Erling Smørgrav</td>
+</tr>
+<tr class="field"><th class="field-name">Date:</th><td class="field-body">2010-05-31</td>
+</tr>
+<tr class="field"><th class="field-name">Version:</th><td class="field-body">1.0</td>
+</tr>
+<tr class="field"><th class="field-name">Manual section:</th><td class="field-body">1</td>
+</tr>
+</tbody>
+</table>
+<div class="section" id="synopsis">
+<h3>SYNOPSIS<a class="headerlink" href="#synopsis" title="Permalink to this headline">¶</a></h3>
+<p>varnishncsa [-a] [-b] [-C] [-c] [-D] [-d] [-f] [-I regex]
+[-i tag] [-n varnish_name] [-P file] [-r file] [-V]
+[-w file] [-X regex] [-x tag]</p>
+</div>
+<div class="section" id="description">
+<h3>DESCRIPTION<a class="headerlink" href="#description" title="Permalink to this headline">¶</a></h3>
+<p>The varnishncsa utility reads varnishd(1) shared memory logs and
+presents them in the Apache / NCSA &#8220;combined&#8221; log format.</p>
+<p>The following options are available:</p>
+<table class="docutils option-list" frame="void" rules="none">
+<col class="option" />
+<col class="description" />
+<tbody valign="top">
+<tr><td class="option-group">
+<kbd><span class="option">-a</span></kbd></td>
+<td>When writing to a file, append to it rather than overwrite it.</td></tr>
+<tr><td class="option-group">
+<kbd><span class="option">-b</span></kbd></td>
+<td>Include log entries which result from communication with a
+backend server.  If neither -b nor -c is
+specified, varnishncsa acts as if they both were.</td></tr>
+<tr><td class="option-group">
+<kbd><span class="option">-C</span></kbd></td>
+<td>Ignore case when matching regular expressions.</td></tr>
+<tr><td class="option-group">
+<kbd><span class="option">-c</span></kbd></td>
+<td>Include log entries which result from communication
+with a client.  If neither -b nor -c is specified,
+varnishncsa acts as if they both were.</td></tr>
+<tr><td class="option-group">
+<kbd><span class="option">-D</span></kbd></td>
+<td>Daemonize.</td></tr>
+<tr><td class="option-group">
+<kbd><span class="option">-d</span></kbd></td>
+<td>Process old log entries on startup.  Normally, varnishncsa
+will only process entries which are written to the log
+after it starts.</td></tr>
+<tr><td class="option-group">
+<kbd><span class="option">-f</span></kbd></td>
+<td>Prefer the X-Forwarded-For HTTP header over client.ip in
+the log output.</td></tr>
+<tr><td class="option-group">
+<kbd><span class="option">-I <var>regex</var></span></kbd></td>
+<td>Include log entries which match the specified regular
+expression.  If neither -I nor -i is specified,
+all log entries are included.</td></tr>
+<tr><td class="option-group">
+<kbd><span class="option">-i <var>tag</var></span></kbd></td>
+<td>Include log entries with the specified tag.  If neither -I nor
+-i is specified, all log entries are included.</td></tr>
+<tr><td class="option-group">
+<kbd><span class="option">-n</span></kbd></td>
+<td>Specifies the name of the varnishd instance to get logs
+from.  If -n is not specified, the host name is used.</td></tr>
+<tr><td class="option-group">
+<kbd><span class="option">-P <var>file</var></span></kbd></td>
+<td>Write the process&#8217;s PID to the specified file.</td></tr>
+<tr><td class="option-group">
+<kbd><span class="option">-r <var>file</var></span></kbd></td>
+<td>Read log entries from file instead of shared memory.</td></tr>
+<tr><td class="option-group">
+<kbd><span class="option">-V</span></kbd></td>
+<td>Display the version number and exit.</td></tr>
+<tr><td class="option-group">
+<kbd><span class="option">-w <var>file</var></span></kbd></td>
+<td><p class="first">Write log entries to file instead of displaying them.
+The file will be overwritten unless the -a
+option was specified.</p>
+<p class="last">If varnishncsa receives a SIGHUP while writing to a file,
+it will reopen the file, allowing the old one to be
+rotated away.</p>
+</td></tr>
+<tr><td class="option-group">
+<kbd><span class="option">-X <var>regex</var></span></kbd></td>
+<td>Exclude log entries which match the specified
+regular expression.</td></tr>
+<tr><td class="option-group">
+<kbd><span class="option">-x <var>tag</var></span></kbd></td>
+<td>Exclude log entries with the specified tag.</td></tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="see-also">
+<h3>SEE ALSO<a class="headerlink" href="#see-also" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>varnishd(1)</li>
+<li>varnishhist(1)</li>
+<li>varnishlog(1)</li>
+<li>varnishstat(1)</li>
+<li>varnishtop(1)</li>
+</ul>
+</div>
+<div class="section" id="history">
+<h3>HISTORY<a class="headerlink" href="#history" title="Permalink to this headline">¶</a></h3>
+<p>The varnishncsa utility was developed by Poul-Henning Kamp in
+cooperation with Verdens Gang AS and Linpro AS.  This manual page was
+written by Dag-Erling Smørgrav ⟨des&#64;des.no⟩.</p>
+</div>
+<div class="section" id="copyright">
+<h3>COPYRIGHT<a class="headerlink" href="#copyright" title="Permalink to this headline">¶</a></h3>
+<p>This document is licensed under the same licence as Varnish
+itself. See LICENCE for details.</p>
+<ul class="simple">
+<li>Copyright (c) 2006 Verdens Gang AS</li>
+<li>Copyright (c) 2006-2008 Linpro AS</li>
+<li>Copyright (c) 2008-2010 Redpill Linpro AS</li>
+<li>Copyright (c) 2010 Varnish Software AS</li>
+</ul>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="../index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference external" href="#">varnishncsa</a><ul>
+<li><a class="reference external" href="#display-varnish-logs-in-apache-ncsa-combined-log-format">Display Varnish logs in Apache / NCSA combined log format</a><ul>
+<li><a class="reference external" href="#synopsis">SYNOPSIS</a></li>
+<li><a class="reference external" href="#description">DESCRIPTION</a></li>
+<li><a class="reference external" href="#see-also">SEE ALSO</a></li>
+<li><a class="reference external" href="#history">HISTORY</a></li>
+<li><a class="reference external" href="#copyright">COPYRIGHT</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="varnishlog.html"
+                                  title="previous chapter">varnishlog</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="varnishreplay.html"
+                                  title="next chapter">varnishreplay</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../_sources/reference/varnishncsa.txt"
+                     rel="nofollow">Show Source</a></li>
+            </ul>
+          <div id="searchbox" style="display: none">
+            <h3>Quick search</h3>
+              <form class="search" action="../search.html" method="get">
+                <input type="text" name="q" size="18" />
+                <input type="submit" value="Go" />
+                <input type="hidden" name="check_keywords" value="yes" />
+                <input type="hidden" name="area" value="default" />
+              </form>
+              <p class="searchtip" style="font-size: 90%">
+              Enter search terms or a module, class or function name.
+              </p>
+          </div>
+          <script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="varnishreplay.html" title="varnishreplay"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="varnishlog.html" title="varnishlog"
+             >previous</a> |</li>
+        <li><a href="../index.html">Varnish v-trunk documentation</a> &raquo;</li>
+          <li><a href="index.html" >The Varnish Reference Manual</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2010, Varnish Project.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.6.6.
+    </div>
+  </body>
+</html>

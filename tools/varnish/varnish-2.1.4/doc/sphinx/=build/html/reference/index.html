@@ -1,0 +1,269 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>The Varnish Reference Manual &mdash; Varnish v-trunk documentation</title>
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '-trunk',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Varnish v-trunk documentation" href="../index.html" />
+    <link rel="next" title="VCL" href="vcl.html" />
+    <link rel="prev" title="Troubleshooting Varnish" href="../tutorial/troubleshooting.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="vcl.html" title="VCL"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../tutorial/troubleshooting.html" title="Troubleshooting Varnish"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">Varnish v-trunk documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="the-varnish-reference-manual">
+<h1>The Varnish Reference Manual<a class="headerlink" href="#the-varnish-reference-manual" title="Permalink to this headline">¶</a></h1>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="vcl.html">VCL</a><ul>
+<li class="toctree-l2"><a class="reference external" href="vcl.html#varnish-configuration-language">Varnish Configuration Language</a><ul>
+<li class="toctree-l3"><a class="reference external" href="vcl.html#description">DESCRIPTION</a></li>
+<li class="toctree-l3"><a class="reference external" href="vcl.html#syntax">SYNTAX</a><ul>
+<li class="toctree-l4"><a class="reference external" href="vcl.html#backend-declarations">Backend declarations</a></li>
+<li class="toctree-l4"><a class="reference external" href="vcl.html#directors">Directors</a><ul>
+<li class="toctree-l5"><a class="reference external" href="vcl.html#the-random-director">The random director</a></li>
+<li class="toctree-l5"><a class="reference external" href="vcl.html#the-round-robin-director">The round-robin director</a></li>
+<li class="toctree-l5"><a class="reference external" href="vcl.html#the-client-director">The client director</a></li>
+<li class="toctree-l5"><a class="reference external" href="vcl.html#the-hash-director">The hash director</a></li>
+<li class="toctree-l5"><a class="reference external" href="vcl.html#the-dns-director">The DNS director</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference external" href="vcl.html#backend-probes">Backend probes</a></li>
+<li class="toctree-l4"><a class="reference external" href="vcl.html#acls">ACLs</a></li>
+<li class="toctree-l4"><a class="reference external" href="vcl.html#grace">Grace</a></li>
+<li class="toctree-l4"><a class="reference external" href="vcl.html#functions">Functions</a><ul>
+<li class="toctree-l5"><a class="reference external" href="vcl.html#subroutines">Subroutines</a></li>
+<li class="toctree-l5"><a class="reference external" href="vcl.html#multiple-subroutines">Multiple subroutines</a></li>
+<li class="toctree-l5"><a class="reference external" href="vcl.html#variables">Variables</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference external" href="vcl.html#examples">EXAMPLES</a></li>
+<li class="toctree-l3"><a class="reference external" href="vcl.html#see-also">SEE ALSO</a></li>
+<li class="toctree-l3"><a class="reference external" href="vcl.html#history">HISTORY</a></li>
+<li class="toctree-l3"><a class="reference external" href="vcl.html#copyright">COPYRIGHT</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference external" href="varnishadm.html">varnishadm</a><ul>
+<li class="toctree-l2"><a class="reference external" href="varnishadm.html#control-a-running-varnish-instance">Control a running varnish instance</a><ul>
+<li class="toctree-l3"><a class="reference external" href="varnishadm.html#synopsis">SYNOPSIS</a></li>
+<li class="toctree-l3"><a class="reference external" href="varnishadm.html#description">DESCRIPTION</a></li>
+<li class="toctree-l3"><a class="reference external" href="varnishadm.html#options">OPTIONS</a></li>
+<li class="toctree-l3"><a class="reference external" href="varnishadm.html#exit-status">EXIT STATUS</a></li>
+<li class="toctree-l3"><a class="reference external" href="varnishadm.html#examples">EXAMPLES</a></li>
+<li class="toctree-l3"><a class="reference external" href="varnishadm.html#see-also">SEE ALSO</a></li>
+<li class="toctree-l3"><a class="reference external" href="varnishadm.html#history">HISTORY</a></li>
+<li class="toctree-l3"><a class="reference external" href="varnishadm.html#copyright">COPYRIGHT</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference external" href="varnishd.html">varnishd</a><ul>
+<li class="toctree-l2"><a class="reference external" href="varnishd.html#http-accelerator-daemon">HTTP accelerator daemon</a><ul>
+<li class="toctree-l3"><a class="reference external" href="varnishd.html#synopsis">SYNOPSIS</a></li>
+<li class="toctree-l3"><a class="reference external" href="varnishd.html#description">DESCRIPTION</a></li>
+<li class="toctree-l3"><a class="reference external" href="varnishd.html#options">OPTIONS</a><ul>
+<li class="toctree-l4"><a class="reference external" href="varnishd.html#hash-algorithms">Hash Algorithms</a></li>
+<li class="toctree-l4"><a class="reference external" href="varnishd.html#storage-types">Storage Types</a></li>
+<li class="toctree-l4"><a class="reference external" href="varnishd.html#management-interface">Management Interface</a></li>
+<li class="toctree-l4"><a class="reference external" href="varnishd.html#run-time-parameters">Run-Time Parameters</a></li>
+<li class="toctree-l4"><a class="reference external" href="varnishd.html#purge-expressions">Purge expressions</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference external" href="varnishd.html#see-also">SEE ALSO</a></li>
+<li class="toctree-l3"><a class="reference external" href="varnishd.html#history">HISTORY</a></li>
+<li class="toctree-l3"><a class="reference external" href="varnishd.html#copyright">COPYRIGHT</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference external" href="varnishhist.html">varnishhist</a><ul>
+<li class="toctree-l2"><a class="reference external" href="varnishhist.html#varnish-request-histogram">Varnish request histogram</a><ul>
+<li class="toctree-l3"><a class="reference external" href="varnishhist.html#synopsis">SYNOPSIS</a></li>
+<li class="toctree-l3"><a class="reference external" href="varnishhist.html#description">DESCRIPTION</a></li>
+<li class="toctree-l3"><a class="reference external" href="varnishhist.html#see-also">SEE ALSO</a></li>
+<li class="toctree-l3"><a class="reference external" href="varnishhist.html#history">HISTORY</a></li>
+<li class="toctree-l3"><a class="reference external" href="varnishhist.html#copyright">COPYRIGHT</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference external" href="varnishlog.html">varnishlog</a><ul>
+<li class="toctree-l2"><a class="reference external" href="varnishlog.html#display-varnish-logs">Display Varnish logs</a><ul>
+<li class="toctree-l3"><a class="reference external" href="varnishlog.html#synopsis">SYNOPSIS</a></li>
+<li class="toctree-l3"><a class="reference external" href="varnishlog.html#description">DESCRIPTION</a></li>
+<li class="toctree-l3"><a class="reference external" href="varnishlog.html#tags">TAGS</a></li>
+<li class="toctree-l3"><a class="reference external" href="varnishlog.html#examples">EXAMPLES</a></li>
+<li class="toctree-l3"><a class="reference external" href="varnishlog.html#see-also">SEE ALSO</a></li>
+<li class="toctree-l3"><a class="reference external" href="varnishlog.html#history">HISTORY</a></li>
+<li class="toctree-l3"><a class="reference external" href="varnishlog.html#copyright">COPYRIGHT</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference external" href="varnishncsa.html">varnishncsa</a><ul>
+<li class="toctree-l2"><a class="reference external" href="varnishncsa.html#display-varnish-logs-in-apache-ncsa-combined-log-format">Display Varnish logs in Apache / NCSA combined log format</a><ul>
+<li class="toctree-l3"><a class="reference external" href="varnishncsa.html#synopsis">SYNOPSIS</a></li>
+<li class="toctree-l3"><a class="reference external" href="varnishncsa.html#description">DESCRIPTION</a></li>
+<li class="toctree-l3"><a class="reference external" href="varnishncsa.html#see-also">SEE ALSO</a></li>
+<li class="toctree-l3"><a class="reference external" href="varnishncsa.html#history">HISTORY</a></li>
+<li class="toctree-l3"><a class="reference external" href="varnishncsa.html#copyright">COPYRIGHT</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference external" href="varnishreplay.html">varnishreplay</a><ul>
+<li class="toctree-l2"><a class="reference external" href="varnishreplay.html#http-traffic-replay-tool">HTTP traffic replay tool</a><ul>
+<li class="toctree-l3"><a class="reference external" href="varnishreplay.html#synopsis">SYNOPSIS</a></li>
+<li class="toctree-l3"><a class="reference external" href="varnishreplay.html#description">DESCRIPTION</a></li>
+<li class="toctree-l3"><a class="reference external" href="varnishreplay.html#see-also">SEE ALSO</a></li>
+<li class="toctree-l3"><a class="reference external" href="varnishreplay.html#history">HISTORY</a></li>
+<li class="toctree-l3"><a class="reference external" href="varnishreplay.html#copyright">COPYRIGHT</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference external" href="varnishsizes.html">varnishsizes</a><ul>
+<li class="toctree-l2"><a class="reference external" href="varnishsizes.html#varnish-object-size-request-histogram">Varnish object size request histogram</a><ul>
+<li class="toctree-l3"><a class="reference external" href="varnishsizes.html#synopsis">SYNOPSIS</a></li>
+<li class="toctree-l3"><a class="reference external" href="varnishsizes.html#description">DESCRIPTION</a></li>
+<li class="toctree-l3"><a class="reference external" href="varnishsizes.html#see-also">SEE ALSO</a></li>
+<li class="toctree-l3"><a class="reference external" href="varnishsizes.html#history">HISTORY</a></li>
+<li class="toctree-l3"><a class="reference external" href="varnishsizes.html#copyright">COPYRIGHT</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference external" href="varnishstat.html">varnishstat</a><ul>
+<li class="toctree-l2"><a class="reference external" href="varnishstat.html#http-accelerator-statistics">HTTP accelerator statistics</a><ul>
+<li class="toctree-l3"><a class="reference external" href="varnishstat.html#synopsis">SYNOPSIS</a></li>
+<li class="toctree-l3"><a class="reference external" href="varnishstat.html#description">DESCRIPTION</a></li>
+<li class="toctree-l3"><a class="reference external" href="varnishstat.html#see-also">SEE ALSO</a></li>
+<li class="toctree-l3"><a class="reference external" href="varnishstat.html#history">HISTORY</a></li>
+<li class="toctree-l3"><a class="reference external" href="varnishstat.html#copyright">COPYRIGHT</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference external" href="varnishtest.html">varnishtest</a><ul>
+<li class="toctree-l2"><a class="reference external" href="varnishtest.html#test-program-for-varnish">Test program for Varnish</a><ul>
+<li class="toctree-l3"><a class="reference external" href="varnishtest.html#synopsis">SYNOPSIS</a></li>
+<li class="toctree-l3"><a class="reference external" href="varnishtest.html#description">DESCRIPTION</a></li>
+<li class="toctree-l3"><a class="reference external" href="varnishtest.html#scripts">SCRIPTS</a><ul>
+<li class="toctree-l4"><a class="reference external" href="varnishtest.html#example-script">Example script</a></li>
+<li class="toctree-l4"><a class="reference external" href="varnishtest.html#example-script-output">Example script output</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference external" href="varnishtest.html#see-also">SEE ALSO</a></li>
+<li class="toctree-l3"><a class="reference external" href="varnishtest.html#history">HISTORY</a></li>
+<li class="toctree-l3"><a class="reference external" href="varnishtest.html#copyright">COPYRIGHT</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference external" href="varnishtop.html">varnishtop</a><ul>
+<li class="toctree-l2"><a class="reference external" href="varnishtop.html#varnish-log-entry-ranking">Varnish log entry ranking</a><ul>
+<li class="toctree-l3"><a class="reference external" href="varnishtop.html#synopsis">SYNOPSIS</a></li>
+<li class="toctree-l3"><a class="reference external" href="varnishtop.html#description">DESCRIPTION</a></li>
+<li class="toctree-l3"><a class="reference external" href="varnishtop.html#examples">EXAMPLES</a></li>
+<li class="toctree-l3"><a class="reference external" href="varnishtop.html#see-also">SEE ALSO</a></li>
+<li class="toctree-l3"><a class="reference external" href="varnishtop.html#history">HISTORY</a></li>
+<li class="toctree-l3"><a class="reference external" href="varnishtop.html#copyright">COPYRIGHT</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="../tutorial/troubleshooting.html"
+                                  title="previous chapter">Troubleshooting Varnish</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="vcl.html"
+                                  title="next chapter">VCL</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../_sources/reference/index.txt"
+                     rel="nofollow">Show Source</a></li>
+            </ul>
+          <div id="searchbox" style="display: none">
+            <h3>Quick search</h3>
+              <form class="search" action="../search.html" method="get">
+                <input type="text" name="q" size="18" />
+                <input type="submit" value="Go" />
+                <input type="hidden" name="check_keywords" value="yes" />
+                <input type="hidden" name="area" value="default" />
+              </form>
+              <p class="searchtip" style="font-size: 90%">
+              Enter search terms or a module, class or function name.
+              </p>
+          </div>
+          <script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="vcl.html" title="VCL"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../tutorial/troubleshooting.html" title="Troubleshooting Varnish"
+             >previous</a> |</li>
+        <li><a href="../index.html">Varnish v-trunk documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2010, Varnish Project.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.6.6.
+    </div>
+  </body>
+</html>

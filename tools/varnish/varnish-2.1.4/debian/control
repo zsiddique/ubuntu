@@ -1,0 +1,29 @@
+Source: varnish
+Section: web
+Priority: optional
+Maintainer: Sascha Kettler <kettler@gmx.net>
+Build-Depends: autoconf, autoconf2.13, automake1.9, libtool,
+ libncurses-dev, xsltproc, groff-base, libpcre3-ev, pkg-config,
+ tcl8.5 | tclsh
+Standards-Version: 3.8.3
+Homepage: http://varnish-cache.org/
+
+Package: varnish
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, adduser, gcc ( >= 3.3), 
+ libc6-dev | libc6.1-dev | libc-dev
+Replaces: libvarnish1, libvarnish-dev
+Description: a state-of-the-art, high-performance HTTP accelerator
+ Varnish is a state-of-the-art, high-performance HTTP accelerator.  It uses the
+ advanced features in Linux 2.6, FreeBSD 6/7 and Solaris 10 to achieve its high
+ performance.
+ .
+ Some of the features include:
+  * A modern design
+  * VCL - a very flexible configuration language
+  * Load balancing with health checking of backends
+  * Partial support for ESI - Edge Side Includes
+  * URL rewriting
+  * Graceful handling of "dead" backends
+ .
+ Homepage: http://varnish-cache.org/

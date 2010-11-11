@@ -1,0 +1,5 @@
+varnish (5.2.14~lucid~ppa1) lucid; urgency=low
+
+  * Initial release
+
+ -- Sascha Kettler <kettler@gmx.net>  Thu, 11 Nov 2010 15:41:28 +0100
