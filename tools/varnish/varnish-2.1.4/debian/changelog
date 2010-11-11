@@ -1,3 +1,9 @@
+varnish (2.1.4~lucid~ppa4) lucid; urgency=low
+
+  * Remove default EXTRA_DAEMON_OPTS from config file 
+
+ -- Sascha Kettler <kettler@gmx.net>  Thu, 11 Nov 2010 21:03:37 +0100
+
 varnish (2.1.4~lucid~ppa3) lucid; urgency=low
 
   * Added missing debhelper build requirement 

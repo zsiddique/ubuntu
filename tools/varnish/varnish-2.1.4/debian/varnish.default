@@ -105,5 +105,5 @@ DAEMON_OPTS="-a :6081 \
 #
 # DAEMON_OPTS=""
 
-# Extra options passed to varnishd
-DAEMON_EXTRA_OPTS="-p thread_pools=4 -p thread_pool_min=200 -p thread_pool_max=5000 -p thread_pool_add_delay=2"
+# Extra options passed to varnishd, used in all alternatives
+DAEMON_EXTRA_OPTS=""
