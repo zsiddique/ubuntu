@@ -1,3 +1,9 @@
+varnish (2.1.4~lucid~ppa2) lucid; urgency=low
+
+  * Fixed build dependancy typo
+
+ -- Sascha Kettler <kettler@gmx.net>  Thu, 11 Nov 2010 16:55:31 +0100
+
 varnish (2.1.4~lucid~ppa1) lucid; urgency=low
 
   * Initial release

@@ -3,7 +3,7 @@ Section: web
 Priority: optional
 Maintainer: Sascha Kettler <kettler@gmx.net>
 Build-Depends: autoconf, autoconf2.13, automake1.9, libtool,
- libncurses-dev, xsltproc, groff-base, libpcre3-ev, pkg-config,
+ libncurses-dev, xsltproc, groff-base, libpcre3-dev, pkg-config,
  tcl8.5 | tclsh
 Standards-Version: 3.8.3
 Homepage: http://varnish-cache.org/
