@@ -62,52 +62,15 @@ install: build
 	dh_testroot
 	dh_clean -k
 	dh_installdirs
-	mkdir -p debian/php52/var/lib/php52
-	chmod 01733 debian/php52/var/lib/php52
-	mkdir -p debian/php52/$(EXTENSION_DIR)
-	mkdir -p debian/php52/var/log/php52
-	chown root:www-data debian/php52/var/log/php52
-	chmod 0750 debian/php52/var/log/php52
-	
-	# install apache2 DSO module
-	mkdir -p debian/libapache2-mod-php52/`apxs2 -q LIBEXECDIR`
-	cp apache2-build/.libs/libphp5.so debian/libapache2-mod-php52/`apxs2 -q LIBEXECDIR`/libphp52.so
-	mkdir -p debian/libapache2-mod-php52/etc/apache2/mods-available
-	cp debian/apache2-php52.load debian/libapache2-mod-php52/etc/apache2/mods-available/php52.load
-	cp debian/apache2-php52.conf debian/libapache2-mod-php52/etc/apache2/mods-available/php52.conf
-	mkdir -p debian/libapache2-mod-php52/etc/php52/apache2
-	cp php.ini-recommended debian/libapache2-mod-php52/etc/php52/apache2/php.ini
-	sed -i "s#^extension_dir = \"./\"#extension_dir = \"$(EXTENSION_DIR)\"#" debian/libapache2-mod-php52/etc/php52/apache2/php.ini
-	
-	# install CGI
-	cd cgi-build && $(MAKE) install-sapi INSTALL_ROOT=$(PWD)/debian/php52
-	mkdir -p debian/php52/etc/php52/cgi
-	cp php.ini-recommended debian/php52/etc/php52/cgi/php.ini
-	sed -i "s#^extension_dir = \"./\"#extension_dir = \"$(EXTENSION_DIR)\"#" debian/php52/etc/php52/cgi/php.ini
-	
-	# install CLI
-	cd cli-build && $(MAKE) install-cli INSTALL_ROOT=$(PWD)/debian/php52
-	mkdir -p debian/php52/etc/php52/cli
-	cp php.ini-recommended debian/php52/etc/php52/cli/php.ini
-	sed -i 's#^display_errors = Off#display_errors = stderr#' debian/php52/etc/php52/cli/php.ini
-	sed -i "s#^extension_dir = \"./\"#extension_dir = \"$(EXTENSION_DIR)\"#" debian/php52/etc/php52/cli/php.ini
-	sed -i "s#^output_buffering = 4096#output_buffering = Off#" debian/php52/etc/php52/cli/php.ini
-	
-	# Install alternate paths
-	cd cli-build && $(MAKE) install-build install-headers install-programs INSTALL_ROOT=$(PWD)/debian/php52-dev
-	mv debian/php52-dev/usr/include/php debian/php52-dev/usr/include/php52
-	sed -i 's~/include/php~/include/php52~g' debian/php52-dev/usr/bin/php-config52
-	sed -i 's~/include`/php~/include`/php52~g' debian/php52-dev/usr/bin/phpize52
-	
-	# Install configuration
-	mkdir -p debian/php52/etc/php52/conf.d
-	cp debian/phpini.logging debian/php52/etc/php52/conf.d/logging.ini
-	cp debian/phpini.limits debian/php52/etc/php52/conf.d/limits.ini
-	cp debian/phpini.environment debian/php52/etc/php52/conf.d/environment.ini
-	
-	# Install PEAR
-	cp -r pear-build/* debian/php52-pear/
-	
+	cd build && $(MAKE) install DESTDIR=$(CURDIR)/debian/varnish
+	sed -i '/backend default {/,/}/ s/^#[[:space:]]//' debian/varnish/etc/varnish/default.vcl
+	mkdir -p debian/varnish/etc/default
+	install -o root -g root -m 644 debian/varnish.default debian/varnish/etc/default/varnish
+	install -o root -g root -m 644 debian/varnish.varnishlog.default debian/varnish/etc/default/varnishlog
+	install -o root -g root -m 644 debian/varnish.varnishncsa.default debian/varnish/etc/default/varnishncsaa
+	mkdir -p debian/varnish/usr/share/varnish
+	install -o root -g root -m 755 debian/reload-vcl debian/varnish/usr/share/varnish/reload-vcl
+	mkdir -p debian/varnish/var/log/varnish
 	touch install-stamp
 
 binary: binary-arch
@@ -115,16 +78,15 @@ binary: binary-arch
 binary-arch: build install
 	dh_testdir
 	dh_testroot
-	dh_installcron --name=php52
 	dh_installchangelogs ChangeLog
 	dh_installdocs
+	dh_installinit -a
+	dh_installinit --name=varnishlog
+	dh_installinit --name=varnishncsa
 	dh_strip -s
 	dh_link -s
-	dh_compress -s -X.ini
-	dh_fixperms -s -X /var/lib/php52
-	mkdir -p debian/php52/usr/share/linda/overrides
-	echo "Tag: non-standard-dir-perm" >> debian/php52/usr/share/linda/overrides/php52
-	echo "Data: /var/lib/php52.*" >> debian/php52/usr/share/linda/overrides/php52
+	dh_compress -s
+	dh_fixperms -s
 	dh_installdeb -s
 	dh_shlibdeps -s
 	dh_gencontrol -s
@@ -133,7 +95,7 @@ binary-arch: build install
 
 clean:
 	dh_testdir
-	rm -f configure-stamp build-stamp
+	rm -f configure-stamp build-stamp install-stamp
 	rm -rf build
 	dh_clean
 
