@@ -25,11 +25,20 @@ case "$1" in
         chown root:www-data /var/log/php52
         chmod 0750 /var/log/php52
         chmod 0664 /var/log/php52/php_error.log
+	
+	# Alternative for php
 	update-alternatives \
 		--install /usr/bin/php php /usr/bin/php52 50 \
 		--slave /usr/share/man/man1/php.1.gz php.1.gz /usr/share/man/man1/php52.1.gz
 	update-alternatives \
 		--install /usr/bin/php-cgi php-cgi /usr/bin/php-cgi52 50
+	
+	# Alternative for php5
+	update-alternatives \
+		--install /usr/bin/php5 php5 /usr/bin/php52 50 \
+		--slave /usr/share/man/man1/php5.1.gz php5.1.gz /usr/share/man/man1/php52.1.gz
+	update-alternatives \
+		--install /usr/bin/php5-cgi php5-cgi /usr/bin/php-cgi52 50
     ;;
 
     abort-upgrade|abort-remove|abort-deconfigure)
