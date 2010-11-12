@@ -114,7 +114,7 @@ binary-arch: build install
 
 clean: unprepared unpatch
 	dh_testdir
-	$(MAKE) clean
+	-$(MAKE) clean
 	rm -f configure-stamp build-stamp
 	rm -f install-stamp
 	dh_clean
