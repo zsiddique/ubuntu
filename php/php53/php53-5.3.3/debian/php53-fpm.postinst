@@ -1,5 +1,5 @@
 #!/bin/sh
-# postinst script for php53
+# postinst script for php53-fpm
 #
 # see: dh_installdeb(1)
 
@@ -19,26 +19,9 @@ set -e
 
 case "$1" in
     configure)
-        TIMEZONE=`cat /etc/timezone`
-        sed -i "s#@@DEFAULT_TIMEZONE@@#$TIMEZONE#" /etc/php53/conf.d/environment.ini
-        touch /var/log/php53/php_error.log
-        chown root:www-data /var/log/php53
-        chmod 0750 /var/log/php53
-        chmod 0664 /var/log/php53/php_error.log
-	
-	# Alternative for php
 	update-alternatives \
-		--install /usr/bin/php php /usr/bin/php53 50 \
-		--slave /usr/share/man/man1/php.1.gz php.1.gz /usr/share/man/man1/php53.1.gz
-	update-alternatives \
-		--install /usr/bin/php-cgi php-cgi /usr/bin/php-cgi53 50
-	
-	# Alternative for php5
-	update-alternatives \
-		--install /usr/bin/php5 php5 /usr/bin/php53 50 \
-		--slave /usr/share/man/man1/php5.1.gz php5.1.gz /usr/share/man/man1/php53.1.gz
-	update-alternatives \
-		--install /usr/bin/php5-cgi php5-cgi /usr/bin/php-cgi53 50
+		--install /usr/sbin/php-fpm php-fpm /usr/sbin/php-fpm53 50 \
+		--slave /usr/share/man/man1/php-fpm.1.gz php-fpm.1.gz /usr/share/man/man1/php-fpm53.1.gz
     ;;
 
     abort-upgrade|abort-remove|abort-deconfigure)

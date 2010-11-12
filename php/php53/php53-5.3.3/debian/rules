@@ -32,6 +32,7 @@ export DEB_BUILD_HARDENING DEB_BUILD_HARDENING_PIE
 ZEND_MODULE_API_NO	= $(shell grep '\#define ZEND_MODULE_API_NO ' Zend/zend_modules.h | sed 's/\#define ZEND_MODULE_API_NO //')
 EXTENSION_DIR		= /usr/lib/php53/$(ZEND_MODULE_API_NO)
 
+LIBEVENT_DIR	= libevent-1.4.14b-stable
 PROG_SENDMAIL	= /usr/sbin/sendmail
 
 CFLAGS = -O2 -Wall -fsigned-char -fno-strict-aliasing
@@ -47,7 +48,8 @@ endif
 COMMON_CONFIG=--build=$(DEB_BUILD_GNU_TYPE) \
 		--host=$(DEB_HOST_GNU_TYPE) \
 		--program-suffix=53 \
-		--sysconfdir=/etc \
+		--prefix=/usr \
+		--localstatedir=/var \
 		--mandir=/usr/share/man \
 		--disable-debug \
 		--with-regex=php \
@@ -116,13 +118,26 @@ prepared: prepared-stamp
 
 prepared-stamp: $(QUILT_STAMPFN)
 	dh_testdir
+	rm -rf $(LIBEVENT_DIR)
+	rm -rf $(LIBEVENT_DIR)-install
+	tar xfz debian/$(LIBEVENT_DIR).tar.gz
 	touch prepared-stamp
 
 unprepared:
 	dh_testdir
+	rm -rf $(LIBEVENT_DIR)
+	rm -rf $(LIBEVENT_DIR)-install
 	rm -f prepared-stamp
 
-configure: configure-apache2-stamp configure-cgi-stamp configure-cli-stamp
+install-libevent-stamp:
+	dh_testdir
+	cd $(LIBEVENT_DIR) && \
+	CFLAGS="$(CFLAGS)" ./configure --prefix=$(CURDIR)/$(LIBEVENT_DIR)-install --disable-shared
+	cd $(LIBEVENT_DIR) && $(MAKE)
+	cd $(LIBEVENT_DIR) && $(MAKE) install
+	touch install-libevent-stamp
+
+configure: configure-apache2-stamp configure-cgi-stamp configure-cli-stamp configure-fpm-stamp
 
 configure-apache2-stamp: prepared-stamp
 	dh_testdir
@@ -130,7 +145,8 @@ configure-apache2-stamp: prepared-stamp
 	-mkdir apache2-build
 	cd apache2-build && \
 	CFLAGS="$(CFLAGS)" PROG_SENDMAIL="$(PROG_SENDMAIL)" ../configure \
-		--prefix=/usr --with-apxs2=/usr/bin/apxs2 \
+		--sysconfdir=/etc \
+		--with-apxs2=/usr/bin/apxs2 \
 		--with-config-file-path=/etc/php53/apache2 \
 		--with-config-file-scan-dir=/etc/php53/apache2/conf.d \
 		$(COMMON_CONFIG)
@@ -142,7 +158,7 @@ configure-cgi-stamp: prepared-stamp
 	-mkdir cgi-build
 	cd cgi-build && \
 	CFLAGS="$(CFLAGS)" PROG_SENDMAIL="$(PROG_SENDMAIL)" ../configure \
-		--prefix=/usr --enable-force-cgi-redirect --enable-fastcgi \
+		--sysconfdir=/etc \
 		--with-config-file-path=/etc/php53/cgi \
 		--with-config-file-scan-dir=/etc/php53/cgi/conf.d \
 		$(COMMON_CONFIG)
@@ -154,13 +170,28 @@ configure-cli-stamp: prepared-stamp
 	-mkdir cli-build
 	cd cli-build && \
 	CFLAGS="$(CFLAGS)" PROG_SENDMAIL="$(PROG_SENDMAIL)" ../configure \
-		--prefix=/usr --disable-cgi \
+		--sysconfdir=/etc \
+		--disable-cgi \
 		--with-config-file-path=/etc/php53/cli \
 		--with-config-file-scan-dir=/etc/php53/cli/conf.d \
 		$(COMMON_CONFIG)
 	touch configure-cli-stamp
 
-build: build-apache2-stamp build-cgi-stamp build-cli-stamp build-pear-stamp
+configure-fpm-stamp: prepared-stamp install-libevent-stamp
+	dh_testdir
+	if [ -d fpm-build ]; then rm -rf fpm-build; fi
+	-mkdir fpm-build
+	cd fpm-build && \
+	CFLAGS="$(CFLAGS)" LDFLAGS="-lrt" PROG_SENDMAIL="$(PROG_SENDMAIL)" ../configure \
+		--sysconfdir=/etc/php53 \
+		--enable-fpm --with-fpm-user=www-data --with-fpm-group=www-data \
+		--with-libevent-dir=$(CURDIR)/$(LIBEVENT_DIR)-install \
+		--with-config-file-path=/etc/php53/fpm \
+		--with-config-file-scan-dir=/etc/php53/fpm/conf.d \
+		$(COMMON_CONFIG)
+	touch configure-fpm-stamp
+
+build: build-apache2-stamp build-cgi-stamp build-cli-stamp build-fpm-stamp build-pear-stamp
 
 build-apache2-stamp: configure-apache2-stamp
 	dh_testdir
@@ -176,6 +207,11 @@ build-cli-stamp: configure-cli-stamp
 	dh_testdir
 	cd cli-build && $(MAKE)
 	touch build-cli-stamp
+
+build-fpm-stamp: configure-fpm-stamp
+	dh_testdir
+	cd fpm-build && $(MAKE)
+	touch build-fpm-stamp
 
 build-pear-stamp: build-cli-stamp
 	dh_testdir
@@ -226,6 +262,12 @@ install: build
 	sed -i 's#^display_errors = Off#display_errors = stderr#' debian/php53/etc/php53/cli/php.ini
 	sed -i "s#^extension_dir = \"./\"#extension_dir = \"$(EXTENSION_DIR)\"#" debian/php53/etc/php53/cli/php.ini
 	sed -i "s#^output_buffering = 4096#output_buffering = Off#" debian/php53/etc/php53/cli/php.ini
+	
+	# install FPM
+	cd fpm-build && $(MAKE) install-fpm INSTALL_ROOT=$(PWD)/debian/php53-fpm
+	mkdir -p debian/php53-fpm/etc/php53/fpm
+	cp php.ini-production debian/php53-fpm/etc/php53/fpm/php.ini
+	sed -i "s#^extension_dir = \"./\"#extension_dir = \"$(EXTENSION_DIR)\"#" debian/php53-fpm/etc/php53/fpm/php.ini
 	
 	# Install alternate paths
 	cd cli-build && $(MAKE) install-build install-headers install-programs INSTALL_ROOT=$(PWD)/debian/php53-dev
@@ -284,11 +326,14 @@ clean: unprepared unpatch
 	rm -f configure-apache2-stamp build-apache2-stamp
 	rm -f configure-cgi-stamp build-cgi-stamp
 	rm -f configure-cli-stamp build-cli-stamp
+	rm -f configure-fpm-stamp build-fpm-stamp
+	rm -f install-libevent-stamp
 	rm -f build-pear-stamp
 	rm -f install-stamp
 	rm -rf apache2-build
 	rm -rf cgi-build
 	rm -rf cli-build
+	rm -rf fpm-build
 	rm -rf pear-build
 	dh_clean
 
