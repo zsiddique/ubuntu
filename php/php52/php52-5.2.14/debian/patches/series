@@ -5,3 +5,4 @@
 50_suhosin-patch-5.2.14-0.9.7.patch
 60_zipext_memset.patch
 70_mail_log.patch
+80_php-5.2.14-fpm-0.5.14.patch
