@@ -1,0 +1,3 @@
+10_nginx-upstream-fair.patch
+20_dlopen.patch
+30_nginx-echo.patch

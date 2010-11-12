@@ -1,0 +1,5 @@
+nginx (0.8.53~lucid~ppa1) lucid; urgency=low
+
+  * Initial release.
+
+ -- Sascha Kettler <kettler@gmx.net>  Fri, 12 Nov 2010 11:13:34 +0100

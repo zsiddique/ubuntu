@@ -1,0 +1,2 @@
+objs/nginx usr/sbin
+debian/conf/* etc/nginx

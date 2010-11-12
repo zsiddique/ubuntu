@@ -1,0 +1,122 @@
+#!/usr/bin/make -f
+# -*- makefile -*-
+# Sample debian/rules that uses debhelper.
+# This file was originally written by Joey Hess and Craig Small.
+# As a special exception, when this file is copied by dh-make into a
+# dh-make output file, you may use that output file without restriction.
+# This special exception was added by Craig Small in version 0.37 of dh-make.
+
+# Uncomment this to turn on verbose mode.
+#export DH_VERBOSE=1
+
+# This has to be exported to make some magic below work.
+export DH_OPTIONS
+
+DEB_HOST_GNU_TYPE	?= $(shell dpkg-architecture -qDEB_HOST_GNU_TYPE)
+DEB_BUILD_GNU_TYPE	?= $(shell dpkg-architecture -qDEB_BUILD_GNU_TYPE)
+DEB_BUILD_ARCH		?= $(shell dpkg-architecture -qDEB_BUILD_ARCH)
+
+PHP5_HOST_GNU_TYPE	= $(subst gnulp,gnu,$(DEB_HOST_GNU_TYPE))
+PHP5_BUILD_GNU_TYPE	= $(subst gnulp,gnu,$(DEB_BUILD_GNU_TYPE))
+
+PHP5_HOST_GNU_TYPE	:= $(shell echo $(PHP5_HOST_GNU_TYPE) | sed 's/-gnu$$//')
+PHP5_BUILD_GNU_TYPE	:= $(shell echo $(PHP5_BUILD_GNU_TYPE) | sed 's/-gnu$$//')
+
+# enable the hardening wrapper
+DEB_BUILD_HARDENING = 1
+# but disable PIE
+DEB_BUILD_HARDENING_PIE = 0
+export DEB_BUILD_HARDENING DEB_BUILD_HARDENING_PIE
+
+# include the patch/unpatch rules from quilt
+include /usr/share/quilt/quilt.make
+
+prepared: prepared-stamp
+
+prepared-stamp: $(QUILT_STAMPFN)
+	dh_testdir
+	touch prepared-stamp
+
+unprepared:
+	dh_testdir
+	rm -f prepared-stamp
+
+configure: configure-stamp
+
+configure-stamp: prepared-stamp
+	dh_testdir
+	CFLAGS="$(CFLAGS)" ./configure \
+		--prefix=/usr \
+		--conf-path=/etc/nginx/nginx.conf \
+		--error-log-path=/var/log/nginx/error.log \
+		--http-client-body-temp-path=/var/lib/nginx/body \
+		--http-fastcgi-temp-path=/var/lib/nginx/fastcgi \
+		--http-log-path=/var/log/nginx/access.log \
+		--http-proxy-temp-path=/var/lib/nginx/proxy \
+		--http-scgi-temp-path=/var/lib/nginx/scgi \
+		--http-uwsgi-temp-path=/var/lib/nginx/uwsgi \
+		--lock-path=/var/lock/nginx.lock \
+		--pid-path=/var/run/nginx.pid \
+		--with-http_dav_module \
+		--with-http_flv_module \
+		--with-http_geoip_module \
+		--with-http_gzip_static_module \
+		--with-http_image_filter_module \
+		--with-http_realip_module \
+		--with-http_stub_status_module \
+		--with-http_ssl_module \
+		--with-http_sub_module \
+		--with-http_xslt_module \
+		--with-ipv6 \
+		--with-sha1=/usr/include/openssl \
+		--with-md5=/usr/include/openssl \
+		--with-mail \
+		--with-mail_ssl_module \
+		--add-module=$(CURDIR)/modules/nginx-upstream-fair \
+		--add-module=$(CURDIR)/modules/nginx-echo
+	touch configure-stamp
+
+build: build-stamp
+
+build-stamp: configure-stamp
+	dh_testdir
+	$(MAKE) build
+	touch build-stamp
+
+install: DH_OPTIONS=
+install: build
+	dh_testdir
+	dh_testroot
+	dh_clean -k
+	dh_installdirs
+	dh_install
+	touch install-stamp
+
+binary: binary-arch
+
+binary-arch: build install
+	dh_testdir
+	dh_testroot
+	dh_installchangelogs CHANGES
+	dh_installdocs
+	dh_installinit -a
+	dh_installman debian/nginx.1
+	dh_installlogrotate
+	dh_strip -s
+	dh_link -s
+	dh_compress -s
+	dh_fixperms -s
+	dh_installdeb -s
+	dh_shlibdeps -s
+	dh_gencontrol -s
+	dh_md5sums -s
+	dh_builddeb -s
+
+clean: unprepared unpatch
+	dh_testdir
+	$(MAKE) clean
+	rm -f configure-stamp build-stamp
+	rm -f install-stamp
+	dh_clean
+
+.PHONY: build clean binary-indep binary-arch binary install configure
