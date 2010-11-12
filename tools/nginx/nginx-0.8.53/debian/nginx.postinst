@@ -2,8 +2,32 @@
 
 set -e
 
+nginx_setup_user() {
+    if ! getent passwd www-data 2>&1 >/dev/null; then
+        adduser --quiet --system --no-create-home --group www-data
+    fi
+}
+
+nginx_create_storagedir() {
+    if ! [ -d /var/lib/nginx ]; then
+        install -m 0750 -o www-data -g www-data -d /var/lib/nginx
+    fi
+}
+
+nginx_setup_logdir() {
+    if ! [ -d /var/llognginx ]; then
+        install -m 0750 -o www-data -g www-data -d /var/log/nginx
+    fi
+    if ! dpkg-statoverride --list /var/log/nginx >/dev/null; then
+        dpkg-statoverride --update --add www-data www-data 0750 /var/log/nginx
+    fi
+}
+
 case "$1" in
   configure)
+    nginx_setup_user
+    nginx_create_storagedir
+    nginx_setup_logdir
     if [ -z $2 ] && [ ! -e /etc/nginx/sites-enabled/default ] ; 
     then
       ln -s /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
