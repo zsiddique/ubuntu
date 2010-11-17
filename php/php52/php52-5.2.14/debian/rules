@@ -339,6 +339,7 @@ clean: unprepared unpatch
 	rm -rf apache2-build
 	rm -rf cgi-build
 	rm -rf cli-build
+	rm -rf fpm-build
 	rm -rf pear-build
 	dh_clean
 
