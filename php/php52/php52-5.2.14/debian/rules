@@ -270,7 +270,7 @@ install: build
 	mkdir -p debian/php52-fpm/usr/sbin
 	cp fpm-build/sapi/cgi/php-cgi debian/php52-fpm/usr/sbin/php-fpm52
 	mkdir -p debian/php52-fpm/etc/php52/fpm
-	cp php.ini-production debian/php52-fpm/etc/php52/fpm/php.ini
+	cp php.ini-recommended debian/php52-fpm/etc/php52/fpm/php.ini
 	sed -i "s#^extension_dir = \"./\"#extension_dir = \"$(EXTENSION_DIR)\"#" debian/php52-fpm/etc/php52/fpm/php.ini
 	
 	# Install alternate paths
@@ -287,9 +287,6 @@ install: build
 	
 	# Install PEAR
 	cp -r pear-build/* debian/php52-pear/
-	
-	# Remove superflous directories
-	rmdir debian/php52/var/run debian/php52/var/log debian/php52/var
 	
 	touch install-stamp
 
