@@ -1,3 +1,9 @@
+php52-apc (3.1.5~lucid~ppa3) lucid; urgency=low
+
+  * Fixed version number in compiled code
+
+ -- Sascha Kettler <kettler@gmx.net>  Wed, 17 Nov 2010 16:50:51 +0100
+
 php52-apc (3.1.5~lucid~ppa2) lucid; urgency=low
 
   * Added apc.php to /usr/share/doc/php52-apc
