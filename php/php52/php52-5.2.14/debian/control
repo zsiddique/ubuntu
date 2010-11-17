@@ -46,6 +46,23 @@ Description: server-side, HTML-embedded scripting language (Apache 2 module)
  .
  Homepage: http://www.php.net/
 
+Package: php52-fpm
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, php52
+Description: server-side, HTML-embedded scripting language (FastCGI Manager)
+ FastCGI is a high-speed and scalable interface for communicating with the
+ web server scripting language. More information about FastCGI can be found
+ on the official website or on Wikipedia.
+ .
+ PHP-FPM works on with any web server that supports FastCGI.
+ .
+ PHP5 is an HTML-embedded scripting language. Much of its syntax is borrowed
+ from C, Java and Perl with a couple of unique PHP-specific features thrown
+ in. The goal of the language is to allow web developers to write dynamically
+ generated pages quickly.
+ .
+ Homepage: http://www.php.net/
+
 Package: php52-dev
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}, php52, autoconf, autoconf2.13, 

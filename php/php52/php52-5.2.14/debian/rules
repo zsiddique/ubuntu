@@ -32,7 +32,6 @@ export DEB_BUILD_HARDENING DEB_BUILD_HARDENING_PIE
 ZEND_MODULE_API_NO	= $(shell grep '\#define ZEND_MODULE_API_NO ' Zend/zend_modules.h | sed 's/\#define ZEND_MODULE_API_NO //')
 EXTENSION_DIR		= /usr/lib/php52/$(ZEND_MODULE_API_NO)
 
-LIBEVENT_DIR	= libevent-1.4.14b-stable
 PROG_SENDMAIL	= /usr/sbin/sendmail
 
 CFLAGS = -O2 -Wall -fsigned-char -fno-strict-aliasing
@@ -130,24 +129,11 @@ prepared: prepared-stamp
 
 prepared-stamp: $(QUILT_STAMPFN)
 	dh_testdir
-	rm -rf $(LIBEVENT_DIR)
-	rm -rf $(LIBEVENT_DIR)-install
-	tar xfz debian/$(LIBEVENT_DIR).tar.gz
 	touch prepared-stamp
 
 unprepared:
 	dh_testdir
-	rm -rf $(LIBEVENT_DIR)
-	rm -rf $(LIBEVENT_DIR)-install
 	rm -f prepared-stamp
-
-install-libevent-stamp:
-	dh_testdir
-	cd $(LIBEVENT_DIR) && \
-	CFLAGS="$(CFLAGS)" ./configure --prefix=$(CURDIR)/$(LIBEVENT_DIR)-install --disable-shared
-	cd $(LIBEVENT_DIR) && $(MAKE)
-	cd $(LIBEVENT_DIR) && $(MAKE) install
-	touch install-libevent-stamp
 
 configure: configure-apache2-stamp configure-cgi-stamp configure-cli-stamp configure-fpm-stamp
 
@@ -190,15 +176,17 @@ configure-cli-stamp: prepared-stamp
 		$(COMMON_CONFIG)
 	touch configure-cli-stamp
 
-configure-fpm-stamp: prepared-stamp install-libevent-stamp
+configure-fpm-stamp: prepared-stamp
 	dh_testdir
 	if [ -d fpm-build ]; then rm -rf fpm-build; fi
 	-mkdir fpm-build
 	cd fpm-build && \
 	CFLAGS="$(CFLAGS)" LDFLAGS="-lrt" PROG_SENDMAIL="$(PROG_SENDMAIL)" ../configure \
 		--sysconfdir=/etc/php52 \
-		--enable-fpm --with-fpm-user=www-data --with-fpm-group=www-data \
-		--with-libevent-dir=$(CURDIR)/$(LIBEVENT_DIR)-install \
+		--enable-fastcgi --enable-fpm \
+		--with-fpm-conf=/etc/php52/php-fpm.conf \
+		--with-fpm-log=/var/log/php52/php-fpm.log \
+		--with-fpm-pid=/var/run/php-fpm52.pid \
 		--with-config-file-path=/etc/php52/fpm \
 		--with-config-file-scan-dir=/etc/php52/fpm/conf.d \
 		$(COMMON_CONFIG)
@@ -277,10 +265,11 @@ install: build
 	sed -i "s#^output_buffering = 4096#output_buffering = Off#" debian/php52/etc/php52/cli/php.ini
 	
 	# install FPM
-	cd fpm-build && $(MAKE) install-fpm INSTALL_ROOT=$(PWD)/debian/php52
-	mkdir -p debian/php52/etc/php52/fpm
-	cp php.ini-production debian/php52/etc/php52/fpm/php.ini
-	sed -i "s#^extension_dir = \"./\"#extension_dir = \"$(EXTENSION_DIR)\"#" debian/php52/etc/php52/fpm/php.ini
+	mkdir -p debian/php52-fpm/usr/sbin
+	cp fpm-build/sapi/cgi/php-cgi debian/php52-fpm/usr/sbin/php-fpm52
+	mkdir -p debian/php52-fpm/etc/php52/fpm
+	cp php.ini-production debian/php52-fpm/etc/php52/fpm/php.ini
+	sed -i "s#^extension_dir = \"./\"#extension_dir = \"$(EXTENSION_DIR)\"#" debian/php52-fpm/etc/php52/fpm/php.ini
 	
 	# Install alternate paths
 	cd cli-build && $(MAKE) install-build install-headers install-programs INSTALL_ROOT=$(PWD)/debian/php52-dev
@@ -321,6 +310,7 @@ binary-arch: build install
 	dh_testdir
 	dh_testroot
 	dh_installcron --name=php52
+	dh_installinit
 	dh_installchangelogs NEWS
 	dh_installdocs
 	dh_strip -s
@@ -342,7 +332,6 @@ clean: unprepared unpatch
 	rm -f configure-cgi-stamp build-cgi-stamp
 	rm -f configure-cli-stamp build-cli-stamp
 	rm -f configure-fpm-stamp build-fpm-stamp
-	rm -f install-libevent-stamp
 	rm -f build-pear-stamp
 	rm -f install-stamp
 	rm -rf apache2-build
