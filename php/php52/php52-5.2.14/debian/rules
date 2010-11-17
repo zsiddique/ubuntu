@@ -129,10 +129,12 @@ prepared: prepared-stamp
 
 prepared-stamp: $(QUILT_STAMPFN)
 	dh_testdir
+	tar xfz debian/php-fpm-bundled-libevent.tar.gz
 	touch prepared-stamp
 
 unprepared:
 	dh_testdir
+	rm -rf libevent
 	rm -f prepared-stamp
 
 configure: configure-apache2-stamp configure-cgi-stamp configure-cli-stamp configure-fpm-stamp
