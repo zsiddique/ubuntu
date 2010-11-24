@@ -1,0 +1,67 @@
+libaugeas-ruby (0.3.0-1.1ubuntu1~ppa1~lucid1) lucid; urgency=low
+
+  * Converted for PPA
+
+ -- Sascha Kettler <kettler@gmx.net>  Tue, 27 Jul 2010 09:19:41 +0200
+
+libaugeas-ruby (0.3.0-1.1ubuntu1) maverick; urgency=low
+
+  * Merge from debian testing.  Remaining changes:
+    - debian/control: remove ruby1.9 build-dep as we don't want it in main.
+    - debian/control: Dont use ruby-pkgtools.
+
+ -- Chuck Short <zulcss@ubuntu.com>  Tue, 09 Mar 2010 07:27:50 +0000
+
+libaugeas-ruby (0.3.0-1.1) unstable; urgency=low
+
+  * Non-maintainer upload.
+  * Switch to Ruby 1.9.1. Closes: #565841.
+
+ -- Lucas Nussbaum <lucas@lucas-nussbaum.net>  Sat, 13 Feb 2010 08:21:15 +0100
+
+libaugeas-ruby (0.3.0-1) unstable; urgency=low
+
+  * New upstream release.
+  * New maintainer.
+
+ -- Matt Palmer <mpalmer@debian.org>  Fri, 29 Jan 2010 07:14:27 +1100
+
+libaugeas-ruby (0.2.0-2ubuntu3) lucid; urgency=low
+
+  * debian/control: remove ruby1.9 build-dep as we don't want it in main.
+
+ -- Marc Deslauriers <marc.deslauriers@ubuntu.com>  Tue, 23 Feb 2010 15:42:21 -0500
+
+libaugeas-ruby (0.2.0-2ubuntu2) karmic; urgency=low
+
+  * debian/control:
+    - Build and install the arch-dependent stuff again after the removal of
+      ruby-pkg-tools.
+    - Install the arch-independent augeas.rb to libdir instead of archdir.
+    - Make it easy to add libaugeas-ruby1.9 support in future.
+
+ -- Johan Kiviniemi <debian@johan.kiviniemi.name>  Sat, 03 Oct 2009 20:56:22 +0300
+
+libaugeas-ruby (0.2.0-2ubuntu1) karmic; urgency=low
+
+  * debian/control: Dont use ruby-pkgtools. 
+  * debian/control: Drop libaugeas-rub1.9
+
+ -- Chuck Short <zulcss@ubuntu.com>  Tue, 22 Sep 2009 13:55:29 -0400
+
+libaugeas-ruby (0.2.0-2) unstable; urgency=low
+
+  * Add missing augeas.rb to package. Thanks, Marc Fournier. (Closes:
+    #509438)
+  * Decrease build-dep versions to allow package to be built on legacy
+    distributions. Thanks, Marc Fournier.
+  * Fix typo in description. Thanks, Bernhard Kleine.
+
+ -- Bart Cortooms <bart@kumina.nl>  Sun, 25 Jan 2009 15:49:32 +0100
+
+libaugeas-ruby (0.2.0-1) unstable; urgency=low
+
+  * Initial release. (Closes: #497940)
+
+ -- Bart Cortooms <bart@kumina.nl>  Sat, 01 Nov 2008 14:49:34 +0000
+

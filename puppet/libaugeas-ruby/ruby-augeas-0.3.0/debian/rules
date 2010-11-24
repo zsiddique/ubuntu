@@ -1,0 +1,38 @@
+#!/usr/bin/make -f
+# -*- makefile -*-
+#
+# CDBS file to build the libaugeas-ruby package.
+
+include /usr/share/cdbs/1/rules/debhelper.mk
+
+pkgdir = $(CURDIR)/debian/$(cdbs_curpkg)
+
+clean::
+	$(RM) -r build
+
+# For 1.9 support in future:
+# • Put everything that follows inside ‘define build_template’...‘endef’
+# • Substitute $ with $$
+# • Substitute 1.8 with $(1)
+# • Add $(foreach ver,1.8 1.9,$(eval $(call build_template,$(ver))))
+
+target1.8  := $(shell ruby1.8 -r rbconfig -e 'print Config::CONFIG["target"]')
+libdir1.8  := $(shell ruby1.8 -r rbconfig -e 'print Config::CONFIG["rubylibdir"]')
+archdir1.8 := $(shell ruby1.8 -r rbconfig -e 'print Config::CONFIG["archdir"]')
+
+builddir1.8 := $(CURDIR)/build/ruby1.8-$(target1.8)
+
+build/libaugeas-ruby1.8::
+	install -d $(builddir1.8)
+	cd $(builddir1.8) && \
+	  ruby1.8 $(CURDIR)/ext/augeas/extconf.rb && \
+	  make
+
+install/libaugeas-ruby1.8::
+	cd $(builddir1.8) && \
+	  make install \
+	    DESTDIR=$(pkgdir) \
+	    sitelibdir=$(pkgdir)$(libdir1.8) \
+	    sitearchdir=$(pkgdir)$(archdir1.8)
+	install -D -m0644 $(CURDIR)/lib/augeas.rb \
+	  $(pkgdir)$(libdir1.8)/augeas.rb

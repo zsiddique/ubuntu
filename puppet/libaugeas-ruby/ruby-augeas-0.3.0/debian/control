@@ -1,0 +1,31 @@
+Source: libaugeas-ruby
+Section: ruby
+Priority: optional
+Maintainer: Ubuntu Develoers <ubuntu-devel-discuss@lists.ubuntu.com>
+XSBC-Original-Maintainer: Matt Palmer <mpalmer@debian.org>
+Uploaders: Nicolas Valcárcel Scerpella (Canonical) <nvalcarcel@canonical.com>
+DM-Upload-Allowed: yes
+Build-Depends: debhelper (>= 5), ruby1.8, ruby1.8-dev, libaugeas-dev (>= 0.6.0), pkg-config, cdbs
+Standards-Version: 3.8.3
+Homepage: http://augeas.net/
+
+Package: libaugeas-ruby
+Architecture: all
+Depends: libaugeas-ruby1.8, ${misc:Depends}
+Description: Augeas bindings for the Ruby language
+ Augeas is a configuration editing tool. It parses configuration files in their
+ native formats and transforms them into a tree. Configuration changes are made
+ by populating this tree and saving it back into native config files.
+ .
+ This is a dependency package which depends on Debian's default Ruby version
+ (currently 1.8.x).
+
+Package: libaugeas-ruby1.8
+Architecture: any
+Depends: ruby1.8, ${shlibs:Depends}, ${misc:Depends}
+Description: Augeas bindings for the Ruby language
+ Augeas is a configuration editing tool. It parses configuration files in their
+ native formats and transforms them into a tree. Configuration changes are made
+ by populating this tree and saving it back into native config files.
+ .
+ This package provides a Ruby 1.8 interface to the Augeas API.
