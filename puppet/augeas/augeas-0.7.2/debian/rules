@@ -26,21 +26,14 @@ endif
 build: build-stamp
 build-stamp:  config.status
 	dh_testdir
-
-	# Add here commands to compile the package.
 	$(MAKE)
-
 	touch $@
 
 clean:
 	dh_testdir
-	dh_testroot
 	rm -f build-stamp
-
-	# Add here commands to clean up after the build process.
 	[ ! -f Makefile ] || $(MAKE) distclean
 	rm -f config.sub config.guess config.log
-
 	dh_clean \
 	    --exclude=./tests/root/etc/group~ \
 	    --exclude=./tests/root/etc/multipath.conf~ \
@@ -54,15 +47,10 @@ install: build
 	    --exclude=./tests/root/etc/multipath.conf~ \
 	    --exclude=./tests/root/etc/passwd~
 	dh_installdirs
-
-	# Add here commands to install the package into debian/tmp
 	$(MAKE) DESTDIR=$(CURDIR)/debian/tmp install
 
-# Build architecture-independent files here.
 binary-indep: build install
-# We have nothing to do by default.
 
-# Build architecture-dependent files here.
 binary-arch: build install
 	dh_testdir
 	dh_testroot
