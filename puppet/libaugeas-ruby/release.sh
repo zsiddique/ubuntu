@@ -12,7 +12,7 @@ PROGRAM_VERSION=`echo "${DIRECTORY}" | sed "s/${PACKAGE}-//"`
 
 . /etc/lsb-release
 
-( cd ${DIRECTORY} && ./debian/rules clean ); [ $? -eq 0 ]
+( cd ${DIRECTORY} && fakeroot ./debian/rules clean )
 
 if [ "${DISTRIB_CODENAME}" != "${GIT_UBUNTU_RELEASE}" ]; then
     sed -i "s~${GIT_UBUNTU_RELEASE}~${DISTRIB_CODENAME}~g" ${DIRECTORY}/debian/changelog
