@@ -15,23 +15,17 @@ endif
 configure: configure-stamp
 configure-stamp:
 	dh_testdir
-	# Add here commands to configure the package.
-
 	touch configure-stamp
-
 
 build: build-stamp
 
 build-stamp: configure-stamp 
 	dh_testdir
-
 	touch build-stamp
 
 clean:
 	dh_testdir
-	dh_testroot
 	rm -f build-stamp configure-stamp
-
 	dh_clean 
 
 install: build
@@ -39,7 +33,6 @@ install: build
 	dh_testroot
 	dh_clean -k 
 	dh_installdirs
-
 	$(CURDIR)/install.rb --destdir=$(CURDIR)/debian/facter/ \
                 --bindir=/usr/bin \
                 --sbindir=/usr/sbin \
