@@ -1,14 +1,10 @@
 Source: augeas
 Priority: optional
-Maintainer: Nicolas Valcárcel Scerpella (Canonical) <nicolas.valcarcel@canonical.com>
-Uploaders: Free Ekanayaka <freee@debian.org>
+Maintainer: Sascha Kettler <kettler@gmx.net>
 Build-Depends: debhelper (>= 5), autotools-dev, libreadline-dev, chrpath
 Standards-Version: 3.8.1
 Section: libs
 Homepage: http://augeas.net/
-Vcs-Browser: http://git.debian.org/?p=collab-maint/augeas.git;a=summary
-Vcs-Git: git://git.debian.org/git/collab-maint/augeas.git
-DM-Upload-Allowed: yes
 
 Package: augeas-tools
 Section: admin

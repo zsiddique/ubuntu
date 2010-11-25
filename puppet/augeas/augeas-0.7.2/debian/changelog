@@ -1,3 +1,9 @@
+augeas (0.7.2-1~ppa1~lucid2) lucid; urgency=low
+
+  * Fixed maintainer
+
+ -- Sascha Kettler <kettler@gmx.net>  Thu, 25 Nov 2010 16:04:30 +0100
+
 augeas (0.7.2-1~ppa1~lucid1) lucid; urgency=low
 
   * Converted to PPA
