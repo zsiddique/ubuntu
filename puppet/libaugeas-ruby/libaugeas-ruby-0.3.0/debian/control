@@ -1,10 +1,7 @@
 Source: libaugeas-ruby
 Section: ruby
 Priority: optional
-Maintainer: Ubuntu Develoers <ubuntu-devel-discuss@lists.ubuntu.com>
-XSBC-Original-Maintainer: Matt Palmer <mpalmer@debian.org>
-Uploaders: Nicolas Valcárcel Scerpella (Canonical) <nvalcarcel@canonical.com>
-DM-Upload-Allowed: yes
+Maintainer: Sascha Kettler <kettler@gmx.net>
 Build-Depends: debhelper (>= 5), ruby1.8, ruby1.8-dev, libaugeas-dev (>= 0.6.0), pkg-config, cdbs
 Standards-Version: 3.8.3
 Homepage: http://augeas.net/

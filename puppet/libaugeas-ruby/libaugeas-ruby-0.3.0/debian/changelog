@@ -1,3 +1,9 @@
+libaugeas-ruby (0.3.0-1.1ubuntu1~ppa1~lucid2) lucid; urgency=low
+
+  * Fixed maintainer 
+
+ -- Sascha Kettler <kettler@gmx.net>  Thu, 25 Nov 2010 16:12:21 +0100
+
 libaugeas-ruby (0.3.0-1.1ubuntu1~ppa1~lucid1) lucid; urgency=low
 
   * Converted for PPA
