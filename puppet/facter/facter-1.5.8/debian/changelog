@@ -1,0 +1,154 @@
+facter (1.5.8-lucid1) lucid; urgency=low
+
+  * Updated to facter 1.5.8
+
+ -- Sascha Kettler <kettler@gmx.net>  Thu, 25 Nov 2010 15:57:30 +0100
+
+facter (1.5.7-1ubuntu1~ppa1~lucid1) lucid; urgency=low
+
+  * Converted for PPA
+
+ -- Sascha Kettler <kettler@gmx.net>  Tue, 27 Jul 2010 09:04:34 +0200
+
+facter (1.5.7-1ubuntu1) maverick; urgency=low
+
+  * Merge from debian testing.  Remaining changes:
+    - Dropped ruby-pkg-tools, and libsetup-ruby1.8, and cdbs, use what
+      we had in lucid. Since we dont want ruby-pkg-tools in main
+      (LP: #408402)
+
+ -- Chuck Short <zulcss@ubuntu.com>  Fri, 26 Mar 2010 16:14:26 +0000
+
+facter (1.5.7-1) unstable; urgency=low
+
+  * New upstream version 1.5.7
+  * Migrate packaging to git-buildpackage
+
+ -- Nigel Kersten <nigel@explanatorygap.net>  Fri, 29 Jan 2010 09:57:40 -0800
+
+facter (1.5.6-3) UNRELEASED; urgency=low
+
+  [ Micah Anderson ]
+  * Switch the Depends priority from 'host | bind9-host' as the
+    'host' package is really old and may be removed soon from the
+    archive. It also doesn't provide many newer functionality.
+
+  [ Andrew Pollock ]
+  * Recommend pciutils instead of depending on it (closes: #545866)
+
+  [ Stig Sandbeck Mathisen ]
+  * Add manpage for facter (Closes: #377123)
+
+ -- Stig Sandbeck Mathisen <ssm@debian.org>  Fri, 25 Dec 2009 00:41:25 +0100
+
+facter (1.5.6-2ubuntu2) lucid; urgency=low
+
+  * Dropped ruby-pkg-tools, and libsetup-ruby1.8, and cdbs, use what 
+    we had in karmic. Since we dont want ruby-pkg-tools in main. 
+    (LP: #408402)
+
+ -- Chuck Short <zulcss@ubuntu.com>  Fri, 26 Mar 2010 08:34:25 -0400
+
+facter (1.5.6-2ubuntu1) lucid; urgency=low
+
+  * Merge from debian testing, remaining changes:
+    - Use bind9-host9 only.
+
+ -- Chuck Short <zulcss@ubuntu.com>  Fri, 06 Nov 2009 00:52:19 +0000
+
+facter (1.5.6-2) unstable; urgency=low
+
+  * Added depends possibility on libopenssl-ruby1.9
+  * Switch from install.rb to using the standardized Debian ruby CDBS
+    classes to use setup.rb. This stops the munging of the shebang
+    to a specific ruby version, as facter works with both 1.8 and 1.9
+  * Install facter library dependencies in ruby version neutral
+    directory: /usr/lib/ruby/vendor_ruby
+  * Add depends on libsetup-ruby1.8, ruby-pkg-tools and cdbs
+
+ -- Micah Anderson <micah@debian.org>  Tue, 30 Jun 2009 00:21:23 -0400
+
+facter (1.5.6-1) unstable; urgency=low
+
+  * New upsream release
+  * Add myself to uploaders
+  * Bumped Standards-Version (no changes)
+  * Added versioned build-depends on debhelper 5
+
+ -- Micah Anderson <micah@debian.org>  Mon, 29 Jun 2009 22:53:18 -0400
+
+facter (1.5.4-1ubuntu1) karmic; urgency=low
+
+  * Use bind9-host9 only. 
+
+ -- Chuck Short <zulcss@ubuntu.com>  Mon, 03 Aug 2009 09:51:59 -0400
+
+facter (1.5.4-1) unstable; urgency=low
+
+  [ Nigel Kersten ]
+  * New upstream release
+  * Switch maintainer to pkg-puppet-devel list
+  * Modify uploaders
+  * Update watch file regexp to exclude release canditate tarballs
+  * Use upstream install.rb script to build rather than copying manually
+
+  [ Andrew Pollock ]
+  * debian/control: add libopenssl-ruby to build dependencies
+  * debian/control: bump Standards-Version (no changes)
+  * debian/compat: increase to 5
+  * debian/control: add pciutils and ${misc:Depends} to dependencies
+
+ -- Andrew Pollock <apollock@debian.org>  Mon, 13 Apr 2009 15:20:21 -0700
+
+facter (1.5.1-0.1) unstable; urgency=low
+
+  * Non-maintainer upload
+  * New upstream release to fix zombie problem (Closes: #497363)
+
+ -- Micah Anderson <micah@debian.org>  Wed, 03 Sep 2008 09:06:56 -0400
+
+facter (1.5-0.1) unstable; urgency=low
+
+  * Non-maintainer upload.
+  * New upstream release (Closes: #492430)
+  * Upgraded standards version to 3.8.0 (no changes)
+
+ -- Micah Anderson <micah@debian.org>  Sat, 26 Jul 2008 07:46:56 -0400
+
+facter (1.3.8-1) unstable; urgency=low
+
+  * New upstream release.
+  * Add 4.0/etch as a new entry in the debianversion fact.
+  * Unfutz the debianversion fact so it doesn't annoy us with it's
+    "constant already defined" whining.
+
+ -- Matthew Palmer <mpalmer@debian.org>  Tue, 25 Sep 2007 07:58:22 +1000
+
+facter (1.3.7-1) unstable; urgency=low
+
+  * New upstream release.  Closes: #418967.
+  * Add dependency on net-tools (for ifconfig).  Closes: #415899.
+  * Add a new 'debianversion' fact.  Closes: #378895.  Thanks to David
+    Schmitt for the patch.
+  * Add a dependency on host | bind9-host (for host).  Closes: #403109.
+
+ -- Matthew Palmer <mpalmer@debian.org>  Fri, 20 Apr 2007 14:09:59 +1000
+
+facter (1.3.5-1) unstable; urgency=low
+
+  * New upstream release.
+
+ -- Matthew Palmer <mpalmer@debian.org>  Tue, 31 Oct 2006 06:24:59 +1100
+
+facter (1.3.3-1) unstable; urgency=low
+
+  * New upstream release.
+
+ -- Matthew Palmer <mpalmer@debian.org>  Fri, 30 Jun 2006 12:43:50 +1000
+
+facter (1.3.1-1) unstable; urgency=low
+
+  * Initial release. (Closes: #364976)
+
+ -- Matthew Palmer <mpalmer@debian.org>  Wed, 24 May 2006 09:40:54 +1000
+
