@@ -235,9 +235,6 @@ install: build
 	mkdir -p debian/php53/var/lib/php53
 	chmod 01733 debian/php53/var/lib/php53
 	mkdir -p debian/php53/$(EXTENSION_DIR)
-	mkdir -p debian/php53/var/log/php53
-	chown root:www-data debian/php53/var/log/php53
-	chmod 0750 debian/php53/var/log/php53
 	
 	# install apache2 DSO module
 	mkdir -p debian/libapache2-mod-php53/`apxs2 -q LIBEXECDIR`
@@ -277,9 +274,6 @@ install: build
 	
 	# Instal configuration
 	mkdir -p debian/php53/etc/php53/conf.d
-	cp debian/phpini.logging debian/php53/etc/php53/conf.d/logging.ini
-	cp debian/phpini.limits debian/php53/etc/php53/conf.d/limits.ini
-	cp debian/phpini.environment debian/php53/etc/php53/conf.d/environment.ini
 	
 	# Install PEAR
 	cp -r pear-build/* debian/php53-pear/

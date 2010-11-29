@@ -19,13 +19,6 @@ set -e
 
 case "$1" in
     configure)
-        TIMEZONE=`cat /etc/timezone`
-        sed -i "s#@@DEFAULT_TIMEZONE@@#$TIMEZONE#" /etc/php53/conf.d/environment.ini
-        touch /var/log/php53/php_error.log
-        chown root:www-data /var/log/php53
-        chmod 0750 /var/log/php53
-        chmod 0664 /var/log/php53/php_error.log
-	
 	# Alternative for php
 	update-alternatives \
 		--install /usr/bin/php php /usr/bin/php53 50 \
