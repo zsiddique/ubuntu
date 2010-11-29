@@ -36,6 +36,7 @@ install: build
 	
 	# Install configuration
 	mkdir -p debian/php52-common/etc/php52/conf.d
+	cp php_browscap.ini debian/php52-common/etc/php52/
 	cp conf.d/*.ini debian/php52-common/etc/php52/conf.d/
 	
 	touch install-stamp
