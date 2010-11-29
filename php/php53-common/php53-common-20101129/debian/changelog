@@ -1,0 +1,11 @@
+php53-common (20101129~lucid~ppa2) lucid; urgency=low
+
+  * Fixed path to php_browscap.ini
+
+ -- Sascha Kettler <kettler@gmx.net>  Mon, 29 Nov 2010 14:44:08 +0100
+
+php53-common (20101129~lucid~ppa1) lucid; urgency=low
+
+  * Moved custom configuration to php53-common
+
+ -- Sascha Kettler <kettler@gmx.net>  Mon, 29 Nov 2010 14:01:49 +0100

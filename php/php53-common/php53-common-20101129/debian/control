@@ -1,0 +1,20 @@
+Source: php53-common
+Section: php
+Priority: optional
+Maintainer: Sascha Kettler <kettler@gmx.net>
+Build-Depends: shtool, debhelper (>= 5)
+Standards-Version: 3.8.3
+Homepage: http://www.php.net/
+
+Package: php53-common
+Architecture: all
+Depends: ${shlibs:Depends}, ${misc:Depends}, php53
+Description: server-side, HTML-embedded scripting language
+ This packages provides default production ready PHP settings.
+ .
+ PHP5 is an HTML-embedded scripting language. Much of its syntax is borrowed
+ from C, Java and Perl with a couple of unique PHP-specific features thrown
+ in. The goal of the language is to allow web developers to write dynamically
+ generated pages quickly.
+ .
+ Homepage: http://www.php.net/
