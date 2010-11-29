@@ -1,0 +1,5 @@
+php52-common (20101129~lucid~ppa1) lucid; urgency=low
+
+  * Moved custom configuration to php52-common
+
+ -- Sascha Kettler <kettler@gmx.net>  Mon, 29 Nov 2010 14:01:49 +0100

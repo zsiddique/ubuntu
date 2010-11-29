@@ -238,9 +238,6 @@ install: build
 	mkdir -p debian/php52/var/lib/php52
 	chmod 01733 debian/php52/var/lib/php52
 	mkdir -p debian/php52/$(EXTENSION_DIR)
-	mkdir -p debian/php52/var/log/php52
-	chown root:www-data debian/php52/var/log/php52
-	chmod 0750 debian/php52/var/log/php52
 	
 	# install apache2 DSO module
 	mkdir -p debian/libapache2-mod-php52/`apxs2 -q LIBEXECDIR`
@@ -281,9 +278,6 @@ install: build
 	
 	# Install configuration
 	mkdir -p debian/php52/etc/php52/conf.d
-	cp debian/phpini.logging debian/php52/etc/php52/conf.d/logging.ini
-	cp debian/phpini.limits debian/php52/etc/php52/conf.d/limits.ini
-	cp debian/phpini.environment debian/php52/etc/php52/conf.d/environment.ini
 	
 	# Install PEAR
 	cp -r pear-build/* debian/php52-pear/

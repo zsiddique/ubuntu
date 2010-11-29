@@ -1,0 +1,64 @@
+#!/usr/bin/make -f
+# -*- makefile -*-
+# Sample debian/rules that uses debhelper.
+# This file was originally written by Joey Hess and Craig Small.
+# As a special exception, when this file is copied by dh-make into a
+# dh-make output file, you may use that output file without restriction.
+# This special exception was added by Craig Small in version 0.37 of dh-make.
+
+# Uncomment this to turn on verbose mode.
+#export DH_VERBOSE=1
+
+# This has to be exported to make some magic below work.
+export DH_OPTIONS
+
+configure: configure-stamp
+
+configure-stamp:
+	dh_testdir
+	touch configure-stamp
+
+build: build-stamp
+
+build-stamp: configure-stamp
+	dh_testdir
+	touch build-stamp
+
+install: DH_OPTIONS=
+install: build
+	dh_testdir
+	dh_testroot
+	dh_clean -k
+	dh_installdirs
+	mkdir -p debian/php52-common/var/log/php52
+	chown root:www-data debian/php52-common/var/log/php52
+	chmod 0750 debian/php52-common/var/log/php52
+	
+	# Install configuration
+	mkdir -p debian/php52-common/etc/php52/conf.d
+	cp conf.d/*.ini debian/php52-common/etc/php52/conf.d/
+	
+	touch install-stamp
+
+binary: binary-arch binary-indep
+
+binary-indep: DH_OPTIONS=-i
+binary-indep: build install
+	dh_testdir
+	dh_testroot
+	dh_installdocs
+	dh_link
+	dh_compress -X.ini
+	dh_fixperms
+	dh_installdeb
+	dh_gencontrol
+	dh_md5sums
+	dh_builddeb
+
+clean:
+	dh_testdir
+	rm -f configure-stamp build-stamp
+	rm -f install-stamp
+	dh_clean
+
+.PHONY: build clean binary-indep binary-arch binary install configure

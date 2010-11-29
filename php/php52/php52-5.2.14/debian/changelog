@@ -1,3 +1,9 @@
+php52 (5.2.14~lucid~ppa9) lucid; urgency=low
+
+  * Moved custom configuration to php52-common
+
+ -- Sascha Kettler <kettler@gmx.net>  Mon, 29 Nov 2010 13:57:13 +0100
+
 php52 (5.2.14~lucid~ppa8) lucid; urgency=low
 
   * Added php-fpm to php52 
