@@ -96,7 +96,7 @@ COMMON_CONFIG=--build=$(DEB_BUILD_GNU_TYPE) \
 		--with-curlwrappers \
 		--enable-dba \
 		--enable-dbase \
-		--with-gd \
+		--with-gd=/usr \
 		--with-jpeg-dir=/usr \
 		--with-png-dir=/usr \
 		--with-xpm-dir=/usr \

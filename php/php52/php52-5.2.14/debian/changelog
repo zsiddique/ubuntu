@@ -1,3 +1,10 @@
+php52 (5.2.14~lucid~ppa10) lucid; urgency=low
+
+  * Use system GD library
+  * Added dependancy on php52-common
+
+ -- Sascha Kettler <kettler@gmx.net>  Fri, 17 Dec 2010 13:57:30 +0100
+
 php52 (5.2.14~lucid~ppa9) lucid; urgency=low
 
   * Moved custom configuration to php52-common

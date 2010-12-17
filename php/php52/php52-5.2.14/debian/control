@@ -17,7 +17,8 @@ Homepage: http://www.php.net/
 
 Package: php52
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}, mime-support, libmagic1, ucf
+Depends: ${shlibs:Depends}, ${misc:Depends}, mime-support, libmagic1, ucf,
+ php52-common
 Conflicts: php5, php5-cli, php5-cgi, php5-common
 Replaces: php5, php5-cli, php5-cgi, php5-common
 Description: server-side, HTML-embedded scripting language
