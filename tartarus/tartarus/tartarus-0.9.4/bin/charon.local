@@ -1,0 +1,143 @@
+#!/usr/bin/perl
+#
+# charon.local by Stefan Tomanek <stefan.tomanek@wertarbyte.de>
+#              http://wertarbyte.de/tartarus.shtml
+#
+# This script will remove tartarus backup files from a local directory
+#
+# WARNING: This script will delete your backup data when called
+# improperly
+
+use strict;
+use warnings;
+use Getopt::Long;
+use Tartarus::Charon::Filter;
+
+my $dir = undef;
+
+my $days_to_expire = undef;
+my $uprofile = undef;
+my $all = 0;
+
+my $dry_run = 0;
+my $verbose = 0;
+my $help = 0;
+
+=pod
+
+=head1 NAME
+
+charon.local - remove backup files that exceed a certain age from a local directoy
+
+=head1 SYNOPSIS
+
+B<charon.local> --dir F<directory> --maxage I<days> (--profile I<identifier> | --all) [--dry-run] [--verbose] [--help]
+
+=head1
+
+The program charon.local removes backup archives created by tartarus from a
+local directory once they reach a certain age and expire. Files that are older
+than the number of days specified on the command line are considerer candidates
+for removal unless other, non-expired backups are based on them, so full
+backups may survive longer than expected.
+
+=head1 OPTIONS AND ARGUMENTS
+
+=over
+
+=item B<--dir>
+
+Specify the directory the backups files are stored in.
+
+=item B<--maxage> I<n>
+
+Set the maximum number of days after which a backup is expired.
+
+=item B<--profile> I<name>
+
+Set the profile name to process. This is mandatory unless B<--all> is supplied.
+
+=item B<--all>
+
+When this is set, charon.local operates on all files disregarding the profile name.
+
+=item B<--dry-run>
+
+This option prevents charon from actually deleting files.
+
+=item B<--verbose>
+
+This option makes charon more verbose about the actions made
+
+=item B<--help>
+
+This parameter shows a brief command reference.
+
+=back
+
+=head1 EXAMPLE
+
+The following command will remove alle files inside the directory F</var/backups/tartarus/>
+created by Tartarus with the profile name "home" which exceed the age of 7 days:
+
+    $ charon.local --dir /var/tartarus/backups/ --profile home --maxage 7 --verbose
+
+=cut
+
+sub usage {
+    my ($error) = @_;
+    print <<EOF;
+charon.local by Stefan Tomanek <stefan.tomanek\@wertarbyte.de>
+
+    --dir           server directory of the backup files
+    --maxage        maximum age of backup files (in days)
+    --profile       backup profile name to process
+    --all           process all files found in the directory
+    --dry-run       do a test run, don't actually delete files
+    --verbose       be more verbose about the actions made
+    --help          show this help text
+EOF
+    if (defined $error) {
+        print "\n$error\n";
+    }
+    exit 1;
+}
+
+GetOptions(
+    "maxage|m=i"        => \$days_to_expire,
+    "profile|p=s"       => \$uprofile,
+    "all|a"             => \$all,
+    "directory|dir|d=s" => \$dir,
+    "test|dry-run|n"    => \$dry_run,
+    "verbose|v"         => \$verbose,
+    "help|h"            => \$help
+) || usage();
+
+usage "No expiration age given" unless defined $days_to_expire;
+usage "No directory specified" unless defined $dir;
+usage "Neither --all nor a single backup profile specified" unless ($all || defined $uprofile);
+
+#chdir($dir) || die "Error changing to backup directory '$dir'";
+
+my $c = new Tartarus::Charon::Filter();
+$c->verbose($verbose);
+
+opendir(DIR, $dir) || die;
+my @files = grep { -f "$dir/$_" } readdir(DIR);
+closedir(DIR);
+$c->files( @files );
+
+# if $uprofile is undefined, the filter works on all profiles
+for my $file ($c->expire($days_to_expire, $uprofile)) {
+    print STDERR "Removing file $dir/$file...\n";
+    unless ($dry_run) {
+        unlink("$dir/$file") || print STDERR "Error removing $dir/$file!\n";
+    }
+}
+
+=head1 AUTHOR
+
+Stefan Tomanek E<lt>stefan.tomanek@wertarbyte.deE<gt>
+
+=cut
+
