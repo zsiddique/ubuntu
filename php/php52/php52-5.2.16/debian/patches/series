@@ -6,3 +6,4 @@
 60_zipext_memset.patch
 70_mail_log.patch
 80_php-5.2.14-fpm-0.5.14.patch
+90_phpbug53632_fp_hang.patch

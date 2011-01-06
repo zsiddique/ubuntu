@@ -1,3 +1,9 @@
+php52 (5.2.16~lucid~ppa3) lucid; urgency=low
+
+  * Fixed PHP Bug #53632 (PHP hangs on numeric value 2.2250738585072011e-308)
+
+ -- Sascha Kettler <kettler@gmx.net>  Thu, 06 Jan 2011 14:49:53 +0100
+
 php52 (5.2.16~lucid~ppa2) lucid; urgency=low
 
   * Updated Suhosin and mail_log patches
