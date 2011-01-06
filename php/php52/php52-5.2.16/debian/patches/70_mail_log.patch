@@ -134,7 +134,7 @@ diff -ur php52-5.2.14/ext/standard/mail.c php52-5.2.14-mail/ext/standard/mail.c
 diff -ur php52-5.2.14/main/main.c php52-5.2.14-mail/main/main.c
 --- php52-5.2.14/main/main.c	2010-11-03 17:18:07.676117136 +0100
 +++ php52-5.2.14-mail/main/main.c	2010-11-03 17:28:27.366124413 +0100
-@@ -445,6 +445,8 @@
+@@ -448,6 +448,8 @@
  
  	PHP_INI_ENTRY("SMTP",						"localhost",PHP_INI_ALL,		NULL)
  	PHP_INI_ENTRY("smtp_port",					"25",		PHP_INI_ALL,		NULL)
