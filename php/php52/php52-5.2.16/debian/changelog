@@ -1,3 +1,9 @@
+php52 (5.2.16~lucid~ppa2) lucid; urgency=low
+
+  * Updated Suhosin and mail_log patches
+
+ -- Sascha Kettler <kettler@gmx.net>  Thu, 06 Jan 2011 13:49:02 +0100
+
 php52 (5.2.16~lucid~ppa1) lucid; urgency=low
 
   * Updated PHP to 5.2.16
