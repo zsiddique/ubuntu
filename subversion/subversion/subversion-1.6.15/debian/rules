@@ -27,6 +27,7 @@ endif
 # We may need to disable libapache2-svn and/or libsvn-ruby*.
 ENABLE_APACHE        := yes
 ENABLE_RUBY          := yes
+DEB_OPT_NOCHECK      := 1
 
 DEB_BUILDDIR     := BUILD
 MAKE_B           := $(MAKE) -C $(DEB_BUILDDIR)
