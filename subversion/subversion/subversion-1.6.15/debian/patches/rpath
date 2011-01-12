@@ -16,7 +16,7 @@
  
  # special link rule for mod_dav_svn
  LINK_APACHE_MOD = $(LIBTOOL) $(LTFLAGS) --mode=link $(CC) $(LT_LDFLAGS) $(CFLAGS) $(LDFLAGS) -rpath $(APACHE_LIBEXECDIR) -avoid-version -module $(APACHE_LDFLAGS)
-@@ -678,7 +679,9 @@
+@@ -683,7 +684,9 @@
  	./config.status subversion/bindings/swig/perl/native/Makefile.PL
  
  $(SWIG_PL_DIR)/native/Makefile: $(SWIG_PL_DIR)/native/Makefile.PL
@@ -68,7 +68,7 @@
      self.testing = options.get('testing')
 --- a/build/generator/gen_make.py
 +++ b/build/generator/gen_make.py
-@@ -389,8 +389,8 @@
+@@ -386,8 +386,8 @@
            name = base.replace('mod_', '')
            self.ofile.write('\tcd %s ; '
                             '$(MKDIR) "$(APACHE_LIBEXECDIR)" ; '
