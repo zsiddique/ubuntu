@@ -8,4 +8,6 @@ apc.shm_size = 128M
 apc.num_files_hint = 10000
 apc.user_entries_hint = 4096
 apc.max_file_size = 10485760
+apc.slam_defense = 0
+apc.write_lock = 1
 apc.stat_ctime = 1
