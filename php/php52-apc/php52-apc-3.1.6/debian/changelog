@@ -1,3 +1,9 @@
+php52-apc (3.1.6~lucid~ppa2) lucid; urgency=low
+
+  * Switched off apc.slam_defense
+
+ -- Sascha Kettler <kettler@gmx.net>  Fri, 21 Jan 2011 11:59:12 +0100
+
 php52-apc (3.1.6~lucid~ppa1) lucid; urgency=low
 
   * Updated to version 3.1.6
