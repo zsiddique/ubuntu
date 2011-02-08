@@ -80,7 +80,7 @@ install: build
 	cd pecl-build && $(MAKE) install INSTALL_IT=/bin/true INSTALL_ROOT=$(PWD)/debian/php52-syck
 	# Install configuration
 	mkdir -p debian/php52-apc/etc/php52/conf.d
-	cp debian/phpini.syck debian/php52-apc/etc/php52/conf.d/syck.ini
+	cp debian/phpini.syck debian/php52-syck/etc/php52/conf.d/syck.ini
 	
 	touch install-stamp
 

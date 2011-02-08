@@ -1,3 +1,9 @@
+php52-syck (0.9.3~lucid~ppa3) lucid; urgency=low
+
+  * Fixed syck.ini installation
+
+ -- Sascha Kettler <kettler@gmx.net>  Tue, 08 Feb 2011 22:57:16 +0100
+
 php52-syck (0.9.3~lucid~ppa2) lucid; urgency=low
 
   * Added missing build dependancies
