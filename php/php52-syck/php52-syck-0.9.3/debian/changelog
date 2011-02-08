@@ -1,3 +1,9 @@
+php52-syck (0.9.3~lucid~ppa4) lucid; urgency=low
+
+  * Fixed syck.ini folder 
+
+ -- Sascha Kettler <kettler@gmx.net>  Tue, 08 Feb 2011 23:07:52 +0100
+
 php52-syck (0.9.3~lucid~ppa3) lucid; urgency=low
 
   * Fixed syck.ini installation
