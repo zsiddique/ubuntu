@@ -1,0 +1,20 @@
+Source: php52-syck
+Section: php
+Priority: optional
+Maintainer: Sascha Kettler <kettler@gmx.net>
+Build-Depends: php52, php52-dev, shtool, chrpath, debhelper (>= 5), quilt
+Standards-Version: 3.8.3
+Homepage: http://www.php.net/
+
+Package: php52-syck
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, php52
+Description: PHP binding to the Syck library
+ YAML-1.0 parser and emitter
+ .
+ YAML(tm) (rhymes with "camel") is a straightforward machine parsable 
+ data serialization format designed for human readability and interaction
+ with scripting languages. YAML is optimized for data serialization,
+ configuration settings, log files, Internet messaging and filtering.
+ .
+ Homepage: http://pecl.php.net/package/syck

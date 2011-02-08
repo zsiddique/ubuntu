@@ -1,0 +1,5 @@
+php52-syck (0.9.3~lucid~ppa1) lucid; urgency=low
+
+  * Converted to PPA
+
+ -- Sascha Kettler <kettler@gmx.net>  Tue, 08 Feb 2011 21:18:22 +0100
