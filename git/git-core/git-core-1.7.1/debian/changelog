@@ -1,6 +1,7 @@
 git-core (1:1.7.1~lucid~ppa3) lucid; urgency=low
 
   * Fixed version number to correspond with main release
+  * Fixed reference to git package
 
  -- Sascha Kettler <kettler@gmx.net>  Fri, 04 Mar 2011 15:16:51 +0100
 
