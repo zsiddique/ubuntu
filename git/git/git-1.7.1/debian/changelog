@@ -1,8 +1,8 @@
-git (1.7.1~lucid~ppa2) lucid; urgency=low
+git-core (1.7.1~lucid~ppa2) lucid; urgency=low
 
   * Renamed main package to git-core due to naming conflict
 
- -- Sascha Kettler <kettler@gmx.net>  Fri, 04 Mar 2011 14:55:35 +0100
+ -- Sascha Kettler <kettler@gmx.net>  Fri, 04 Mar 2011 14:58:59 +0100
 
 git (1.7.1~lucid~ppa1) lucid; urgency=low
 
