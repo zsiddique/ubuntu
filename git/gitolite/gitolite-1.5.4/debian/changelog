@@ -1,8 +1,9 @@
 gitolite (1.5.4~lucid~ppa1) lucid; urgency=low
 
   * Updated for PPA
+  * Don't require fakeroot to clean
 
- -- Sascha Kettler <kettler@gmx.net>  Fri, 04 Mar 2011 00:07:57 +0100
+ -- Sascha Kettler <kettler@gmx.net>  Fri, 04 Mar 2011 10:42:46 +0100
 
 gitolite (1.5.4-1ubuntu0.1) maverick-security; urgency=low
 

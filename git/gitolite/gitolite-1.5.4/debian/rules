@@ -18,8 +18,6 @@ include /usr/share/quilt/quilt.make
 
 clean: unpatch
 	$(checkdir)
-	$(checkroot)
-
 	-rm -rf $(TMP) debian/files conf/VERSION
 
 
