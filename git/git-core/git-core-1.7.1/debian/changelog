@@ -1,3 +1,9 @@
+git-core (1:1.7.1~lucid~ppa4) lucid; urgency=low
+
+  * Fixed build scripts
+
+ -- Sascha Kettler <kettler@gmx.net>  Fri, 04 Mar 2011 17:40:58 +0100
+
 git-core (1:1.7.1~lucid~ppa3) lucid; urgency=low
 
   * Fixed version number to correspond with main release
