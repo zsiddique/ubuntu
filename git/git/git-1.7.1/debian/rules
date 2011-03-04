@@ -31,7 +31,7 @@ ifneq (,$(findstring nocheck,$(DEB_BUILD_OPTIONS)))
 endif
 
 TMP =$(shell pwd)/tmp
-GIT =$(shell pwd)/debian/git
+GIT =$(shell pwd)/debian/git-core
 
 patch: deb-checkdir patch-stamp
 patch-stamp:

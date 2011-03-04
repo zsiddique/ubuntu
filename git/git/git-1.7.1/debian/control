@@ -1,4 +1,4 @@
-Source: git
+Source: git-core
 Section: vcs
 Priority: optional
 Maintainer: Ubuntu Core Developers <ubuntu-devel-discuss@lists.ubuntu.com>
@@ -8,7 +8,7 @@ Build-Depends: libz-dev, libcurl4-gnutls-dev | libcurl3-gnutls-dev, asciidoc (>>
 Standards-Version: 3.8.4.0
 Vcs-Git: http://smarden.org/git/git.git/
 
-Package: git
+Package: git-core
 Architecture: any
 Depends: ${shlibs:Depends}, perl-modules, liberror-perl, libdigest-sha1-perl,
  libc6.1 (>= 2.10.2-6) [ia64]
@@ -31,24 +31,6 @@ Description: fast, scalable, distributed revision control system
  Additional functionality, e.g. a graphical user interface and revision
  tree visualizer, tools for interoperating with other VCS's, or a web
  interface, is provided as separate git* packages.
-
-Package: git-core
-Architecture: all
-Depends: git (>> 1:1.7.0.2)
-Description: fast, scalable, distributed revision control system (obsolete)
- Git is popular version control system designed to handle very large
- projects with speed and efficiency; it is used for many high profile
- open source projects, most notably the Linux kernel.
- .
- Git falls in the category of distributed source code management tools.
- Every Git working directory is a full-fledged repository with full
- revision tracking capabilities, not dependent on network access or a
- central server.
- .
- This is a transitional dummy package.  The 'git-core' package has been
- renamed to 'git', which has been installed automatically.  This
- git-core package is now obsolete, and can safely be removed from the
- system.
 
 Package: git-doc
 Section: doc
