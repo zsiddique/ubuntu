@@ -222,14 +222,14 @@ install-indep: build-arch-stamp build-indep-stamp
 	test -r changelog || ln -s debian/changelog.upstream changelog
 
 binary: binary-arch binary-indep
-binary-arch: install-arch git.deb
+binary-arch: install-arch git-core.deb
 	rm -f debian/substvars
 	dpkg-shlibdeps '$(GIT)'/usr/bin/* '$(GIT)'/usr/lib/git-core/*
-	dpkg-gencontrol -isp -pgit -P'$(GIT)'
+	dpkg-gencontrol -isp -pgit-core -P'$(GIT)'
 	dpkg -b '$(GIT)' ..
 binary-indep: install-indep git-doc.deb git-arch.deb git-cvs.deb git-svn.deb \
 	  git-daemon-run.deb git-email.deb git-gui.deb gitk.deb gitweb.deb \
-	  git-all.deb git-core.deb-DEBIAN
+	  git-all.deb
 	rm -f debian/substvars
 	for i in -doc -arch -cvs -svn -daemon-run -email -gui k web -all \
 	 -core; do \
