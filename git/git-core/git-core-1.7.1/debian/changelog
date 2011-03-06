@@ -1,3 +1,9 @@
+git-core (1:1.7.1~lucid~ppa5) lucid; urgency=low
+
+  * Added old-style command aliases for backwards compatibility
+
+ -- Sascha Kettler <kettler@gmx.net>  Sun, 06 Mar 2011 14:49:37 +0100
+
 git-core (1:1.7.1~lucid~ppa4) lucid; urgency=low
 
   * Fixed build scripts
