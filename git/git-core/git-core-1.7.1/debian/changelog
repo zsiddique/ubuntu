@@ -1,3 +1,9 @@
+git-core (1:1.7.1~lucid~ppa6) lucid; urgency=low
+
+  * Don't try to move /usr/share/doc/git/git-core
+
+ -- Sascha Kettler <kettler@gmx.net>  Tue, 08 Mar 2011 11:50:17 +0100
+
 git-core (1:1.7.1~lucid~ppa5) lucid; urgency=low
 
   * Added old-style command aliases for backwards compatibility
