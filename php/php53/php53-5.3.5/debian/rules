@@ -96,10 +96,10 @@ COMMON_CONFIG=--build=$(DEB_BUILD_GNU_TYPE) \
 		--with-t1lib \
 		--with-mcrypt \
 		--with-mhash \
-		--with-mysql=/usr \
-		--with-mysqli \
+		--with-mysql=mysqlnd \
+		--with-mysqli=mysqlnd \
 		--with-mysql-sock=/var/run/mysqld/mysqld.sock \
-		--with-pdo-mysql=/usr \
+		--with-pdo-mysql=mysqlnd \
 		--with-readline \
 		--with-recode \
 		--enable-pcntl \

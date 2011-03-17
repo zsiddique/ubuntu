@@ -1,3 +1,9 @@
+php53 (5.3.5~lucid~ppa2) lucid; urgency=low
+
+  * Switched to mysqlnd library for MySQL support
+
+ -- root <root@ubuntu.aoemedia.lan>  Thu, 17 Mar 2011 11:48:21 +0100
+
 php53 (5.3.5~lucid~ppa1) lucid; urgency=low
 
   * Updated PHP to 5.3.5
