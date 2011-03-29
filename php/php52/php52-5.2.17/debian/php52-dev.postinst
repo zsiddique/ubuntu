@@ -31,8 +31,14 @@ case "$1" in
 		--install /usr/bin/phpize phpize /usr/bin/phpize52 50 \
 		--slave /usr/share/man/man1/phpize.1.gz phpize.1.gz /usr/share/man/man1/phpize52.1.gz
 	update-alternatives \
+		--install /usr/bin/phpize phpize /usr/bin/phpize5 50 \
+		--slave /usr/share/man/man1/phpize.1.gz phpize.1.gz /usr/share/man/man1/phpize5.1.gz
+	update-alternatives \
 		--install /usr/bin/php-config php-config /usr/bin/php-config52 50 \
 		--slave /usr/share/man/man1/php-config.1.gz php-config.1.gz /usr/share/man/man1/php-config52.1.gz
+	update-alternatives \
+		--install /usr/bin/php-config php-config /usr/bin/php-config5 50 \
+		--slave /usr/share/man/man1/php-config.1.gz php-config.1.gz /usr/share/man/man1/php-config5.1.gz
     ;;
 
     abort-upgrade|abort-remove|abort-deconfigure)
