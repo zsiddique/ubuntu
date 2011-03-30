@@ -22,7 +22,7 @@ case "$1" in
 	update-alternatives \
 		--install /usr/sbin/php-fpm php-fpm /usr/sbin/php-fpm52 50
 	update-alternatives \
-		--install /usr/sbin/php-fpm php-fpm /usr/sbin/php-fpm5 50
+		--install /usr/sbin/php-fpm5 php-fpm5 /usr/sbin/php-fpm52 50
     ;;
 
     abort-upgrade|abort-remove|abort-deconfigure)
