@@ -1,3 +1,9 @@
+php53 (5.3.5~lucid~ppa4) lucid; urgency=low
+
+  * Fixed build and broken alternatives
+
+ -- Sascha Kettler <kettler@gmx.net>  Wed, 30 Mar 2011 10:51:37 +0200
+
 php53 (5.3.5~lucid~ppa3) lucid; urgency=low
 
   * Updated suhosin patch
