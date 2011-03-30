@@ -1,0 +1,29 @@
+Source: php52-uuid
+Section: php
+Priority: optional
+Maintainer: Sascha Kettler <kettler@gmx.net>
+Build-Depends: php52, php52-dev, shtool, chrpath, debhelper (>= 5), quilt, bison, flex,
+ libossp-uuid-dev
+Standards-Version: 3.8.3
+Homepage: http://www.ossp.org/pkg/lib/uuid/
+
+Package: php52-uuid
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, php52
+Description: OSSP uuid module for PHP
+ OSSP uuid is an ISO-C and Perl application programming interface (API)
+ and corresponding command line interface (CLI) for the generation of
+ DCE 1.1 and ISO/IEC 11578:1996 compliant Universally Unique Identifier
+ (UUID). It supports DCE 1.1 variant UUIDs of version 1 (time and node
+ based), version 3 (name based) and version 4 (random number based).
+ .
+ UUIDs are 128 bit numbers which are intended to have a high likelihood
+ of uniqueness over space and time and are computationally difficult
+ to guess. They are globally unique identifiers which can be locally
+ generated without contacting a global registration authority. UUIDs
+ are intended as unique identifiers for both mass tagging objects
+ with an extremely short lifetime and to reliably identifying very
+ persistent objects across a network.
+ .
+ This package provides a module for OSSP uuid functions support in PHP
+ scripts.
