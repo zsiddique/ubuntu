@@ -1,3 +1,9 @@
+php52-uuid (1.6.2~lucid~ppa2) lucid; urgency=low
+
+  * Added Ubuntu patches to fix libarary name
+
+ -- Sascha Kettler <kettler@gmx.net>  Wed, 30 Mar 2011 14:22:35 +0200
+
 php52-uuid (1.6.2~lucid~ppa1) lucid; urgency=low
 
   * Converted to PPA
