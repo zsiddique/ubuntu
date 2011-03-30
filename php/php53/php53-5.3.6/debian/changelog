@@ -1,0 +1,74 @@
+php53 (5.3.6~lucid~ppa1) lucid; urgency=low
+
+  * Updated to 5.3.6 
+  * Enabled UTF8 mode for SQLite 
+
+ -- Sascha Kettler <kettler@gmx.net>  Wed, 30 Mar 2011 11:51:31 +0200
+
+php53 (5.3.5~lucid~ppa4) lucid; urgency=low
+
+  * Fixed build and broken alternatives
+
+ -- Sascha Kettler <kettler@gmx.net>  Wed, 30 Mar 2011 10:51:37 +0200
+
+php53 (5.3.5~lucid~ppa3) lucid; urgency=low
+
+  * Updated suhosin patch
+
+ -- Sascha Kettler <kettler@gmx.net>  Wed, 30 Mar 2011 10:35:37 +0200
+
+php53 (5.3.5~lucid~ppa2) lucid; urgency=low
+
+  * Switched to mysqlnd library for MySQL support
+
+ -- root <root@ubuntu.aoemedia.lan>  Thu, 17 Mar 2011 11:48:21 +0100
+
+php53 (5.3.5~lucid~ppa1) lucid; urgency=low
+
+  * Updated PHP to 5.3.5
+
+ -- Sascha Kettler <kettler@gmx.net>  Thu, 06 Jan 2011 16:40:53 +0100
+
+php53 (5.3.4~lucid~ppa1) lucid; urgency=low
+
+  * Update PHP and Suhosin patch
+  * Fixed PHP Bug #53632 (PHP hangs on numeric value 2.2250738585072011e-308)
+
+ -- Sascha Kettler <kettler@gmx.net>  Thu, 06 Jan 2011 15:18:00 +0100
+
+php53 (5.3.3~lucid~ppa6) lucid; urgency=low
+
+  * Use system GD library
+  * Added dependancy on php53-common
+
+ -- Sascha Kettler <kettler@gmx.net>  Fri, 17 Dec 2010 13:58:49 +0100
+
+php53 (5.3.3~lucid~ppa5) lucid; urgency=low
+
+  * Added PHP-FPM to build
+
+ -- Sascha Kettler <kettler@gmx.net>  Fri, 12 Nov 2010 18:20:37 +0100
+
+php53 (5.3.3~lucid~ppa4) lucid; urgency=low
+
+  * Updated debian/control to allow installation of php52 and php53
+
+ -- root <root@ubuntu.aoemedia.lan>  Tue, 09 Nov 2010 16:17:01 +0100
+
+php53 (5.3.3~lucid~ppa3) lucid; urgency=low
+
+  * Fixed postinstall script 
+
+ -- Sascha Kettler <kettler@gmx.net>  Wed, 03 Nov 2010 21:12:54 +0100
+
+php53 (5.3.3~lucid~ppa2) lucid; urgency=low
+
+  * Updated architecture in debian/control 
+
+ -- Sascha Kettler <kettler@gmx.net>  Wed, 03 Nov 2010 19:18:52 +0100
+
+php53 (5.3.3~lucid~ppa1) lucid; urgency=low
+
+  * Initial release after updating version numbering
+
+ -- Sascha Kettler <kettler@gmx.net>  Wed, 03 Nov 2010 17:41:30 +0100
