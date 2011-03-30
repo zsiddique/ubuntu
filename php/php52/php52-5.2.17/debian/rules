@@ -107,6 +107,7 @@ COMMON_CONFIG=--build=$(DEB_BUILD_GNU_TYPE) \
 		--with-t1lib \
 		--with-mcrypt \
 		--with-mhash \
+		--enable-sqlite-utf8 \
 		--with-mysql=/usr \
 		--with-mysqli \
 		--with-mysql-sock=/var/run/mysqld/mysqld.sock \

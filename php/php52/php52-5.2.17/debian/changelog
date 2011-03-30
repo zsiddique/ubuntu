@@ -1,3 +1,9 @@
+php52 (5.2.17~lucid~ppa4) lucid; urgency=low
+
+  * Enabled UTF8 mode for SQLite 
+
+ -- Sascha Kettler <kettler@gmx.net>  Wed, 30 Mar 2011 11:50:13 +0200
+
 php52 (5.2.17~lucid~ppa3) lucid; urgency=low
 
   * Fixed broken alternatives
