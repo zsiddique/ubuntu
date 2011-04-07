@@ -1,3 +1,9 @@
+php53 (5.3.6~lucid~ppa2) lucid; urgency=low
+
+  * Remove alternatives when removing package
+
+ -- Sascha Kettler <kettler@gmx.net>  Thu, 07 Apr 2011 12:30:20 +0200
+
 php53 (5.3.6~lucid~ppa1) lucid; urgency=low
 
   * Updated to 5.3.6 

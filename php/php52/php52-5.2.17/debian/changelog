@@ -1,3 +1,9 @@
+php52 (5.2.17~lucid~ppa5) lucid; urgency=low
+
+  * Remove alternatives when removing package
+
+ -- Sascha Kettler <kettler@gmx.net>  Thu, 07 Apr 2011 12:41:55 +0200
+
 php52 (5.2.17~lucid~ppa4) lucid; urgency=low
 
   * Enabled UTF8 mode for SQLite 
