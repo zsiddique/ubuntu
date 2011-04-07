@@ -1,0 +1,65 @@
+php53-apc (3.1.7~lucid~ppa1) lucid; urgency=low
+
+  * Updated APC to 3.1.7
+
+ -- Sascha Kettler <kettler@gmx.net>  Thu, 07 Apr 2011 13:11:06 +0200
+
+php53-apc (3.1.6~lucid~ppa2) lucid; urgency=low
+
+  * Switched off apc.slam_defense
+
+ -- Sascha Kettler <kettler@gmx.net>  Fri, 21 Jan 2011 12:03:43 +0100
+
+php53-apc (3.1.6~lucid~ppa1) lucid; urgency=low
+
+  * Updated to version 3.1.6
+
+ -- Sascha Kettler <kettler@gmx.net>  Thu, 02 Dec 2010 21:41:07 +0100
+
+php53-apc (3.1.5~lucid~ppa4) lucid; urgency=low
+
+  * Fixed version number in compiled code
+
+ -- Sascha Kettler <kettler@gmx.net>  Wed, 17 Nov 2010 16:51:09 +0100
+
+php53-apc (3.1.5~lucid~ppa3) lucid; urgency=low
+
+  * Fixed typo in debian/rules 
+
+ -- Sascha Kettler <kettler@gmx.net>  Wed, 10 Nov 2010 11:28:55 +0100
+
+php53-apc (3.1.5~lucid~ppa2) lucid; urgency=low
+
+  * Added apc.php to /usr/share/doc/php53-apc
+
+ -- Sascha Kettler <kettler@gmx.net>  Wed, 10 Nov 2010 11:12:09 +0100
+
+php53-apc (3.1.5~lucid~ppa1) lucid; urgency=low
+
+  * Updated to APC 3.1.5
+
+ -- Sascha Kettler <kettler@gmx.net>  Wed, 10 Nov 2010 10:59:07 +0100
+
+php53-apc (3.1.4~lucid~ppa4) lucid; urgency=low
+
+  * Do not compile PHP extensions using hardening-wrapper
+
+ -- root <root@ubuntu.aoemedia.lan>  Thu, 04 Nov 2010 13:38:32 +0100
+
+php53-apc (3.1.4~lucid~ppa3) lucid; urgency=low
+
+  * apc.shm_size now uses M/G suffixes
+
+ -- Sascha Kettler <kettler@gmx.net>  Thu, 04 Nov 2010 13:09:31 +0100
+
+php53-apc (3.1.4~lucid~ppa2) lucid; urgency=low
+
+  * Fixed config file directory location 
+
+ -- Sascha Kettler <kettler@gmx.net>  Thu, 04 Nov 2010 10:55:57 +0100
+
+php53-apc (3.1.4~lucid~ppa1) lucid; urgency=low
+
+  * Initial release after versioning change
+
+ -- Sascha Kettler <kettler@gmx.net>  Wed, 03 Nov 2010 16:53:41 +0100
