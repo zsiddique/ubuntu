@@ -1,0 +1,2 @@
+*.tar.gz -delta
+*.tar.bz2 -delta
