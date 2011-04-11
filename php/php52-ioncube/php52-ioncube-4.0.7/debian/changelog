@@ -1,0 +1,23 @@
+php52-ioncube (4.0.7~lucid~ppa1) lucid; urgency=low
+
+  * Updated loaders to 4.0.7
+
+ -- Sascha Kettler <kettler@gmx.net>  Mon, 11 Apr 2011 11:38:18 +0200
+
+php52-ioncube (4.0.1~lucid~ppa3) lucid; urgency=low
+
+  * Fixed ioncube installation directory
+
+ -- Sascha Kettler <kettler@gmx.net>  Thu, 04 Nov 2010 13:13:39 +0100
+
+php52-ioncube (4.0.1~lucid~ppa2) lucid; urgency=low
+
+  * Fixed config file directory location
+
+ -- Sascha Kettler <kettler@gmx.net>  Thu, 04 Nov 2010 10:54:35 +0100
+
+php52-ioncube (4.0.1~lucid~ppa1) lucid; urgency=low
+
+  * Initial release.
+
+ -- Sascha Kettler <kettler@gmx.net>  Mon, 01 Nov 2010 16:21:26 +0100
