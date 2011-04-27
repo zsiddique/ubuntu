@@ -1,0 +1,17 @@
+php52-xdebug (2.1.1~lucid~ppa1) lucid; urgency=low
+
+  * Updated Xdebug to version 2.1.1 
+
+ -- Sascha Kettler <kettler@gmx.net>  Wed, 27 Apr 2011 11:48:18 +0200
+
+php52-xdebug (2.1.0~lucid~ppa2) lucid; urgency=low
+
+  * Fixed timestamps from original source package
+
+ -- Sascha Kettler <kettler@gmx.net>  Wed, 10 Nov 2010 10:40:32 +0100
+
+php52-xdebug (2.1.0~lucid~ppa1) lucid; urgency=low
+
+  * Initial release
+
+ -- Sascha Kettler <kettler@gmx.net>  Tue, 09 Nov 2010 15:43:03 +0100
