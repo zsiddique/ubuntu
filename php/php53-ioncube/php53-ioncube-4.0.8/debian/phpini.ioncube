@@ -1,0 +1,1 @@
+zend_extension = @@EXTENSION_DIR@@/ioncube_loader_lin_5.3.so
