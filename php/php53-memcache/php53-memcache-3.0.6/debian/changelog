@@ -1,4 +1,4 @@
-php53-memcache (3.0.6~ppa~lucid1) lucid; urgency=low
+php53-memcache (3.0.6~lucid~ppa1) lucid; urgency=low
 
   * Converted to PPA
 
