@@ -1,0 +1,5 @@
+php53-memcache (3.0.6~ppa~lucid1) lucid; urgency=low
+
+  * Converted to PPA
+
+ -- Sascha Kettler <kettler@gmx.net>  Wed, 18 May 2011 14:16:48 +0200
