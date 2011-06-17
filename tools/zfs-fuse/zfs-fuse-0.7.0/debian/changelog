@@ -1,3 +1,9 @@
+zfs-fuse (0.7.0~lucid~ppa2) lucid; urgency=low
+
+  * Update default configuration 
+
+ -- Sascha Kettler <kettler@gmx.net>  Fri, 17 Jun 2011 14:26:17 +0200
+
 zfs-fuse (0.7.0~lucid~ppa1) lucid; urgency=low
 
   * Updated for PPA

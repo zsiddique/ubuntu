@@ -13,6 +13,3 @@ ENABLE_ZFS=yes
 # This will require unmounting all ZFS volumes upon upgrade
 # Do not use this if a vital system volume is on ZFS (/var, /home, etc)
 RESTART_ON_UPGRADE=no
-
-# Additional options that are passed to the Daemon.
-DAEMON_OPTS="--no-kstat-mount --fuse-attr-timeout=3600 --fuse-entry-timeout=3600 --fuse-mount-options=noatime,nodev,nosuid,default_permissions --vdev-cache-size=512 --max-arc-size=1024"
