@@ -1,3 +1,9 @@
+zfs-fuse (0.7.0~lucid~ppa3) lucid; urgency=low
+
+  * Updated dependancies for Hardy
+
+ -- Sascha Kettler <kettler@gmx.net>  Sat, 18 Jun 2011 10:37:48 +0200
+
 zfs-fuse (0.7.0~lucid~ppa2) lucid; urgency=low
 
   * Update default configuration 
