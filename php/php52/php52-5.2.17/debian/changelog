@@ -1,3 +1,9 @@
+php52 (5.2.17~lucid~ppa7) lucid; urgency=low
+
+  * Updated package details
+
+ -- Sascha Kettler <kettler@gmx.net>  Wed, 29 Jun 2011 16:42:37 +0200
+
 php52 (5.2.17~lucid~ppa6) lucid; urgency=low
 
   * Updated package dependancies

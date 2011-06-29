@@ -67,6 +67,7 @@ Package: php52-dev
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}, php52, autoconf, autoconf2.13, 
  automake, libssl-dev, libtool, shtool,  m4, build-essential, libpcre3-dev
+Provides: php5-dev
 Description: Files for PHP5 module development
  This package provides the files from the PHP5 source needed for compiling
  additional modules.
