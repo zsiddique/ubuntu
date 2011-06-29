@@ -1,3 +1,9 @@
+php52 (5.2.17~lucid~ppa6) lucid; urgency=low
+
+  * Updated package dependancies
+
+ -- Sascha Kettler <kettler@gmx.net>  Wed, 29 Jun 2011 11:06:04 +0200
+
 php52 (5.2.17~lucid~ppa5) lucid; urgency=low
 
   * Remove alternatives when removing package
