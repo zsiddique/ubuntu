@@ -1,3 +1,9 @@
+php53 (5.3.6~lucid~ppa5) lucid; urgency=low
+
+  * Fixed compatibility with phpmyadmin package
+
+ -- Sascha Kettler <kettler@gmx.net>  Thu, 30 Jun 2011 16:56:10 +0200
+
 php53 (5.3.6~lucid~ppa4) lucid; urgency=low
 
   * Updated Replaces/Conflicts/Provides information

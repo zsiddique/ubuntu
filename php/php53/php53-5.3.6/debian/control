@@ -19,7 +19,8 @@ Package: php53
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}, mime-support, libmagic1, ucf,
  php53-common
-Provides: php5, php5-cli, php5-cgi, php5-common
+Provides: php5, php5-cli, php5-cgi, php5-common, php5-mysql, php5-mysqli,
+ php5-mcrypt, php5-gd
 Description: server-side, HTML-embedded scripting language
  PHP5 is an HTML-embedded scripting language. Much of its syntax is borrowed
  from C, Java and Perl with a couple of unique PHP-specific features thrown
@@ -34,6 +35,7 @@ Depends: ${shlibs:Depends}, ${misc:Depends}, php53, apache2-mpm-prefork,
  apache2.2-common
 Conflicts: libapache2-mod-php52
 Replaces: libapache2-mod-php5
+Provides: libapache2-mod-php5
 Description: server-side, HTML-embedded scripting language (Apache 2 module)
  This package provides the PHP5 module for the Apache 2 webserver (as
  found in the apache2-mpm-prefork package).  Please note that this package
@@ -84,6 +86,7 @@ Architecture: all
 Depends: php53
 Conflicts: php52-pear
 Replaces: php-pear
+Provides: php-pear
 Description: PEAR - PHP Extension and Application Repository
  This package contains the base PEAR classes for PHP, as well as the PEAR
  installer.  Many PEAR classes are already packaged for Debian, and can be
