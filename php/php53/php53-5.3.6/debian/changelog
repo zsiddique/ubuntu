@@ -1,3 +1,9 @@
+php53 (5.3.6~lucid~ppa4) lucid; urgency=low
+
+  * Updated Replaces/Conflicts/Provides information
+
+ -- Sascha Kettler <kettler@gmx.net>  Thu, 30 Jun 2011 15:19:58 +0200
+
 php53 (5.3.6~lucid~ppa3) lucid; urgency=low
 
   * Updated package details
