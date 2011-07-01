@@ -1,3 +1,9 @@
+php53 (5.3.6~lucid~ppa6) lucid; urgency=low
+
+  * Added MySQL compression support to PDO_MySQL when using mysqlnd
+
+ -- Sascha Kettler <kettler@gmx.net>  Fri, 01 Jul 2011 12:34:02 +0200
+
 php53 (5.3.6~lucid~ppa5) lucid; urgency=low
 
   * Fixed compatibility with phpmyadmin package
