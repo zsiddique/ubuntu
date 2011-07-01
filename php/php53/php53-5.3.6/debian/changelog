@@ -1,3 +1,9 @@
+php53 (5.3.6~lucid~ppa7) lucid; urgency=low
+
+  * Fixed compile error using the PDO_MySQL patch
+
+ -- Sascha Kettler <kettler@gmx.net>  Fri, 01 Jul 2011 12:59:57 +0200
+
 php53 (5.3.6~lucid~ppa6) lucid; urgency=low
 
   * Added MySQL compression support to PDO_MySQL when using mysqlnd
