@@ -1,6 +1,72 @@
+diff -ur php53-5.3.6/configure php53-5.3.6-mysqlnd-compression/configure
+--- php53-5.3.6/configure	2011-07-01 16:52:13.804935137 +0200
++++ php53-5.3.6-mysqlnd-compression/configure	2011-07-01 16:57:41.844926927 +0200
+@@ -1165,7 +1165,7 @@
+ ac_help="$ac_help
+   --with-pcre-dir           ZIP: pcre install prefix"
+ ac_help="$ac_help
+-  --disable-mysqlnd-compression-support
++  --enable-mysqlnd-compression-support
+                             Enable support for the MySQL compressed protocol in mysqlnd"
+ ac_help="$ac_help
+   --with-zlib-dir[=DIR]       mysqlnd: Set the path to libz install prefix"
+@@ -103390,13 +103390,13 @@
+ 
+ 
+ 
+-php_enable_disable_mysqlnd_compression_support=yes
++php_enable_mysqlnd_compression_support=no
+ 
+-echo $ac_n "checking whether to disable compressed protocol support in mysqlnd""... $ac_c" 1>&6
+-echo "configure:103394: checking whether to disable compressed protocol support in mysqlnd" >&5
+-# Check whether --enable-disable_mysqlnd_compression_support or --disable-disable_mysqlnd_compression_support was given.
+-if test "${enable_disable_mysqlnd_compression_support+set}" = set; then
+-  enableval="$enable_disable_mysqlnd_compression_support"
++echo $ac_n "checking whether to enable compressed protocol support in mysqlnd""... $ac_c" 1>&6
++echo "configure:103394: checking whether to enable compressed protocol support in mysqlnd" >&5
++# Check whether --enable-mysqlnd-compression-support or --disable-mysqlnd-compression-support was given.
++if test "${enable_mysqlnd_compression_support+set}" = set; then
++  enableval="$enable_mysqlnd_compression_support"
+   PHP_DISABLE_MYSQLND_COMPRESSION_SUPPORT=$enableval
+ else
+   
+@@ -103783,7 +103783,7 @@
+ 
+   
+   if test "$PHP_MYSQLND_COMPRESSION_SUPPORT" != "no"; then
+-    if test -z "$PHP_ZLIB_DIR"; then
++    if test -n "$PHP_ZLIB_DIR"; then
+       cat >> confdefs.h <<\EOF
+ #define MYSQLND_COMPRESSION_ENABLED 1
+ EOF
+diff -ur php53-5.3.6/ext/mysqlnd/config9.m4 php53-5.3.6-mysqlnd-compression/ext/mysqlnd/config9.m4
+--- php53-5.3.6/ext/mysqlnd/config9.m4	2010-10-28 15:46:54.000000000 +0200
++++ php53-5.3.6-mysqlnd-compression/ext/mysqlnd/config9.m4	2011-07-01 16:54:18.282437324 +0200
+@@ -3,9 +3,9 @@
+ dnl config.m4 for mysqlnd driver
+ 
+ 
+-PHP_ARG_ENABLE(disable_mysqlnd_compression_support, whether to disable compressed protocol support in mysqlnd,
+-[  --disable-mysqlnd-compression-support
+-                            Enable support for the MySQL compressed protocol in mysqlnd], yes)
++PHP_ARG_ENABLE(mysqlnd-compression-support, whether to enable compressed protocol support in mysqlnd,
++[  --enable-mysqlnd-compression-support
++                            Enable support for the MySQL compressed protocol in mysqlnd], no)
+ 
+ if test -z "$PHP_ZLIB_DIR"; then
+   PHP_ARG_WITH(zlib-dir, for the location of libz,
+@@ -27,7 +27,7 @@
+   dnl Windows uses config.w32 thus this code is safe for now
+ 
+   if test "$PHP_MYSQLND_COMPRESSION_SUPPORT" != "no"; then
+-    if test -z "$PHP_ZLIB_DIR"; then
++    if test -n "$PHP_ZLIB_DIR"; then
+       AC_DEFINE([MYSQLND_COMPRESSION_ENABLED], 1, [Enable compressed protocol support])
+       PHP_ADD_LIBRARY_WITH_PATH(z, $PHP_ZLIB_DIR, MYSQLND_SHARED_LIBADD)
+       MYSQLND_LIBS="$MYSQLND_LIBS -L$PHP_ZLIB_DIR/$PHP_LIBDIR -lz"
 diff -ur php53-5.3.6/ext/pdo_mysql/mysql_driver.c php53-5.3.6-mysqlnd-compression/ext/pdo_mysql/mysql_driver.c
 --- php53-5.3.6/ext/pdo_mysql/mysql_driver.c	2011-01-17 10:54:22.000000000 +0100
-+++ php53-5.3.6-mysqlnd-compression/ext/pdo_mysql/mysql_driver.c	2011-07-01 12:59:19.392426074 +0200
++++ php53-5.3.6-mysqlnd-compression/ext/pdo_mysql/mysql_driver.c	2011-07-01 16:52:29.842433151 +0200
 @@ -621,9 +621,9 @@
  		long connect_timeout = pdo_attr_lval(driver_options, PDO_ATTR_TIMEOUT, 30 TSRMLS_CC);
  		long local_infile = pdo_attr_lval(driver_options, PDO_MYSQL_ATTR_LOCAL_INFILE, 0 TSRMLS_CC);
@@ -31,7 +97,7 @@ diff -ur php53-5.3.6/ext/pdo_mysql/mysql_driver.c php53-5.3.6-mysqlnd-compressio
  #ifdef PDO_MYSQL_HAS_CHARSET
 diff -ur php53-5.3.6/ext/pdo_mysql/pdo_mysql.c php53-5.3.6-mysqlnd-compression/ext/pdo_mysql/pdo_mysql.c
 --- php53-5.3.6/ext/pdo_mysql/pdo_mysql.c	2011-01-01 03:19:59.000000000 +0100
-+++ php53-5.3.6-mysqlnd-compression/ext/pdo_mysql/pdo_mysql.c	2011-07-01 12:58:42.612432188 +0200
++++ php53-5.3.6-mysqlnd-compression/ext/pdo_mysql/pdo_mysql.c	2011-07-01 16:52:29.842433151 +0200
 @@ -74,8 +74,8 @@
  	REGISTER_PDO_CLASS_CONST_LONG("MYSQL_ATTR_MAX_BUFFER_SIZE", (long)PDO_MYSQL_ATTR_MAX_BUFFER_SIZE);
  	REGISTER_PDO_CLASS_CONST_LONG("MYSQL_ATTR_READ_DEFAULT_FILE", (long)PDO_MYSQL_ATTR_READ_DEFAULT_FILE);
@@ -44,7 +110,7 @@ diff -ur php53-5.3.6/ext/pdo_mysql/pdo_mysql.c php53-5.3.6-mysqlnd-compression/e
  	REGISTER_PDO_CLASS_CONST_LONG("MYSQL_ATTR_IGNORE_SPACE", (long)PDO_MYSQL_ATTR_IGNORE_SPACE);
 diff -ur php53-5.3.6/ext/pdo_mysql/php_pdo_mysql_int.h php53-5.3.6-mysqlnd-compression/ext/pdo_mysql/php_pdo_mysql_int.h
 --- php53-5.3.6/ext/pdo_mysql/php_pdo_mysql_int.h	2011-01-17 10:54:22.000000000 +0100
-+++ php53-5.3.6-mysqlnd-compression/ext/pdo_mysql/php_pdo_mysql_int.h	2011-07-01 12:58:42.612432188 +0200
++++ php53-5.3.6-mysqlnd-compression/ext/pdo_mysql/php_pdo_mysql_int.h	2011-07-01 16:52:29.842433151 +0200
 @@ -164,8 +164,8 @@
  	PDO_MYSQL_ATTR_READ_DEFAULT_FILE,
  	PDO_MYSQL_ATTR_READ_DEFAULT_GROUP,
@@ -57,7 +123,7 @@ diff -ur php53-5.3.6/ext/pdo_mysql/php_pdo_mysql_int.h php53-5.3.6-mysqlnd-compr
  	PDO_MYSQL_ATTR_IGNORE_SPACE
 diff -ur php53-5.3.6/ext/pdo_mysql/tests/pdo_mysql_class_constants.phpt php53-5.3.6-mysqlnd-compression/ext/pdo_mysql/tests/pdo_mysql_class_constants.phpt
 --- php53-5.3.6/ext/pdo_mysql/tests/pdo_mysql_class_constants.phpt	2009-10-26 12:41:30.000000000 +0100
-+++ php53-5.3.6-mysqlnd-compression/ext/pdo_mysql/tests/pdo_mysql_class_constants.phpt	2011-07-01 12:58:42.612432188 +0200
++++ php53-5.3.6-mysqlnd-compression/ext/pdo_mysql/tests/pdo_mysql_class_constants.phpt	2011-07-01 16:52:29.842433151 +0200
 @@ -15,13 +15,13 @@
  		'MYSQL_ATTR_FOUND_ROWS'						=> true,
  		'MYSQL_ATTR_IGNORE_SPACE'					=> true,

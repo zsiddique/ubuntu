@@ -1,0 +1,37 @@
+Source: swftools
+Section: utils
+Priority: extra
+Maintainer: Sascha Kettler <kettler@gmx.net>
+Build-Depends: debhelper (>= 5.0.0), autotools-dev, quilt, libfontconfig1-dev (>= 2.4.2-1), libfreetype6-dev (>= 2.2.1-5), libjpeg62-dev (>= 6b-13), libt1-dev (>= 5.1.0-2), libgif-dev, zlib1g-dev (>= 1:1.2.3-13), libart-2.0-dev (>= 2.3.17-1) | libart-dev (>= 1.4.2-34)
+Standards-Version: 3.7.2
+
+Package: swftools
+Section: utils
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, gsfonts
+Suggests: gs-common
+Description: Collection of utilities for SWF file manipulation/creation
+ SWF Tools is a collection of SWF (Flash) manipulation and creation utilities.
+ .
+ This package includes: pdf2swf, jpeg2swf, png2swf, gif2swf, font2swf,
+ wav2swf, swfcombine, swfextract, swfdump, swfstrings, swfbbox and swfc.
+ .
+  * pdf2swf is a PDF to SWF Converter. It generates one frame per page and
+    enables you to have fully formatted text, including tables, formulas etc.
+    inside your Flash Movie. It's based on the xpdf PDF parser from
+    Derek B. Noonburg.
+  * jpeg2swf takes one or more JPEG pictures and generates an SWF slideshow.
+  * png2swf takes one or more PNG pictures and generates an SWF slideshow.
+  * gif2swf converts GIFs into SWF. It is also able to handle animated gifs.
+  * font2swf converts font files (TTF, Type1) into SWF.
+  * wav2swf converts WAV files into SWF.
+  * swfcombine is a tool for inserting SWFs into Wrapper SWFs. (Templates)
+    E.g. for including the pdf2swf SWFs into some sort of Browsing-SWF.
+  * swfextract allows to extract Movieclips, Sounds, Images etc. from SWF
+    files.
+  * swfdump prints out various informations about SWFs.
+  * swfstrings scans SWFs for text data.
+  * swfbbox allows to readjust SWF bounding boxes.
+  * swfc is a tool for creating SWF files from simple script files.
+ .
+  Homepage: http://www.swftools.org/

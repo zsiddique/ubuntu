@@ -1,3 +1,9 @@
+php53 (5.3.6~lucid~ppa8) lucid; urgency=low
+
+  * Updated patch to fix mysqlnd config9.m4
+
+ -- Sascha Kettler <kettler@gmx.net>  Fri, 01 Jul 2011 17:51:18 +0200
+
 php53 (5.3.6~lucid~ppa7) lucid; urgency=low
 
   * Fixed compile error using the PDO_MySQL patch

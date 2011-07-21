@@ -1,0 +1,22 @@
+diff -urN swftools-0.9.1/src/jpeg2swf.1 swftools-0.9.1-01manpages/src/jpeg2swf.1
+--- swftools-0.9.1/src/jpeg2swf.1	2009-08-24 18:09:01.000000000 +0200
++++ swftools-0.9.1-01manpages/src/jpeg2swf.1	2011-07-21 13:05:32.346977203 +0200
+@@ -57,6 +57,6 @@
+     Make importable as asset with \fIassetname\fR
+ .SH AUTHORS
+ 
+-Rainer Böhme <rfxswf@reflex-studio.de>
++Rainer B\[:o]hme <rfxswf@reflex-studio.de>
+ .TP
+ Matthias Kramm
+diff -urN swftools-0.9.1/src/swfstrings.1 swftools-0.9.1-01manpages/src/swfstrings.1
+--- swftools-0.9.1/src/swfstrings.1	2009-08-24 18:09:01.000000000 +0200
++++ swftools-0.9.1-01manpages/src/swfstrings.1	2011-07-21 13:05:46.786980234 +0200
+@@ -30,6 +30,6 @@
+     Print version information and exit
+ .SH AUTHORS
+ 
+-Rainer Böhme <rfxswf@reflex-studio.de>
++Rainer B\[:o]hme <rfxswf@reflex-studio.de>
+ .TP
+ Matthias Kramm <kramm@quiss.org>
