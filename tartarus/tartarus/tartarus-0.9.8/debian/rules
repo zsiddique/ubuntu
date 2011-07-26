@@ -23,7 +23,7 @@ build-stamp: configure-stamp
 	make
 	touch build-stamp
 
-clean: unprepared unpatch
+clean:
 	dh_testdir
 	rm -f build-stamp configure-stamp
 	make clean
