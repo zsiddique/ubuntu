@@ -8,6 +8,11 @@
 #
 # WARNING: This script will delete your backup data when called
 # improperly
+#
+# Copyright 2008 Stefan Tomanek <stefan.tomanek+tartarus@wertarbyte.de>
+# You have permission to copy, modify, and redistribute under the
+# terms of the GPLv3 or any later version.
+# For full license terms, see COPYING.
 
 use strict;
 use warnings;
@@ -27,6 +32,7 @@ my $uprofile = undef;
 my $all = 0;
 
 my $dry_run = 0;
+my $truncate = 0;
 my $verbose = 0;
 my $help = 0;
 
@@ -38,7 +44,7 @@ charon.ftp - remove backup files that exceed a certain age from an FTP aite
 
 =head1 SYNOPSIS
 
-B<charon.ftp> --host I<host> [--ssl] --user I<name> (--password I<password> | --readpassword) [--dir F<directory>] --maxage I<days> (--profile I<identifier> | --all) [--dry-run] [--verbose] [--help]
+B<charon.ftp> --host I<host> [--ssl] --user I<name> (--password I<password> | --readpassword) [--dir F<directory>] --maxage I<days> (--profile I<identifier> | --all) [--truncate] [--dry-run] [--verbose] [--help]
 
 =head1
 
@@ -90,6 +96,12 @@ Set the profile name to process. This is mandatory unless B<--all> is supplied.
 When this is set, the expiration date is applied to alle files found on the server
 and identified as tartarus backups.
 
+=item B<--truncate>
+
+This option enables replacing files with /dev/null on FTP server before deletion.
+Some FTP servers won't allow deleting files when the quota is reached, this flag
+enables a workaround.
+
 =item B<--dry-run>
 
 This option prevents charon from actually deleting files.
@@ -121,6 +133,7 @@ charon.ftp by Stefan Tomanek <stefan.tomanek\@wertarbyte.de>
     --profile       backup profile name to process
     --all           process all files found in the directory
     --dry-run       do a test run, don't actually delete files
+    --truncate      truncate files on server before deleting
     --verbose       be more verbose about the actions made
     --help          show this help text
 EOF
@@ -141,6 +154,7 @@ GetOptions(
     "all|a"             => \$all,
     "directory|dir|d=s" => \$dir,
     "test|dry-run|n"    => \$dry_run,
+    "truncate|t"        => \$truncate,
     "verbose|v"         => \$verbose,
     "help|h"            => \$help
 ) || usage();
@@ -180,6 +194,9 @@ if (ref($ftp) eq 'Net::FTP') {
     # retrieving the directory listing
     @listing = $ftp->nlst();
 }
+unless (@listing) {
+    die "Unable to retrieve directory listing, ", $ftp->message();
+}
 
 my $c = new Tartarus::Charon::Filter();
 $c->verbose($verbose);
@@ -190,6 +207,9 @@ $c->files( grep {!/^\.\.?$/} @listing );
 for my $file ($c->expire($days_to_expire, $uprofile)) {
     print STDERR "Removing file $file...\n";
     unless ($dry_run) {
+        if ($truncate) {
+            $ftp->put("/dev/null", "$file");
+        }
         $ftp->delete("$file") || print STDERR "Error removing $file!\n";
     }
 }

@@ -11,27 +11,13 @@
 
 CURRENTVERSION := $(shell dpkg-parsechangelog | sed -n 's/^Version: //p')
 
-# include the patch/unpatch rules from quilt
-include /usr/share/quilt/quilt.make
-
-prepared: prepared-stamp
-
-prepared-stamp: $(QUILT_STAMPFN)
-	dh_testdir
-	touch prepared-stamp
-
-unprepared:
-	dh_testdir
-	rm -f prepared-stamp
-
 configure: configure-stamp
-configure-stamp: prepared-stamp
+configure-stamp:
 	dh_testdir
 	# Add here commands to configure the package.
 	touch configure-stamp
 
 build: build-stamp
-
 build-stamp: configure-stamp
 	dh_testdir
 	make

@@ -1,3 +1,9 @@
+tartarus (0.9.8~lucid~ppa1) lucid; urgency=low
+
+  * Updated to version 0.9.8
+
+ -- Sascha Kettler <kettler@gmx.net>  Tue, 26 Jul 2011 14:49:46 +0200
+
 tartarus (0.9.4~lucid~ppa1) lucid; urgency=low
 
   * Converted for PPA
