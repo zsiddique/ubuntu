@@ -26,7 +26,7 @@
 
  */
 
-/* $Id: php_apc.c 307215 2011-01-07 09:54:00Z gopalv $ */
+/* $Id: php_apc.c 308812 2011-03-01 11:21:39Z pajoye $ */
 
 #include "apc_zend.h"
 #include "apc_cache.h"
@@ -305,7 +305,6 @@ static PHP_MINFO_FUNCTION(apc)
     for( i = 0, serializer = apc_get_serializers(TSRMLS_C); 
                 serializer->name != NULL; 
                 serializer++, i++) {
-
         if(i != 0) smart_str_appends(&names, ", ");
         smart_str_appends(&names, serializer->name);
     }
@@ -313,11 +312,12 @@ static PHP_MINFO_FUNCTION(apc)
     if(names.c) {
         smart_str_0(&names);
         php_info_print_table_row(2, "Serialization Support", names.c);
+        smart_str_free(&names);
     } else {
         php_info_print_table_row(2, "Serialization Support", "broken");
     }
 
-    php_info_print_table_row(2, "Revision", "$Revision: 307215 $");
+    php_info_print_table_row(2, "Revision", "$Revision: 308812 $");
     php_info_print_table_row(2, "Build Date", __DATE__ " " __TIME__);
     php_info_print_table_end();
     DISPLAY_INI_ENTRIES();
@@ -545,6 +545,11 @@ int _apc_update(char *strkey, int strkey_len, apc_cache_updater_t updater, void*
         return 0;
     }
 
+    if (!APCG(serializer) && APCG(serializer_name)) {
+        /* Avoid race conditions between MINIT of apc and serializer exts like igbinary */
+        APCG(serializer) = apc_find_serializer(APCG(serializer_name) TSRMLS_CC);
+    }
+
     HANDLE_BLOCK_INTERRUPTIONS();
     APCG(current_cache) = apc_user_cache;
     
@@ -572,6 +577,11 @@ int _apc_store(char *strkey, int strkey_len, const zval *val, const unsigned int
 
     if(!APCG(enabled)) return 0;
 
+    if (!APCG(serializer) && APCG(serializer_name)) {
+        /* Avoid race conditions between MINIT of apc and serializer exts like igbinary */
+        APCG(serializer) = apc_find_serializer(APCG(serializer_name) TSRMLS_CC);
+    }
+
     HANDLE_BLOCK_INTERRUPTIONS();
 
     APCG(current_cache) = apc_user_cache;
@@ -593,7 +603,7 @@ int _apc_store(char *strkey, int strkey_len, const zval *val, const unsigned int
         goto freepool;
     }
 
-    if (apc_cache_is_last_key(apc_user_cache, &key, 0, t TSRMLS_CC)) {
+    if (apc_cache_is_last_key(apc_user_cache, &key, t TSRMLS_CC)) {
         goto freepool;
     }
 

@@ -1,3 +1,10 @@
+php53-apc (3.1.9~lucid~ppa1) lucid; urgency=low
+
+  * Updated APC to 3.1.9
+  * Optimized configure options
+
+ -- Sascha Kettler <kettler@gmx.net>  Mon, 08 Aug 2011 23:52:01 +0200
+
 php53-apc (3.1.7~lucid~ppa1) lucid; urgency=low
 
   * Updated APC to 3.1.7

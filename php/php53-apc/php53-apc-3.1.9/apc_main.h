@@ -15,6 +15,8 @@
   | Authors: Daniel Cowgill <dcowgill@communityconnect.com>              |
   |          George Schlossnagle <george@omniti.com>                     |
   |          Rasmus Lerdorf <rasmus@php.net>                             |
+  |          Arun C. Murthy <arunc@yahoo-inc.com>                        |
+  |          Gopal Vijayaraghavan <gopalv@yahoo-inc.com>                 |
   +----------------------------------------------------------------------+
 
    This software was contributed to PHP by Community Connect Inc. in 2002
@@ -27,22 +29,54 @@
 
  */
 
-/* $Id: php_apc.h 307372 2011-01-11 12:04:18Z gopalv $ */
+/* $Id: apc_main.h 308594 2011-02-23 12:35:33Z gopalv $ */
 
-#ifndef PHP_APC_H
-#define PHP_APC_H
+#ifndef APC_MAIN_H
+#define APC_MAIN_H
 
-#include "apc_php.h"
-#include "apc_globals.h"
+#include "apc_pool.h"
+#include "apc_serializer.h"
 
-#define PHP_APC_VERSION "3.1.7"
+/*
+ * This module provides the primary interface between PHP and APC.
+ */
 
-extern zend_module_entry apc_module_entry;
-#define apc_module_ptr &apc_module_entry
+extern int apc_module_init(int module_number TSRMLS_DC);
+extern int apc_module_shutdown(TSRMLS_D);
+extern int apc_process_init(int module_number TSRMLS_DC);
+extern int apc_process_shutdown(TSRMLS_D);
+extern int apc_request_init(TSRMLS_D);
+extern int apc_request_shutdown(TSRMLS_D);
 
-#define phpext_apc_ptr apc_module_ptr
+typedef enum _apc_copy_type {
+    APC_NO_COPY = 0,
+    APC_COPY_IN_OPCODE,
+    APC_COPY_OUT_OPCODE,
+    APC_COPY_IN_USER,
+    APC_COPY_OUT_USER
+} apc_copy_type;
 
-#endif /* PHP_APC_H */
+typedef struct _apc_context_t
+{
+    apc_pool *pool;
+    apc_copy_type copy;
+    unsigned int force_update:1;
+} apc_context_t;
+
+/* {{{ struct apc_serializer_t */
+typedef struct apc_serializer_t apc_serializer_t;
+struct apc_serializer_t {
+    const char *name;
+    apc_serialize_t serialize;
+    apc_unserialize_t unserialize;
+    void *config;
+};
+/* }}} */
+
+apc_serializer_t* apc_get_serializers(TSRMLS_D);
+apc_serializer_t* apc_find_serializer(const char* name TSRMLS_DC);
+
+#endif
 
 /*
  * Local variables:

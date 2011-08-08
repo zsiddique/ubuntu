@@ -26,7 +26,7 @@
 
  */
 
-/* $Id: apc_cache.h 307048 2011-01-03 23:53:17Z kalle $ */
+/* $Id: apc_cache.h 309327 2011-03-17 07:33:32Z gopalv $ */
 
 #ifndef APC_CACHE_H
 #define APC_CACHE_H
@@ -66,12 +66,14 @@ typedef dev_t apc_dev_t;
 
 #if (RDLOCK_AVAILABLE == 1) && defined(HAVE_ATOMIC_OPERATIONS)
 #define USE_READ_LOCKS 1
-#define CACHE_RDLOCK(cache)      { RDLOCK(cache->header->lock);  cache->has_lock = 0; }
+#define CACHE_RDLOCK(cache)        { RDLOCK(cache->header->lock);  cache->has_lock = 0; }
+#define CACHE_RDUNLOCK(cache)      { RDUNLOCK(cache->header->lock);  cache->has_lock = 0; }
 #define CACHE_SAFE_INC(cache, obj) { ATOMIC_INC(obj); }
 #define CACHE_SAFE_DEC(cache, obj) { ATOMIC_DEC(obj); }
 #else
 #define USE_READ_LOCKS 0
-#define CACHE_RDLOCK(cache)      { LOCK(cache->header->lock);  cache->has_lock = 1; }
+#define CACHE_RDLOCK(cache)        { LOCK(cache->header->lock);  cache->has_lock = 1; }
+#define CACHE_RDUNLOCK(cache)      { UNLOCK(cache->header->lock);  cache->has_lock = 0; }
 #define CACHE_SAFE_INC(cache, obj) { CACHE_SAFE_LOCK(cache); obj++; CACHE_SAFE_UNLOCK(cache);}
 #define CACHE_SAFE_DEC(cache, obj) { CACHE_SAFE_LOCK(cache); obj--; CACHE_SAFE_UNLOCK(cache);}
 #endif
@@ -102,6 +104,7 @@ typedef union _apc_cache_key_data_t {
 typedef struct apc_cache_key_t apc_cache_key_t;
 struct apc_cache_key_t {
     apc_cache_key_data_t data;
+    unsigned long h;              /* pre-computed hash value */
     time_t mtime;                 /* the mtime of this cached entry */
     unsigned char type;
     unsigned char md5[16];        /* md5 hash of the source file */
@@ -346,7 +349,7 @@ extern void apc_cache_unlock(apc_cache_t* cache TSRMLS_DC);
 extern zend_bool apc_cache_busy(apc_cache_t* cache);
 extern zend_bool apc_cache_write_lock(apc_cache_t* cache TSRMLS_DC);
 extern void apc_cache_write_unlock(apc_cache_t* cache TSRMLS_DC);
-extern zend_bool apc_cache_is_last_key(apc_cache_t* cache, apc_cache_key_t* key, unsigned int h, time_t t TSRMLS_DC);
+extern zend_bool apc_cache_is_last_key(apc_cache_t* cache, apc_cache_key_t* key, time_t t TSRMLS_DC);
 
 /* used by apc_rfc1867 to update data in-place - not to be used elsewhere */
 
