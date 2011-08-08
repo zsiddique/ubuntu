@@ -25,7 +25,7 @@
 
  */
 
-/* $Id: apc_rfc1867.c 307371 2011-01-11 10:40:07Z gopalv $*/
+/* $Id: apc_rfc1867.c 309694 2011-03-25 18:47:38Z rasmus $*/
 
 #include "apc.h"
 #include "apc_globals.h"

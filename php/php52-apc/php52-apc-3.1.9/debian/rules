@@ -62,7 +62,9 @@ configure-stamp: prepared-stamp
 	cd pecl-build && \
 	CFLAGS="$(CFLAGS)" ../configure \
 		--prefix=/usr \
-		--enable-apc --enable-apc-filehits
+		--enable-apc \
+		--enable-apc-pthreadrwlocks \
+		--enable-apc-memprotect
 	touch configure-stamp
 
 install: DH_OPTIONS=

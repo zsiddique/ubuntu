@@ -26,7 +26,7 @@
 
  */
 
-/* $Id: apc_sma.c 307264 2011-01-08 13:20:20Z gopalv $ */
+/* $Id: apc_sma.c 309489 2011-03-21 00:00:54Z pajoye $ */
 
 #include "apc_sma.h"
 #include "apc.h"
@@ -693,7 +693,7 @@ apc_sma_info_t* apc_sma_info(zend_bool limited TSRMLS_DC)
 #endif
 
         }
-        UNLOCK(SMA_LCK(i));
+        RDUNLOCK(SMA_LCK(i));
     }
 
     return info;

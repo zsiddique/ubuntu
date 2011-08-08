@@ -28,7 +28,7 @@
 
  */
 
-/* $Id: apc_main.c 307259 2011-01-08 12:05:24Z gopalv $ */
+/* $Id: apc_main.c 309002 2011-03-07 19:50:18Z pajoye $ */
 
 #include "apc_php.h"
 #include "apc_main.h"
@@ -490,7 +490,7 @@ static zend_op_array* my_compile_file(zend_file_handle* h,
     time_t t;
     apc_context_t ctxt = {0,};
     int bailout=0;
-	const char* filename = NULL;
+    const char* filename = NULL;
 
     if (!APCG(enabled) || apc_cache_busy(apc_cache)) {
         return old_compile_file(h, type TSRMLS_CC);
@@ -776,7 +776,7 @@ static int _apc_register_serializer(const char* name, apc_serialize_t serialize,
     return 0;
 }
 
-static apc_serializer_t* apc_find_serializer(const char* name TSRMLS_DC)
+apc_serializer_t* apc_find_serializer(const char* name TSRMLS_DC)
 {
     int i;
     apc_serializer_t *serializer;
@@ -994,7 +994,6 @@ int apc_request_init(TSRMLS_D)
 
 int apc_request_shutdown(TSRMLS_D)
 {
-
 #if APC_HAVE_LOOKUP_HOOKS
     if(APCG(lazy_class_table)) {
         zend_hash_destroy(APCG(lazy_class_table));
@@ -1011,7 +1010,6 @@ int apc_request_shutdown(TSRMLS_D)
 #ifdef APC_FILEHITS
     zval_ptr_dtor(&APCG(filehits));
 #endif
-
     return 0;
 }
 

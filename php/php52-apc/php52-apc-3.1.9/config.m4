@@ -1,5 +1,5 @@
 dnl
-dnl $Id: config.m4 307185 2011-01-06 21:13:11Z gopalv $
+dnl $Id: config.m4 307438 2011-01-13 14:20:21Z gopalv $
 dnl
 
 PHP_ARG_ENABLE(apc, whether to enable APC support,
@@ -8,7 +8,7 @@ PHP_ARG_ENABLE(apc, whether to enable APC support,
 AC_ARG_ENABLE(apc-debug,
 [  --enable-apc-debug     Enable APC debugging], 
 [
-  PHP_APC_DEBUG=yes
+  PHP_APC_DEBUG=$enableval
 ], 
 [
   PHP_APC_DEBUG=no
