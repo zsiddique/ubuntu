@@ -1,0 +1,221 @@
+augeas (0.9.0~ppa~lucid1) lucid; urgency=low
+
+  * Updated to 0.9.0
+
+ -- Sascha Kettler <kettler@gmx.net>  Wed, 14 Sep 2011 16:34:37 +0200
+
+augeas (0.7.2-1~ppa1~lucid2) lucid; urgency=low
+
+  * Fixed maintainer
+
+ -- Sascha Kettler <kettler@gmx.net>  Thu, 25 Nov 2010 16:04:30 +0100
+
+augeas (0.7.2-1~ppa1~lucid1) lucid; urgency=low
+
+  * Converted to PPA
+
+ -- Sascha Kettler <kettler@gmx.net>  Tue, 27 Jul 2010 09:11:50 +0200
+
+augeas (0.7.2-1) unstable; urgency=low
+
+  * New upstream release
+  * Droped 50_iptables-lens.diff. Included upstream
+  * Updated libaugeas0.symbols
+
+ -- Nicolas Valcárcel Scerpella (Canonical) <nicolas.valcarcel@canonical.com>  Fri, 25 Jun 2010 16:12:45 -0500
+
+augeas (0.7.1-2) unstable; urgency=low
+
+  * Remove libaugeas0 from augeas-lenses depends. (Closes: #578880)
+  * Change iptables config location. (LP: #566803)
+
+ -- Nicolas Valcárcel Scerpella (Canonical) <nicolas.valcarcel@canonical.com>  Fri, 23 Apr 2010 09:28:28 -0500
+
+augeas (0.7.1-1) unstable; urgency=low
+
+  * New upstream release
+  * Remove 50_grub_lense.diff. Included upstream
+  * Switch to dpkg-source 3.0 (quilt) format
+    - Remove Build-dep on quilt
+    - Remove all reference to quilt in debian/rules
+    - Remove README.source
+
+ -- Nicolas Valcárcel Scerpella (Canonical) <nicolas.valcarcel@canonical.com>  Wed, 21 Apr 2010 18:38:21 -0500
+
+augeas (0.7.0-2) unstable; urgency=low
+
+  * Add dependecy on libaugeas0 ( >= 0.70) to augeas-lenses
+  * Add dependency on ${misc:Depends} to augeas-lenses and augeas-dbg
+    to satisfy lintian.
+  * Updated my mail in Maintainers field
+  * Add README.source
+
+ -- Nicolas Valcárcel Scerpella (Canonical) <nicolas.valcarcel@canonical.com>  Wed, 21 Apr 2010 18:12:37 -0500
+
+augeas (0.7.0-1) unstable; urgency=low
+
+  * New upstream release
+  * Update grub.lens patch to match grub's config file location 
+    (Closes: #535141)
+  * Add augeas-dbg binary package. Thanks Matthew Palmer for the patch.
+    (Closes: #567236)
+  * Updated libaugeas0.symbols.
+
+ -- Nicolas Valcárcel Scerpella (Canonical) <nvalcarcel@canonical.com>  Thu, 28 Jan 2010 00:51:54 -0500
+
+augeas (0.6.0-2) unstable; urgency=low
+
+  * Add DM-Upload-Allowed field 
+
+ -- Nicolas Valcárcel Scerpella (Canonical) <nvalcarcel@canonical.com>  Sun, 20 Dec 2009 22:03:04 -0500
+
+augeas (0.6.0-1) unstable; urgency=low
+
+  * New upstream release
+  * Add symbols support. (Closes: #530889) Thanks to Chuck Short for the patch.
+
+ -- Nicolas Valcárcel Scerpella (Canonical) <nvalcarcel@canonical.com>  Wed, 02 Dec 2009 22:44:01 -0500
+
+augeas (0.5.3-1) unstable; urgency=low
+
+  * New upstream release
+  * Exclude XXX~ files when cleaning
+ 
+ -- Nicolas Valcárcel Scerpella (Canonical) <nvalcarcel@canonical.com>  Sat, 19 Sep 2009 00:39:07 -0500
+
+augeas (0.5.2-2) unstable; urgency=low
+
+  * Change libreadline5-dev Build-Dep to libreadline-dev
+
+ -- Nicolas Valcárcel Scerpella (Canonical) <nvalcarcel@canonical.com>  Sun, 13 Sep 2009 15:58:16 -0500
+
+augeas (0.5.2-1) unstable; urgency=low
+
+  * New Upstream Version
+
+ -- Free Ekanayaka <freee@debian.org>  Tue, 14 Jul 2009 12:09:26 +0200
+
+augeas (0.5.1-1) unstable; urgency=low
+
+  * New upstream release
+
+ -- Nicolas Valcárcel Scerpella (Canonical) <nvalcarcel@canonical.com>  Wed, 10 Jun 2009 11:52:57 -0500
+
+augeas (0.5.0-2) unstable; urgency=low
+
+  * Bumped the Standards Version to 3.8.1
+  * Version depend in the shlib file. Patch from Torsten Werner. 
+    (Closes: #530931)
+
+ -- Nicolas Valcárcel Scerpella <nvalcarcel@canonical.com>  Thu, 28 May 2009 23:46:03 +0200
+
+augeas (0.5.0-1) unstable; urgency=low
+
+  * New upstream release
+  * Updated 50_grub_lense.diff to fit with new grub lense.
+
+ -- Nicolas Valcárcel Scerpella <nvalcarcel@canonical.com>  Tue, 12 May 2009 11:07:05 -0500
+
+augeas (0.4.0-1) unstable; urgency=low
+
+  * New Upstream Version
+
+ -- Free Ekanayaka <freee@debian.org>  Sun, 08 Feb 2009 10:58:29 +0100
+
+augeas (0.3.6-1) unstable; urgency=low
+
+  * New Upstream Version
+  * Add Vcs-Browser and Vcs-Git fields
+
+ -- Free Ekanayaka <freee@debian.org>  Tue, 27 Jan 2009 21:49:47 +0000
+
+augeas (0.3.5-1) unstable; urgency=low
+
+  * New upstream release
+  * Drop 60_extra-lenses patch, all lenses merged upstream
+
+ -- Free Ekanayaka <freee@debian.org>  Wed, 24 Dec 2008 16:11:49 +0000
+
+augeas (0.3.4-2) unstable; urgency=low
+
+  * Update extra-lenses patch (add passwd lens)
+
+ -- Free Ekanayaka <freee@debian.org>  Mon, 22 Dec 2008 11:27:18 +0000
+
+augeas (0.3.4-1) unstable; urgency=low
+
+  * New Upstream Version
+
+ -- Free Ekanayaka <freee@debian.org>  Mon, 10 Nov 2008 13:48:04 +0100
+
+augeas (0.3.3-2) unstable; urgency=low
+
+  * Update extra-lenses patch (group and cron-apt lenses)
+
+ -- Free Ekanayaka <freee@debian.org>  Tue, 28 Oct 2008 12:30:48 +0100
+
+augeas (0.3.3-1) unstable; urgency=low
+
+  * New upstream release
+
+ -- Free Ekanayaka <freee@debian.org>  Sat, 25 Oct 2008 14:05:54 +0200
+
+augeas (0.3.2-1) unstable; urgency=low
+
+  * New upstream version
+  * Add extra-lenses patch (phpvars, squid, postfix, webmin)
+
+ -- Free Ekanayaka <freee@debian.org>  Wed, 22 Oct 2008 11:04:09 +0200
+
+augeas (0.3.1-1) unstable; urgency=low
+
+  * New upstream release
+  * Pass --enable-compile-warnings=yes to ./configure, which makes
+    the package buildable on etch
+  * Added myself to Uploaders:
+
+ -- Free Ekanayaka <freee@debian.org>  Fri, 05 Sep 2008 10:04:12 +0200
+
+augeas (0.3.0-1) unstable; urgency=low
+
+  * New upstream release.
+
+ -- Nicolas Valcárcel <nvalcarcel@gmail.com>  Fri, 08 Aug 2008 00:31:56 -0500
+
+augeas (0.2.2-1) unstable; urgency=low
+
+  * New upstream release. 
+  * Dropped: 51_alias_commas.diff, 52_dput_support.diff and
+    20_autool_null_printing.diff since they are not needed anymore.
+  * Install NEWS file with changelogs.
+
+ -- Nicolas Valcárcel <nvalcarcel@gmail.com>  Fri, 18 Jul 2008 19:05:12 -0500
+
+augeas (0.2.1-2) unstable; urgency=low
+
+  * Removed required spaces after commas on aliases.aug (51_alias_commas.diff)
+    - Added test cases to tests/test_aliases.aug
+    (Patch taken from upstream)
+  * Added dput support (dput.aug)
+    - Added test cases to tests/test_dput.aug (52_dput_support.diff)
+    (Patch taken from upstream, originally written by Raphael Pinson)
+  * debian/control:
+    - augeas-lenses:
+      + Droped Depends field
+      + Added libaugeas0 (= ${binary:Version}) to Suggests field
+    - libaugeas0:
+      + Added augeas-tools to Suggests field
+  * Fixed printing of null values in augtool (20_autool_null_printing.diff)
+    (Patch taken from upstream)
+
+ -- Nicolas Valcárcel <nvalcarcel@gmail.com>  Fri, 18 Jul 2008 00:10:06 -0500
+
+augeas (0.2.1-1) unstable; urgency=low
+
+  * Initial packaging for debian. (Closes: #476648)
+  * Fix rpath issue. http://wiki.debian.org/RpathIssue
+  * 50_grub_lense.diff:
+    - Fix configuration file path for grub (Debian systems only).
+
+ -- Nicolas Valcárcel <nvalcarcel@gmail.com>  Thu, 03 Jul 2008 19:52:15 -0500
+
