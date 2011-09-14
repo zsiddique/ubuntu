@@ -1,4 +1,4 @@
-facter (1.6.0-lucid~ppa1) lucid; urgency=low
+facter (1.6.0~lucid~ppa1) lucid; urgency=low
 
   * Updated to facter 1.6.0
 
