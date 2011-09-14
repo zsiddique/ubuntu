@@ -2,7 +2,7 @@ Source: libaugeas-ruby
 Section: ruby
 Priority: optional
 Maintainer: Sascha Kettler <kettler@gmx.net>
-Build-Depends: debhelper (>= 5), ruby1.8, ruby1.8-dev, libaugeas-dev (>= 0.6.0), pkg-config, cdbs
+Build-Depends: debhelper (>= 5), ruby1.8, ruby1.8-dev, libaugeas-dev (>= 0.8.0), pkg-config, cdbs
 Standards-Version: 3.8.3
 Homepage: http://augeas.net/
 

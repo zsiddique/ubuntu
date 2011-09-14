@@ -58,9 +58,23 @@ class Augeas
         end
     end
 
+    # Set one or multiple elemens to path.
+    # Multiple elements are mainly sensible with a path like
+    # .../array[last()+1], since this will append all elements.
+    def set(path, *values)
+        values.flatten.each { |v| set_internal(path, v) }
+    end
+
+    # The same as +set+, but raises <tt>Augeas::Error</tt> if setting fails
+    def set!(path, *values)
+        values.flatten.each do |v|
+            raise Augeas::Error unless set_internal(path, v)
+        end
+    end
+
     # Clear the +path+, i.e. make its value +nil+
     def clear(path)
-        set(path, nil)
+        set_internal(path, nil)
     end
 
     # Clear all transforms under <tt>/augeas/load</tt>. If +load+
@@ -81,17 +95,15 @@ class Augeas
         lens = hash[:lens]
         name = hash[:name]
         incl = hash[:incl]
-        excl = hash[:excl] || ""
+        excl = hash[:excl]
         raise ArgumentError, "No lens specified" unless lens
         raise ArgumentError, "No files to include" unless incl
         name = lens.split(".")[0].sub("@", "") unless name
-        incl = [ incl ] unless incl.is_a?(Array)
-        excl = [ excl ] unless incl.is_a?(Array)
 
         xfm = "/augeas/load/#{name}/"
         set(xfm + "lens", lens)
-        incl.each { |inc| set(xfm + "incl[last()+1]", inc) }
-        excl.each { |exc| set(xfm + "excl[last()+1]", exc) }
+        set(xfm + "incl[last()+1]", incl)
+        set(xfm + "excl[last()+1]", excl) if excl
     end
 
     # The same as +save+, but raises <tt>Augeas::Error</tt> if saving fails
@@ -104,8 +116,4 @@ class Augeas
         raise Augeas::Error unless load
     end
 
-    # The same as +set+, but raises <tt>Augeas::Error</tt> if loading fails
-    def set!(path, value)
-        raise Augeas::Error unless set(path, value)
-    end
 end

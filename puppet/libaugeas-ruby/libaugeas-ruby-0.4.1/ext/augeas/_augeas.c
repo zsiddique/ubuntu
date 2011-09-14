@@ -101,6 +101,25 @@ VALUE augeas_set(VALUE s, VALUE path, VALUE value) {
 
 /*
  * call-seq:
+ *   setm(BASE, SUB, VALUE) -> boolean
+ *
+ *  Set multiple nodes in one operation. Find or create a node matching
+ *  SUB by interpreting SUB as a path expression relative to each node
+ *  matching BASE. SUB may be NULL, in which case all the nodes matching
+ *  BASE will be modified.
+ */
+VALUE augeas_setm(VALUE s, VALUE base, VALUE sub, VALUE value) {
+    augeas *aug = aug_handle(s);
+    const char *cbase = StringValueCStr(base) ;
+    const char *csub = StringValueCStrOrNull(sub) ;
+    const char *cvalue = StringValueCStrOrNull(value) ;
+
+    int callValue = aug_setm(aug, cbase, csub, cvalue) ;
+    return INT2FIX(callValue);
+}
+
+/*
+ * call-seq:
  *   insert(PATH, LABEL, BEFORE) -> int
  *
  * Make LABEL a sibling of PATH by inserting it directly before or after PATH.
@@ -286,6 +305,84 @@ VALUE augeas_close (VALUE s) {
     return Qnil;
 }
 
+static void hash_set(VALUE hash, const char *sym, VALUE v) {
+    rb_hash_aset(hash, ID2SYM(rb_intern(sym)), v);
+}
+
+/*
+ * call-seq:
+ *   error -> HASH
+ *
+ * Retrieve details about the last error encountered and return those
+ * details in a HASH with the following entries:
+ * - :code    error code from +aug_error+
+ * - :message error message from +aug_error_message+
+ * - :minor   minor error message from +aug_minor_error_message+
+ * - :details error details from +aug_error_details+
+ */
+VALUE augeas_error(VALUE s) {
+    augeas *aug = aug_handle(s);
+    int code;
+    const char *msg;
+    VALUE result;
+
+    result = rb_hash_new();
+
+    code = aug_error(aug);
+    hash_set(result, "code", INT2NUM(code));
+
+    msg = aug_error_message(aug);
+    if (msg != NULL)
+        hash_set(result, "message", rb_str_new2(msg));
+
+    msg = aug_error_minor_message(aug);
+    if (msg != NULL)
+        hash_set(result, "minor", rb_str_new2(msg));
+
+    msg = aug_error_details(aug);
+    if (msg != NULL)
+        hash_set(result, "details", rb_str_new2(msg));
+
+    return result;
+}
+
+static void hash_set_range(VALUE hash, const char *sym,
+                           unsigned int start, unsigned int end) {
+    VALUE r;
+
+    r = rb_range_new(INT2NUM(start), INT2NUM(end), 0);
+    hash_set(hash, sym, r);
+}
+
+VALUE augeas_span(VALUE s, VALUE path) {
+    augeas *aug = aug_handle(s);
+    char *cpath = StringValueCStr(path);
+    char *filename = NULL;
+    unsigned int label_start, label_end, value_start, value_end,
+        span_start, span_end;
+    int r;
+    VALUE result;
+
+    r = aug_span(aug, cpath,
+                 &filename,
+                 &label_start, &label_end,
+                 &value_start, &value_end,
+                 &span_start, &span_end);
+
+    result = rb_hash_new();
+
+    if (r == 0) {
+        hash_set(result, "filename", rb_str_new2(filename));
+        hash_set_range(result, "label", label_start, label_end);
+        hash_set_range(result, "value", value_start, value_end);
+        hash_set_range(result, "span", span_start, span_end);
+    }
+
+    free(filename);
+
+    return result;
+}
+
 void Init__augeas() {
 
     /* Define the ruby class */
@@ -302,7 +399,22 @@ void Init__augeas() {
     DEF_AUG_FLAG(SAVE_NOOP);
     DEF_AUG_FLAG(NO_LOAD);
     DEF_AUG_FLAG(NO_MODL_AUTOLOAD);
+    DEF_AUG_FLAG(ENABLE_SPAN);
 #undef DEF_AUG_FLAG
+
+    /* Constants for enum aug_errcode_t */
+#define DEF_AUG_ERR(name) \
+    rb_define_const(c_augeas, #name, INT2NUM(AUG_##name))
+    DEF_AUG_ERR(NOERROR);
+    DEF_AUG_ERR(ENOMEM);
+    DEF_AUG_ERR(EINTERNAL);
+    DEF_AUG_ERR(EPATHX);
+    DEF_AUG_ERR(ENOMATCH);
+    DEF_AUG_ERR(EMMATCH);
+    DEF_AUG_ERR(ESYNTAX);
+    DEF_AUG_ERR(ENOLENS);
+    DEF_AUG_ERR(EMXFM);
+#undef DEF_AUG_ERR
 
     /* Define the methods */
     rb_define_singleton_method(c_augeas, "open3", augeas_init, 3);
@@ -316,8 +428,11 @@ void Init__augeas() {
     rb_define_method(c_augeas, "match", augeas_match, 1);
     rb_define_method(c_augeas, "save", augeas_save, 0);
     rb_define_method(c_augeas, "load", augeas_load, 0);
-    rb_define_method(c_augeas, "set", augeas_set, 2);
+    rb_define_method(c_augeas, "set_internal", augeas_set, 2);
+    rb_define_method(c_augeas, "setm", augeas_setm, 3);
     rb_define_method(c_augeas, "close", augeas_close, 0);
+    rb_define_method(c_augeas, "error", augeas_error, 0);
+    rb_define_method(c_augeas, "span", augeas_span, 1);
 }
 
 /*
