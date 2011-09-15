@@ -1,0 +1,11 @@
+diff -urN puppet-2.7.3/ext/rack/files/config.ru puppet-2.7.3-rackconfig/ext/rack/files/config.ru
+--- puppet-2.7.3/ext/rack/files/config.ru	2011-08-06 21:18:42.000000000 +0200
++++ puppet-2.7.3-rackconfig/ext/rack/files/config.ru	2011-09-15 09:13:24.681506186 +0200
+@@ -10,6 +10,7 @@
+ # ARGV << "--debug"
+ 
+ ARGV << "--rack"
++ARGV << '--confdir=/etc/puppet'
+ require 'puppet/application/master'
+ # we're usually running inside a Rack::Builder.new {} block,
+ # therefore we need to call run *here*.
