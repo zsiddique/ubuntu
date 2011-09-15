@@ -1,8 +1,8 @@
-augeas (0.9.0~ppa~lucid1) lucid; urgency=low
+augeas (0.9.0~lucid~ppa1) lucid; urgency=low
 
   * Updated to 0.9.0
 
- -- Sascha Kettler <kettler@gmx.net>  Wed, 14 Sep 2011 16:34:37 +0200
+ -- Sascha Kettler <kettler@gmx.net>  Wed, 14 Sep 2011 17:53:21 +0200
 
 augeas (0.7.2-1~ppa1~lucid2) lucid; urgency=low
 
