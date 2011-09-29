@@ -1,0 +1,5 @@
+php53-xhprof (0.9.2~lucid~ppa1) lucid; urgency=low
+
+  * Converted to PPA
+
+ -- Sascha Kettler <kettler@gmx.net>  Thu, 29 Sep 2011 12:11:03 +0200
