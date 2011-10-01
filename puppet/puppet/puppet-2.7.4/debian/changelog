@@ -1,3 +1,9 @@
+puppet (2.7.4~lucid~ppa2) lucid; urgency=low
+
+  * Added missing quilt dependancy
+
+ -- Sascha Kettler <kettler@gmx.net>  Sat, 01 Oct 2011 03:43:05 +0200
+
 puppet (2.7.4~lucid~ppa1) lucid; urgency=low
 
   * Updated to 2.7.4

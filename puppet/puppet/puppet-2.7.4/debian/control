@@ -3,7 +3,7 @@ Section: admin
 Priority: optional
 Maintainer: Sascha Kettler <kettler@gmx.net>
 Build-Depends-Indep: ruby (>= 1.8.1), libopenssl-ruby, facter (>= 1.5)
-Build-Depends: debhelper (>= 6.0.4), openssl
+Build-Depends: debhelper (>= 6.0.4), openssl, quilt
 Standards-Version: 3.9.1
 Homepage: http://projects.puppetlabs.com/projects/puppet
 
