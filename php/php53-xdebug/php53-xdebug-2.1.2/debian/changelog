@@ -1,3 +1,9 @@
+php53-xdebug (2.1.2~lucid~ppa1) lucid; urgency=low
+
+  * Updated to Xdebug 2.1.2
+
+ -- Sascha Kettler <kettler@gmx.net>  Wed, 12 Oct 2011 13:13:02 +0200
+
 php53-xdebug (2.1.1~lucid~ppa2) lucid; urgency=low
 
   * Removed duplicate section from ini file
