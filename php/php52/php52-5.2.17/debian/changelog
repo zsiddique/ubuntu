@@ -1,3 +1,9 @@
+php52 (5.2.17~lucid~ppa10) lucid; urgency=low
+
+  * Moved cron job to php52-common 
+
+ -- Sascha Kettler <kettler@gmx.net>  Wed, 12 Oct 2011 10:23:41 +0200
+
 php52 (5.2.17~lucid~ppa9) lucid; urgency=low
 
   * Fixed compatibility with phpmyadmin package

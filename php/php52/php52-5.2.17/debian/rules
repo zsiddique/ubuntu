@@ -303,7 +303,7 @@ binary-indep: build install
 binary-arch: build install
 	dh_testdir
 	dh_testroot
-	dh_installcron --name=php52
+	dh_installcron
 	dh_installinit
 	dh_installchangelogs NEWS
 	dh_installdocs
