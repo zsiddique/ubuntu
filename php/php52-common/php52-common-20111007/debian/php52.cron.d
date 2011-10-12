@@ -1,4 +1,4 @@
-# /etc/cron.d/php5: crontab fragment for php5
+# /etc/cron.d/php52: crontab fragment for php52
 #  This purges session files older than X, where X is defined in seconds
 #  as the largest value of session.gc_maxlifetime from all your php.ini
 #  files, or 24 minutes if not defined.  See /usr/lib/php52/maxlifetime
