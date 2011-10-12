@@ -34,6 +34,9 @@ install: build
 	chown root:www-data debian/php53-common/var/log/php53
 	chmod 0750 debian/php53-common/var/log/php53
 	
+	mkdir -p debian/php53-common/usr/lib/php53
+	install -m755 debian/maxlifetime debian/php53-common/usr/lib/php53
+	
 	# Install configuration
 	mkdir -p debian/php53-common/etc/php53/conf.d
 	cp php_browscap.ini debian/php53-common/etc/php53/
@@ -48,7 +51,9 @@ binary-indep: build install
 	dh_testdir
 	dh_testroot
 	dh_installdocs
-	dh_link
+	dh_installcron -pphp53-common --name=php53
+	dh_strip -s
+	dh_link -s
 	dh_compress -X.ini
 	dh_fixperms
 	dh_installdeb
