@@ -35,7 +35,7 @@ install: build
 	chmod 0750 debian/php52-common/var/log/php52
 	
 	mkdir -p debian/php52-common/usr/lib/php52
-	install -m755 debian/maxlifetime debian/php52-common/usr/lib/php5
+	install -m755 debian/maxlifetime debian/php52-common/usr/lib/php52
 	
 	# Install configuration
 	mkdir -p debian/php52-common/etc/php52/conf.d
