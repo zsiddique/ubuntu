@@ -1,8 +1,9 @@
 php52 (5.2.17~lucid~ppa10) lucid; urgency=low
 
   * Moved cron job to php52-common 
+  * Added php52-dbg package
 
- -- Sascha Kettler <kettler@gmx.net>  Wed, 12 Oct 2011 10:23:41 +0200
+ -- Sascha Kettler <kettler@gmx.net>  Wed, 12 Oct 2011 10:27:59 +0200
 
 php52 (5.2.17~lucid~ppa9) lucid; urgency=low
 

@@ -29,6 +29,22 @@ Description: server-side, HTML-embedded scripting language
  .
  Homepage: http://www.php.net/
 
+Package: php52-dbg
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, mime-support, libmagic1, ucf,
+ php52-common
+Recommends: gdb
+Description: Debug symbols for PHP5
+ This package provides the debug symbols for PHP5 needed for properly
+ debugging errors in PHP5 with gdb.
+ .
+ PHP5 is an HTML-embedded scripting language. Much of its syntax is borrowed
+ from C, Java and Perl with a couple of unique PHP-specific features thrown
+ in. The goal of the language is to allow web developers to write dynamically
+ generated pages quickly.
+ .
+ Homepage: http://www.php.net/
+
 Package: libapache2-mod-php52
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}, php52, apache2-mpm-prefork, 
