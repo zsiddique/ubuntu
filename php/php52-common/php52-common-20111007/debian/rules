@@ -34,6 +34,9 @@ install: build
 	chown root:www-data debian/php52-common/var/log/php52
 	chmod 0750 debian/php52-common/var/log/php52
 	
+	mkdir -p debian/php52-common/usr/lib/php52
+	install -m755 debian/maxlifetime debian/php52-common/usr/lib/php5
+	
 	# Install configuration
 	mkdir -p debian/php52-common/etc/php52/conf.d
 	cp php_browscap.ini debian/php52-common/etc/php52/
@@ -48,7 +51,9 @@ binary-indep: build install
 	dh_testdir
 	dh_testroot
 	dh_installdocs
-	dh_link
+	dh_installcron -pphp52-common --name=php52
+	dh_strip -s
+	dh_link -s
 	dh_compress -X.ini
 	dh_fixperms
 	dh_installdeb

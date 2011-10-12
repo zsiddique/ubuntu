@@ -1,3 +1,11 @@
+php52-common (20111007~lucid~ppa1) lucid; urgency=low
+
+  * Updated php_browscap.ini to version 4862 (2011-10-07)
+  * Added missing maxlifetime script
+  * Moved php52 cron into php52-common
+
+ -- Sascha Kettler <kettler@gmx.net>  Wed, 12 Oct 2011 10:33:41 +0200
+
 php52-common (20101129~lucid~ppa2) lucid; urgency=low
 
   * Fixed path to php_browscap.ini

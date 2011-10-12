@@ -1,0 +1,15 @@
+#!/bin/sh -e
+
+max=1440
+
+for ini in /etc/php52/*/php.ini /etc/php52/conf.d/*.ini; do
+	if [ -e $ini ]; then
+		cur=$(sed -n -e 's/^[[:space:]]*session.gc_maxlifetime[[:space:]]*=[[:space:]]*\([0-9]\+\).*$/\1/p' $ini 2>/dev/null || true);
+		[ -z "$cur" ] && cur=0
+		[ "$cur" -gt "$max" ] && max=$cur
+	fi
+done
+
+echo $(($max/60))
+
+exit 0
