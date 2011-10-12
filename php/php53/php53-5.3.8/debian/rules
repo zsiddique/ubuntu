@@ -1,0 +1,336 @@
+#!/usr/bin/make -f
+# -*- makefile -*-
+# Sample debian/rules that uses debhelper.
+# This file was originally written by Joey Hess and Craig Small.
+# As a special exception, when this file is copied by dh-make into a
+# dh-make output file, you may use that output file without restriction.
+# This special exception was added by Craig Small in version 0.37 of dh-make.
+
+# Uncomment this to turn on verbose mode.
+#export DH_VERBOSE=1
+
+# This has to be exported to make some magic below work.
+export DH_OPTIONS
+
+DEB_HOST_GNU_TYPE	?= $(shell dpkg-architecture -qDEB_HOST_GNU_TYPE)
+DEB_BUILD_GNU_TYPE	?= $(shell dpkg-architecture -qDEB_BUILD_GNU_TYPE)
+DEB_BUILD_ARCH		?= $(shell dpkg-architecture -qDEB_BUILD_ARCH)
+
+PHP5_HOST_GNU_TYPE	= $(subst gnulp,gnu,$(DEB_HOST_GNU_TYPE))
+PHP5_BUILD_GNU_TYPE	= $(subst gnulp,gnu,$(DEB_BUILD_GNU_TYPE))
+
+PHP5_HOST_GNU_TYPE	:= $(shell echo $(PHP5_HOST_GNU_TYPE) | sed 's/-gnu$$//')
+PHP5_BUILD_GNU_TYPE	:= $(shell echo $(PHP5_BUILD_GNU_TYPE) | sed 's/-gnu$$//')
+
+# enable the hardening wrapper
+DEB_BUILD_HARDENING = 1
+# but disable PIE
+DEB_BUILD_HARDENING_PIE = 0
+export DEB_BUILD_HARDENING DEB_BUILD_HARDENING_PIE
+
+# Set PHP extension dir
+ZEND_MODULE_API_NO	= $(shell grep '\#define ZEND_MODULE_API_NO ' Zend/zend_modules.h | sed 's/\#define ZEND_MODULE_API_NO //')
+EXTENSION_DIR		= /usr/lib/php53/$(ZEND_MODULE_API_NO)
+
+LIBEVENT_DIR	= libevent-1.4.14b-stable
+PROG_SENDMAIL	= /usr/sbin/sendmail
+
+CFLAGS = -O2 -Wall -fsigned-char -fno-strict-aliasing
+# LFS support
+ifneq (yes,$(PHP5_COMPAT))
+  CFLAGS += $(shell getconf LFS_CFLAGS)
+endif
+
+ifneq (nostrip, $(findstring nostrip, $(DEB_BUILD_OPTIONS)))
+        install_strip = -s
+endif
+
+COMMON_CONFIG=--build=$(DEB_BUILD_GNU_TYPE) \
+		--host=$(DEB_HOST_GNU_TYPE) \
+		--program-suffix=53 \
+		--prefix=/usr \
+		--localstatedir=/var \
+		--mandir=/usr/share/man \
+		--disable-debug \
+		--with-regex=php \
+		--disable-rpath \
+		--disable-static \
+		--with-pic \
+		--with-layout=GNU \
+		--with-pear=/usr/share/php \
+		--enable-calendar \
+		--enable-sysvsem \
+		--enable-sysvshm \
+		--enable-sysvmsg \
+		--enable-bcmath \
+		--with-bz2 \
+		--enable-ctype \
+		--with-db4 \
+		--without-gdbm \
+		--with-iconv \
+		--enable-exif \
+		--enable-ftp \
+		--with-gettext \
+		--enable-mbstring \
+		--with-pcre-regex=/usr \
+		--enable-shmop \
+		--enable-sockets \
+		--enable-wddx \
+		--with-libxml-dir=/usr \
+		--with-zlib \
+		--with-openssl=/usr \
+		--enable-soap \
+		--enable-zip \
+		--with-exec-dir=/usr/lib/php53/libexec \
+		--enable-libxml \
+		--with-curl \
+		--with-curlwrappers \
+		--enable-dba \
+		--with-gd=/usr \
+		--with-jpeg-dir=/usr \
+		--with-png-dir=/usr \
+		--with-xpm-dir=/usr \
+		--with-gmp \
+		--with-freetype-dir=/usr \
+		--enable-gd-native-ttf \
+		--with-t1lib \
+		--with-mcrypt \
+		--with-mhash \
+		--enable-sqlite-utf8 \
+		--with-mysql=mysqlnd \
+		--with-mysqli=mysqlnd \
+		--with-mysql-sock=/var/run/mysqld/mysqld.sock \
+		--with-pdo-mysql=mysqlnd \
+		--with-readline \
+		--with-recode \
+		--enable-pcntl \
+		--with-xmlrpc \
+		--with-xsl \
+		--enable-zip \
+		--with-ldap=/usr \
+		--with-pspell=/usr \
+		--with-tidy=/usr \
+		--with-zend-vm=GOTO
+
+# include the patch/unpatch rules from quilt
+include /usr/share/quilt/quilt.make
+
+prepared: prepared-stamp
+
+prepared-stamp: $(QUILT_STAMPFN)
+	dh_testdir
+	rm -rf $(LIBEVENT_DIR)
+	rm -rf $(LIBEVENT_DIR)-install
+	tar xfz debian/$(LIBEVENT_DIR).tar.gz
+	touch prepared-stamp
+
+unprepared:
+	dh_testdir
+	rm -rf $(LIBEVENT_DIR)
+	rm -rf $(LIBEVENT_DIR)-install
+	rm -f prepared-stamp
+
+install-libevent-stamp:
+	dh_testdir
+	cd $(LIBEVENT_DIR) && \
+	CFLAGS="$(CFLAGS)" ./configure --prefix=$(CURDIR)/$(LIBEVENT_DIR)-install --disable-shared
+	cd $(LIBEVENT_DIR) && $(MAKE)
+	cd $(LIBEVENT_DIR) && $(MAKE) install
+	touch install-libevent-stamp
+
+configure: configure-apache2-stamp configure-cgi-stamp configure-cli-stamp configure-fpm-stamp
+
+configure-apache2-stamp: prepared-stamp
+	dh_testdir
+	if [ -d apache2-build ]; then rm -rf apache2-build; fi
+	-mkdir apache2-build
+	cd apache2-build && \
+	CFLAGS="$(CFLAGS)" PROG_SENDMAIL="$(PROG_SENDMAIL)" ../configure \
+		--sysconfdir=/etc \
+		--with-apxs2=/usr/bin/apxs2 \
+		--with-config-file-path=/etc/php53/apache2 \
+		--with-config-file-scan-dir=/etc/php53/apache2/conf.d \
+		$(COMMON_CONFIG)
+	touch configure-apache2-stamp
+
+configure-cgi-stamp: prepared-stamp
+	dh_testdir
+	if [ -d cgi-build ]; then rm -rf cgi-build; fi
+	-mkdir cgi-build
+	cd cgi-build && \
+	CFLAGS="$(CFLAGS)" PROG_SENDMAIL="$(PROG_SENDMAIL)" ../configure \
+		--sysconfdir=/etc \
+		--with-config-file-path=/etc/php53/cgi \
+		--with-config-file-scan-dir=/etc/php53/cgi/conf.d \
+		$(COMMON_CONFIG)
+	touch configure-cgi-stamp
+
+configure-cli-stamp: prepared-stamp
+	dh_testdir
+	if [ -d cli-build ]; then rm -rf cli-build; fi
+	-mkdir cli-build
+	cd cli-build && \
+	CFLAGS="$(CFLAGS)" PROG_SENDMAIL="$(PROG_SENDMAIL)" ../configure \
+		--sysconfdir=/etc \
+		--disable-cgi \
+		--with-config-file-path=/etc/php53/cli \
+		--with-config-file-scan-dir=/etc/php53/cli/conf.d \
+		$(COMMON_CONFIG)
+	touch configure-cli-stamp
+
+configure-fpm-stamp: prepared-stamp install-libevent-stamp
+	dh_testdir
+	if [ -d fpm-build ]; then rm -rf fpm-build; fi
+	-mkdir fpm-build
+	cd fpm-build && \
+	CFLAGS="$(CFLAGS)" LDFLAGS="-lrt" PROG_SENDMAIL="$(PROG_SENDMAIL)" ../configure \
+		--sysconfdir=/etc/php53 \
+		--enable-fpm --with-fpm-user=www-data --with-fpm-group=www-data \
+		--with-libevent-dir=$(CURDIR)/$(LIBEVENT_DIR)-install \
+		--with-config-file-path=/etc/php53/fpm \
+		--with-config-file-scan-dir=/etc/php53/fpm/conf.d \
+		$(COMMON_CONFIG)
+	touch configure-fpm-stamp
+
+build: build-apache2-stamp build-cgi-stamp build-cli-stamp build-fpm-stamp build-pear-stamp
+
+build-apache2-stamp: configure-apache2-stamp
+	dh_testdir
+	cd apache2-build && $(MAKE)
+	touch build-apache2-stamp
+
+build-cgi-stamp: configure-cgi-stamp
+	dh_testdir
+	cd cgi-build && $(MAKE)
+	touch build-cgi-stamp
+
+build-cli-stamp: configure-cli-stamp
+	dh_testdir
+	cd cli-build && $(MAKE)
+	touch build-cli-stamp
+
+build-fpm-stamp: configure-fpm-stamp
+	dh_testdir
+	cd fpm-build && $(MAKE)
+	touch build-fpm-stamp
+
+build-pear-stamp: build-cli-stamp
+	dh_testdir
+	-mkdir pear-build
+	cd cli-build && make install-pear PHP_PEAR_PHP_BIN=/usr/bin/php PHP_PEAR_INSTALL_DIR=/usr/share/php PHP_PEAR_SYSCONF_DIR=/etc/pear PHP_PEAR_SIG_BIN=/usr/bin/gpg INSTALL_ROOT=$(CURDIR)/pear-build
+	sed -i -e 's/-d output_buffering=1 -d open_basedir="" -d safe_mode=0/-d output_buffering=1 -d open_basedir="" -d safe_mode=0 -d memory_limit="-1"/' \
+		$(CURDIR)/pear-build/usr/bin/pear && \
+	sed -i -e 's/-d output_buffering=1 -d safe_mode=0/-d output_buffering=1 -d open_basedir="" -d safe_mode=0 -d memory_limit="-1"/' \
+		$(CURDIR)/pear-build/usr/bin/pecl && \
+	sed -i -e 's/-d memory_limit="-1"//' \
+		-e 's/-d output_buffering=1 -d open_basedir="" -d safe_mode=0/-d output_buffering=1 -d open_basedir="" -d safe_mode=0 -d memory_limit="-1"/' \
+		$(CURDIR)/pear-build/usr/bin/peardev
+	touch build-pear-stamp
+
+install: DH_OPTIONS=
+install: build
+	dh_testdir
+	dh_testroot
+	dh_clean -k
+	dh_installdirs
+	mkdir -p debian/php53/var/lib/php53
+	chmod 01733 debian/php53/var/lib/php53
+	mkdir -p debian/php53/$(EXTENSION_DIR)
+	
+	# install apache2 DSO module
+	mkdir -p debian/libapache2-mod-php53/`apxs2 -q LIBEXECDIR`
+	cp apache2-build/.libs/libphp5.so debian/libapache2-mod-php53/`apxs2 -q LIBEXECDIR`/libphp53.so
+	mkdir -p debian/libapache2-mod-php53/etc/apache2/mods-available
+	cp debian/apache2-php53.load debian/libapache2-mod-php53/etc/apache2/mods-available/php53.load
+	cp debian/apache2-php53.conf debian/libapache2-mod-php53/etc/apache2/mods-available/php53.conf
+	mkdir -p debian/libapache2-mod-php53/etc/php53/apache2
+	cp php.ini-production debian/libapache2-mod-php53/etc/php53/apache2/php.ini
+	sed -i "s#^extension_dir = \"./\"#extension_dir = \"$(EXTENSION_DIR)\"#" debian/libapache2-mod-php53/etc/php53/apache2/php.ini
+	
+	# install CGI
+	cd cgi-build && $(MAKE) install-sapi INSTALL_ROOT=$(PWD)/debian/php53
+	mkdir -p debian/php53/etc/php53/cgi
+	cp php.ini-production debian/php53/etc/php53/cgi/php.ini
+	sed -i "s#^extension_dir = \"./\"#extension_dir = \"$(EXTENSION_DIR)\"#" debian/php53/etc/php53/cgi/php.ini
+	
+	# install CLI
+	cd cli-build && $(MAKE) install-cli INSTALL_ROOT=$(PWD)/debian/php53
+	mkdir -p debian/php53/etc/php53/cli
+	cp php.ini-production debian/php53/etc/php53/cli/php.ini
+	sed -i 's#^display_errors = Off#display_errors = stderr#' debian/php53/etc/php53/cli/php.ini
+	sed -i "s#^extension_dir = \"./\"#extension_dir = \"$(EXTENSION_DIR)\"#" debian/php53/etc/php53/cli/php.ini
+	sed -i "s#^output_buffering = 4096#output_buffering = Off#" debian/php53/etc/php53/cli/php.ini
+	
+	# install FPM
+	cd fpm-build && $(MAKE) install-fpm INSTALL_ROOT=$(PWD)/debian/php53-fpm
+	mkdir -p debian/php53-fpm/etc/php53/fpm
+	cp php.ini-production debian/php53-fpm/etc/php53/fpm/php.ini
+	sed -i "s#^extension_dir = \"./\"#extension_dir = \"$(EXTENSION_DIR)\"#" debian/php53-fpm/etc/php53/fpm/php.ini
+	
+	# Install alternate paths
+	cd cli-build && $(MAKE) install-build install-headers install-programs INSTALL_ROOT=$(PWD)/debian/php53-dev
+	mv debian/php53-dev/usr/include/php debian/php53-dev/usr/include/php53
+	sed -i 's~/include/php~/include/php53~g' debian/php53-dev/usr/bin/php-config53
+	sed -i 's~/include`/php~/include`/php53~g' debian/php53-dev/usr/bin/phpize53
+	
+	# Instal configuration
+	mkdir -p debian/php53/etc/php53/conf.d
+	
+	# Install PEAR
+	cp -r pear-build/* debian/php53-pear/
+	
+	touch install-stamp
+
+binary: binary-arch binary-indep
+
+binary-indep: DH_OPTIONS=-i
+binary-indep:
+	dh_testdir
+	dh_testroot
+	dh_installdocs
+	dh_link
+	dh_compress -X.ini
+	dh_fixperms
+	dh_installdeb
+	dh_gencontrol
+	dh_md5sums
+	dh_builddeb
+
+
+binary-arch: build install
+	dh_testdir
+	dh_testroot
+	dh_installcron
+	dh_installinit
+	dh_installchangelogs NEWS
+	dh_installdocs
+	dh_strip -s --dbg-package=php53-dbg
+	dh_link -s
+	dh_compress -s -X.ini
+	dh_fixperms -s -X /var/lib/php53
+	mkdir -p debian/php53/usr/share/linda/overrides
+	echo "Tag: non-standard-dir-perm" >> debian/php53/usr/share/linda/overrides/php53
+	echo "Data: /var/lib/php53.*" >> debian/php53/usr/share/linda/overrides/php53
+	dh_installdeb -s
+	dh_shlibdeps -s
+	dh_gencontrol -s
+	dh_md5sums -s
+	dh_builddeb -s
+
+clean: unprepared unpatch
+	dh_testdir
+	rm -f configure-apache2-stamp build-apache2-stamp
+	rm -f configure-cgi-stamp build-cgi-stamp
+	rm -f configure-cli-stamp build-cli-stamp
+	rm -f configure-fpm-stamp build-fpm-stamp
+	rm -f install-libevent-stamp
+	rm -f build-pear-stamp
+	rm -f install-stamp
+	rm -rf apache2-build
+	rm -rf cgi-build
+	rm -rf cli-build
+	rm -rf fpm-build
+	rm -rf pear-build
+	dh_clean
+
+.PHONY: build clean binary-indep binary-arch binary install configure

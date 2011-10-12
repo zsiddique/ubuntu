@@ -1,0 +1,76 @@
+diff -ur php53-5.3.6/ext/pdo_mysql/mysql_driver.c php53-5.3.6-mysqlnd-compression/ext/pdo_mysql/mysql_driver.c
+--- php53-5.3.6/ext/pdo_mysql/mysql_driver.c	2011-01-17 10:54:22.000000000 +0100
++++ php53-5.3.6-mysqlnd-compression/ext/pdo_mysql/mysql_driver.c	2011-07-01 16:52:29.842433151 +0200
+@@ -621,9 +621,9 @@
+ 		long connect_timeout = pdo_attr_lval(driver_options, PDO_ATTR_TIMEOUT, 30 TSRMLS_CC);
+ 		long local_infile = pdo_attr_lval(driver_options, PDO_MYSQL_ATTR_LOCAL_INFILE, 0 TSRMLS_CC);
+ 		char *init_cmd = NULL;
++		long compress = 0;
+ #ifndef PDO_USE_MYSQLND
+ 		char *default_file = NULL, *default_group = NULL;
+-		long compress = 0;
+ #endif
+ #if HAVE_MYSQL_STMT_PREPARE || PDO_USE_MYSLQND
+ 		char *ssl_key = NULL, *ssl_cert = NULL, *ssl_ca = NULL, *ssl_capath = NULL, *ssl_cipher = NULL;
+@@ -703,7 +703,7 @@
+ 			}
+ 			efree(default_group);
+ 		}
+-
++#endif
+ 		compress = pdo_attr_lval(driver_options, PDO_MYSQL_ATTR_COMPRESS, 0 TSRMLS_CC);
+ 		if (compress) {
+ 			if (mysql_options(H->server, MYSQL_OPT_COMPRESS, 0)) {
+@@ -711,7 +711,6 @@
+ 				goto cleanup;
+ 			}
+ 		}
+-#endif
+ #if HAVE_MYSQL_STMT_PREPARE || PDO_USE_MYSLQND
+ 		ssl_key = pdo_attr_strval(driver_options, PDO_MYSQL_ATTR_SSL_KEY, NULL TSRMLS_CC);
+ 		ssl_cert = pdo_attr_strval(driver_options, PDO_MYSQL_ATTR_SSL_CERT, NULL TSRMLS_CC);
+diff -ur php53-5.3.6/ext/pdo_mysql/pdo_mysql.c php53-5.3.6-mysqlnd-compression/ext/pdo_mysql/pdo_mysql.c
+--- php53-5.3.6/ext/pdo_mysql/pdo_mysql.c	2011-01-01 03:19:59.000000000 +0100
++++ php53-5.3.6-mysqlnd-compression/ext/pdo_mysql/pdo_mysql.c	2011-07-01 16:52:29.842433151 +0200
+@@ -74,8 +74,8 @@
+ 	REGISTER_PDO_CLASS_CONST_LONG("MYSQL_ATTR_MAX_BUFFER_SIZE", (long)PDO_MYSQL_ATTR_MAX_BUFFER_SIZE);
+ 	REGISTER_PDO_CLASS_CONST_LONG("MYSQL_ATTR_READ_DEFAULT_FILE", (long)PDO_MYSQL_ATTR_READ_DEFAULT_FILE);
+ 	REGISTER_PDO_CLASS_CONST_LONG("MYSQL_ATTR_READ_DEFAULT_GROUP", (long)PDO_MYSQL_ATTR_READ_DEFAULT_GROUP);
+-	REGISTER_PDO_CLASS_CONST_LONG("MYSQL_ATTR_COMPRESS", (long)PDO_MYSQL_ATTR_COMPRESS);
+ #endif
++	REGISTER_PDO_CLASS_CONST_LONG("MYSQL_ATTR_COMPRESS", (long)PDO_MYSQL_ATTR_COMPRESS);
+ 	REGISTER_PDO_CLASS_CONST_LONG("MYSQL_ATTR_DIRECT_QUERY", (long)PDO_MYSQL_ATTR_DIRECT_QUERY);
+ 	REGISTER_PDO_CLASS_CONST_LONG("MYSQL_ATTR_FOUND_ROWS", (long)PDO_MYSQL_ATTR_FOUND_ROWS);
+ 	REGISTER_PDO_CLASS_CONST_LONG("MYSQL_ATTR_IGNORE_SPACE", (long)PDO_MYSQL_ATTR_IGNORE_SPACE);
+diff -ur php53-5.3.6/ext/pdo_mysql/php_pdo_mysql_int.h php53-5.3.6-mysqlnd-compression/ext/pdo_mysql/php_pdo_mysql_int.h
+--- php53-5.3.6/ext/pdo_mysql/php_pdo_mysql_int.h	2011-01-17 10:54:22.000000000 +0100
++++ php53-5.3.6-mysqlnd-compression/ext/pdo_mysql/php_pdo_mysql_int.h	2011-07-01 16:52:29.842433151 +0200
+@@ -163,8 +163,8 @@
+ 	PDO_MYSQL_ATTR_READ_DEFAULT_FILE,
+ 	PDO_MYSQL_ATTR_READ_DEFAULT_GROUP,
+ 	PDO_MYSQL_ATTR_MAX_BUFFER_SIZE,
+-	PDO_MYSQL_ATTR_COMPRESS,
+ #endif
++	PDO_MYSQL_ATTR_COMPRESS,
+ 	PDO_MYSQL_ATTR_DIRECT_QUERY,
+ 	PDO_MYSQL_ATTR_FOUND_ROWS,
+ 	PDO_MYSQL_ATTR_IGNORE_SPACE,
+diff -ur php53-5.3.6/ext/pdo_mysql/tests/pdo_mysql_class_constants.phpt php53-5.3.6-mysqlnd-compression/ext/pdo_mysql/tests/pdo_mysql_class_constants.phpt
+--- php53-5.3.6/ext/pdo_mysql/tests/pdo_mysql_class_constants.phpt	2009-10-26 12:41:30.000000000 +0100
++++ php53-5.3.6-mysqlnd-compression/ext/pdo_mysql/tests/pdo_mysql_class_constants.phpt	2011-07-01 16:52:29.842433151 +0200
+@@ -15,6 +15,7 @@
+ 		'MYSQL_ATTR_FOUND_ROWS'						=> true,
+ 		'MYSQL_ATTR_IGNORE_SPACE'					=> true,
+ 		'MYSQL_ATTR_INIT_COMMAND'					=> true,
++		'MYSQL_ATTR_COMPRESS'						=> true,
+ 		"MYSQL_ATTR_SSL_KEY"						=> true,
+ 		"MYSQL_ATTR_SSL_CERT"						=> true,
+ 		"MYSQL_ATTR_SSL_CA"							=> true,
+@@ -26,7 +27,6 @@
+ 		$expected['MYSQL_ATTR_MAX_BUFFER_SIZE']			= true;
+ 		$expected['MYSQL_ATTR_READ_DEFAULT_FILE']		= true;
+ 		$expected['MYSQL_ATTR_READ_DEFAULT_GROUP']		= true;
+-		$expected['MYSQL_ATTR_COMPRESS']				= true;
+ 	}
+ 
+ 	/*
