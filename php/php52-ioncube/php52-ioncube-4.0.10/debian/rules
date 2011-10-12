@@ -1,0 +1,83 @@
+#!/usr/bin/make -f
+# -*- makefile -*-
+# Sample debian/rules that uses debhelper.
+# This file was originally written by Joey Hess and Craig Small.
+# As a special exception, when this file is copied by dh-make into a
+# dh-make output file, you may use that output file without restriction.
+# This special exception was added by Craig Small in version 0.37 of dh-make.
+
+# Uncomment this to turn on verbose mode.
+#export DH_VERBOSE=1
+
+# This has to be exported to make some magic below work.
+export DH_OPTIONS
+
+DEB_HOST_GNU_TYPE	?= $(shell dpkg-architecture -qDEB_HOST_GNU_TYPE)
+DEB_BUILD_GNU_TYPE	?= $(shell dpkg-architecture -qDEB_BUILD_GNU_TYPE)
+DEB_BUILD_ARCH		?= $(shell dpkg-architecture -qDEB_BUILD_ARCH)
+
+PHP5_HOST_GNU_TYPE	= $(subst gnulp,gnu,$(DEB_HOST_GNU_TYPE))
+PHP5_BUILD_GNU_TYPE	= $(subst gnulp,gnu,$(DEB_BUILD_GNU_TYPE))
+
+PHP5_HOST_GNU_TYPE	:= $(shell echo $(PHP5_HOST_GNU_TYPE) | sed 's/-gnu$$//')
+PHP5_BUILD_GNU_TYPE	:= $(shell echo $(PHP5_BUILD_GNU_TYPE) | sed 's/-gnu$$//')
+
+EXTENSION_DIR		:= $(shell php-config52 --extension-dir | sed 's/^"//' | sed 's/"$$//' )
+
+build: build-stamp
+
+build-stamp: configure-stamp
+	dh_testdir
+	touch build-stamp
+
+configure: configure-stamp
+
+configure-stamp:
+	dh_testdir
+	if [ -d ioncube ]; then rm -rf ioncube; fi
+	-mkdir ioncube
+	if [ "$(DEB_BUILD_ARCH)" = "amd64" ]; then tar xfj ioncube_loaders_lin_x86-64.tar.bz2; fi
+	if [ "$(DEB_BUILD_ARCH)" = "i386" ]; then tar xfj ioncube_loaders_lin_x86.tar.bz2; fi
+	if [ ! -d ioncube ]; then echo "Unsupported architecture $(DEB_BUILD_ARCH)"; exit 1; fi
+	touch configure-stamp
+
+install: DH_OPTIONS=
+install: build
+	dh_testdir
+	dh_testroot
+	dh_clean -k
+	dh_installdirs
+	mkdir -p debian/php52-ioncube/$(EXTENSION_DIR)
+	cp ioncube/ioncube_loader_lin_5.2.so debian/php52-ioncube/${EXTENSION_DIR}
+	# Instal configuration
+	mkdir -p debian/php52-ioncube/etc/php52/conf.d
+	cp debian/phpini.ioncube debian/php52-ioncube/etc/php52/conf.d/ioncube.ini
+	sed -i 's#@@EXTENSION_DIR@@#$(EXTENSION_DIR)#g' debian/php52-ioncube/etc/php52/conf.d/ioncube.ini
+	
+	touch install-stamp
+
+binary: binary-arch binary-indep
+
+binary-indep:
+
+binary-arch: build install
+	dh_testdir
+	dh_testroot
+	dh_strip -s
+	dh_link -s
+	dh_compress -s -X.ini
+	dh_installdeb -s
+	dh_shlibdeps -s
+	dh_gencontrol -s
+	dh_md5sums -s
+	dh_builddeb -s
+
+clean:
+	dh_testdir
+	rm -f configure-stamp
+	rm -f build-stamp
+	rm -f install-stamp
+	rm -rf ioncube
+	dh_clean
+
+.PHONY: build clean binary-indep binary-arch binary install configure
