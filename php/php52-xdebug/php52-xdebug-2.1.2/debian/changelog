@@ -1,3 +1,9 @@
+php52-xdebug (2.1.2~lucid~ppa2) lucid; urgency=low
+
+  * Added patch to remove compile time warning (broke Launchpad build)
+
+ -- Sascha Kettler <kettler@gmx.net>  Thu, 13 Oct 2011 10:31:25 +0200
+
 php52-xdebug (2.1.2~lucid~ppa1) lucid; urgency=low
 
   * Updated Xdebug to 2.1.2

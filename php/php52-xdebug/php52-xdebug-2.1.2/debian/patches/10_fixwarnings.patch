@@ -1,0 +1,11 @@
+diff -ur php52-xdebug-2.1.2/php_xdebug.h php52-xdebug-2.1.2-fixwarnings/php_xdebug.h
+--- php52-xdebug-2.1.2/php_xdebug.h	2011-07-28 13:13:03.000000000 +0200
++++ php52-xdebug-2.1.2-fixwarnings/php_xdebug.h	2011-10-13 10:24:57.774399955 +0200
+@@ -49,6 +49,7 @@
+ #endif
+ 
+ #include "main/SAPI.h"
++#include "ext/standard/php_string.h"
+ 
+ #if MEMORY_LIMIT
+ # define HAVE_PHP_MEMORY_USAGE 1

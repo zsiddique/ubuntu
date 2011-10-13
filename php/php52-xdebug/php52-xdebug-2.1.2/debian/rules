@@ -34,6 +34,19 @@ ifneq (nostrip, $(findstring nostrip, $(DEB_BUILD_OPTIONS)))
         install_strip = -s
 endif
 
+# include the patch/unpatch rules from quilt
+include /usr/share/quilt/quilt.make
+
+prepared: prepared-stamp
+
+prepared-stamp: $(QUILT_STAMPFN)
+	dh_testdir
+	touch prepared-stamp
+
+unprepared:
+	dh_testdir
+	rm -f prepared-stamp
+
 build: build-stamp
 
 build-stamp: configure-stamp
@@ -43,7 +56,7 @@ build-stamp: configure-stamp
 
 configure: configure-stamp
 
-configure-stamp:
+configure-stamp: prepared-stamp
 	dh_testdir
 	if [ -d pecl-build ]; then rm -rf pecl-build; fi
 	-mkdir pecl-build
@@ -86,7 +99,7 @@ binary-arch: build install
 	dh_md5sums -s
 	dh_builddeb -s
 
-clean:
+clean: unprepared unpatch
 	dh_testdir
 	rm -f configure-stamp
 	rm -f build-stamp
