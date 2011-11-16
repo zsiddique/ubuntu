@@ -180,7 +180,7 @@ config.status.%:
 
 build-arch.%: config.status.%
 	dh_testdir
-	dh_prep
+	dh_clean -k
 	$(MAKE) -C $(BUILDDIR_$*) build
 
 build-arch: $(foreach flavour,$(FLAVOURS),build-arch.$(flavour))
@@ -212,7 +212,7 @@ clean: unprepared unpatch
 install:
 	dh_testdir
 	dh_testroot
-	dh_prep
+	dh_clean -k
 	dh_installdirs
 	dh_install
 

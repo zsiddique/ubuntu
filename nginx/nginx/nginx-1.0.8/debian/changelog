@@ -1,3 +1,9 @@
+nginx (1.0.8~lucid~ppa3) lucid; urgency=low
+
+  * Replaces "dh_prep" with "dh_clean -k" for Hardy compatibility
+
+ -- Sascha Kettler <kettler@gmx.net>  Thu, 27 Oct 2011 15:59:00 +0200
+
 nginx (1.0.8~lucid~ppa2) lucid; urgency=low
 
   * Updated build dependancies for Ubuntu 8.04 lTS (Hardy)
