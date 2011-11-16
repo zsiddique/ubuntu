@@ -1,0 +1,12 @@
+Source: php53-redis
+Section: web
+Priority: optional
+Maintainer: Sascha Kettler <kettler@gmx.net>
+Build-Depends: php53, php53-dev, shtool, chrpath, debhelper (>= 5), quilt, bison, flex
+Standards-Version: 3.8.3
+Homepage: http://github.com/nicolasff/phpredis
+
+Package: php53-redis
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, php53
+Description: Redis C extension for PHP5.
