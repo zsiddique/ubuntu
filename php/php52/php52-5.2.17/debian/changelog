@@ -1,3 +1,9 @@
+php52 (5.2.17~lucid~ppa11) lucid; urgency=low
+
+  * Fixed php52-fpm init script 
+
+ -- Sascha Kettler <kettler@gmx.net>  Fri, 03 Feb 2012 10:19:29 +0100
+
 php52 (5.2.17~lucid~ppa10) lucid; urgency=low
 
   * Moved cron job to php52-common 
