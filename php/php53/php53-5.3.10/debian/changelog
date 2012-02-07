@@ -1,3 +1,9 @@
+php53 (5.3.10~lucid~ppa2) lucid; urgency=low
+
+  * Added patch for Bug #60817 - stream_get_line() incorrectly blocks
+
+ -- Sascha Kettler <kettler@gmx.net>  Tue, 07 Feb 2012 14:32:12 +0100
+
 php53 (5.3.10~lucid~ppa1) lucid; urgency=low
 
   * Updated to PHP 5.3.10
