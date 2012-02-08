@@ -1,0 +1,16 @@
+Source: php53-runkit
+Section: php
+Priority: optional
+Maintainer: Sascha Kettler <kettler@gmx.net>
+Build-Depends: php53, php53-dev, shtool, chrpath, debhelper (>= 5), quilt
+Standards-Version: 3.8.3
+Homepage: http://www.php.net/
+
+Package: php53-runkit
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, php53
+Description: Runkit extension for PHP
+ Replace, rename, and remove user defined functions and classes.
+ Define customized superglobal variables for general purpose use.
+ .
+ Homepage: https://github.com/zenovich/runkit
