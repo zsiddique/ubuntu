@@ -1,0 +1,5 @@
+php52-runkit (1.0.3~lucid~ppa1) lucid; urgency=low
+
+  * Converted to PPA
+
+ -- Sascha Kettler <kettler@gmx.net>  Wed, 08 Feb 2012 13:23:09 +0100
