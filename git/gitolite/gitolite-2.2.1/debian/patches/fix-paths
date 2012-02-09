@@ -1,0 +1,25 @@
+diff -ur gitolite-2.2.1/conf/example.gitolite.rc gitolite-2.2.1-fix-paths/conf/example.gitolite.rc
+--- gitolite-2.2.1/conf/example.gitolite.rc	2011-11-27 04:13:36.000000000 +0100
++++ gitolite-2.2.1-fix-paths/conf/example.gitolite.rc	2012-02-09 11:04:47.531124101 +0100
+@@ -19,8 +19,8 @@
+ # DO NOT CHANGE THE NEXT FOUR LINES UNLESS YOU REALLY KNOW WHAT YOU'RE DOING.
+ # These variables are set automatically by the install method you choose.
+ #            (PACKAGE MAINTAINERS: PLEASE READ doc/packaging.mkd)
+-# $GL_PACKAGE_CONF = "";
+-# $GL_PACKAGE_HOOKS = "";
++$GL_PACKAGE_CONF = "/etc/gitolite";
++$GL_PACKAGE_HOOKS = "/usr/share/gitolite/hooks";
+ 
+ # ------------------------------------------------------------------------------
+ # most often used/changed variables
+diff -ur gitolite-2.2.1/src/gl-setup gitolite-2.2.1-fix-paths/src/gl-setup
+--- gitolite-2.2.1/src/gl-setup	2011-11-27 04:13:36.000000000 +0100
++++ gitolite-2.2.1-fix-paths/src/gl-setup	2012-02-09 11:05:25.281128469 +0100
+@@ -1,6 +1,6 @@
+ #!/bin/sh
+ 
+-GL_PACKAGE_CONF=/tmp/share/gitolite/conf
++GL_PACKAGE_CONF=/etc/gitolite
+ # must be the same as the value for the same variable in
+ # $GL_PACKAGE_CONF/example.gitolite.rc.  Sorry about the catch-22 :)
+ 

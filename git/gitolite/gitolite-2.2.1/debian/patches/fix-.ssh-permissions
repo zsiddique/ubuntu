@@ -1,0 +1,12 @@
+diff -ur gitolite-2.2.1/src/gl-setup gitolite-2.2.1-fix-.ssh-permissions/src/gl-setup
+--- gitolite-2.2.1/src/gl-setup	2012-02-09 11:06:06.000000000 +0100
++++ gitolite-2.2.1-fix-.ssh-permissions/src/gl-setup	2012-02-09 11:07:07.551123377 +0100
+@@ -92,7 +92,7 @@
+ # authkeys etc., because in this case it seems appropriate
+ (
+     cd $HOME
+-    mkdir -p .ssh
++    mkdir -m700 .ssh
+     chmod go-rwx .ssh
+     touch .ssh/authorized_keys
+     chmod go-w . .ssh .ssh/authorized_keys
