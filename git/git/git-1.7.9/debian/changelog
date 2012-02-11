@@ -1,3 +1,9 @@
+git (1:1.7.9~lucid~ppa3) lucid; urgency=low
+
+  * Fixed git-man dependancy
+
+ -- Sascha Kettler <kettler@gmx.net>  Sat, 11 Feb 2012 17:46:20 +0100
+
 git (1:1.7.9~lucid~ppa2) lucid; urgency=low
 
   * Updated build dependancies

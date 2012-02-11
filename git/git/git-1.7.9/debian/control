@@ -1,8 +1,7 @@
 Source: git
 Section: vcs
 Priority: optional
-Maintainer: Gerrit Pape <pape@smarden.org>
-Uploaders: Jonathan Nieder <jrnieder@gmail.com>
+Maintainer: Sascha Kettler <kettler@gmx.net>
 Build-Depends: libz-dev,
  libcurl4-gnutls-dev | libcurl3-gnutls-dev, libexpat1-dev,
  subversion, libsvn-perl | libsvn-core-perl,
@@ -19,7 +18,7 @@ Vcs-Git: http://smarden.org/git/git.git/
 Package: git
 Architecture: any
 Depends: ${shlibs:Depends}, perl-modules, liberror-perl,
- git-man (>> ${source:Upstream-Version}), git-man (<< ${source:Upstream-Version}-.),
+ git-man (>= ${source:Upstream-Version}),
  libc6.1 (>= 2.10.2-6) [ia64]
 Recommends: patch, less, rsync, ssh-client
 Suggests: git-daemon-run | git-daemon-sysvinit,
@@ -103,7 +102,7 @@ Description: fast, scalable, distributed revision control system (documentation)
 
 Package: git-arch
 Architecture: all
-Depends: git (>> ${source:Upstream-Version}), git (<< ${source:Upstream-Version}-.), tla
+Depends: git (>= ${source:Upstream-Version}), tla
 Suggests: git-doc
 Replaces: cogito (<< 0.16rc2-0)
 Description: fast, scalable, distributed revision control system (arch interoperability)
@@ -121,7 +120,7 @@ Description: fast, scalable, distributed revision control system (arch interoper
 
 Package: git-cvs
 Architecture: all
-Depends: git (>> ${source:Upstream-Version}), git (<< ${source:Upstream-Version}-.), cvsps, libdbd-sqlite3-perl
+Depends: git (>= ${source:Upstream-Version}), cvsps, libdbd-sqlite3-perl
 Suggests: git-doc, cvs
 Replaces: cogito (<< 0.16rc2-0)
 Description: fast, scalable, distributed revision control system (cvs interoperability)
@@ -146,7 +145,7 @@ Description: fast, scalable, distributed revision control system (cvs interopera
 
 Package: git-svn
 Architecture: all
-Depends: git (>> ${source:Upstream-Version}), git (<< ${source:Upstream-Version}-.), libsvn-perl | libsvn-core-perl, libwww-perl, libterm-readkey-perl
+Depends: git (>= ${source:Upstream-Version}), libsvn-perl | libsvn-core-perl, libwww-perl, libterm-readkey-perl
 Suggests: git-doc, subversion
 Replaces: cogito (<< 0.16rc2-0)
 Description: fast, scalable, distributed revision control system (svn interoperability)
@@ -164,7 +163,7 @@ Description: fast, scalable, distributed revision control system (svn interopera
 
 Package: git-email
 Architecture: all
-Depends: git (>> ${source:Upstream-Version}), git (<< ${source:Upstream-Version}-.)
+Depends: git (>= ${source:Upstream-Version})
 Recommends: libemail-valid-perl, libnet-smtp-ssl-perl, libauthen-sasl-perl
 Suggests: git-doc
 Replaces: cogito (<< 0.16rc2-0)
@@ -183,7 +182,7 @@ Description: fast, scalable, distributed revision control system (email add-on)
 
 Package: git-daemon-run
 Architecture: all
-Depends: git (>> ${source:Upstream-Version}), git (<< ${source:Upstream-Version}-.), runit (>= 1.8.0-2), adduser
+Depends: git (>= ${source:Upstream-Version}), runit (>= 1.8.0-2), adduser
 Conflicts: git-daemon-sysvinit
 Description: fast, scalable, distributed revision control system (git-daemon service)
  Git is popular version control system designed to handle very large
@@ -202,7 +201,7 @@ Description: fast, scalable, distributed revision control system (git-daemon ser
 
 Package: git-daemon-sysvinit
 Architecture: all
-Depends: git (>> ${source:Upstream-Version}), git (<< ${source:Upstream-Version}-.), adduser
+Depends: git (>= ${source:Upstream-Version}), adduser
 Conflicts: git-daemon-run
 Description: fast, scalable, distributed revision control system (git-daemon service)
  Git is popular version control system designed to handle very large
@@ -221,7 +220,7 @@ Description: fast, scalable, distributed revision control system (git-daemon ser
 
 Package: git-gui
 Architecture: all
-Depends: git (>> ${source:Upstream-Version}), git (<< ${source:Upstream-Version}-.), tk
+Depends: git (>= ${source:Upstream-Version}), tk
 Replaces: git-core (<< 1:1.5.2.2-3)
 Recommends: gitk
 Suggests: git-doc
@@ -239,7 +238,7 @@ Description: fast, scalable, distributed revision control system (GUI)
 
 Package: gitk
 Architecture: all
-Depends: git (>> ${source:Upstream-Version}), git (<< ${source:Upstream-Version}-.), tk (>= 8.4)
+Depends: git (>= ${source:Upstream-Version}), tk (>= 8.4)
 Suggests: git-doc
 Replaces: cogito (<< 0.16rc2-0)
 Description: fast, scalable, distributed revision control system (revision tree visualizer)
@@ -292,7 +291,7 @@ Description: fast, scalable, distributed revision control system (emacs support)
 
 Package: gitweb
 Architecture: all
-Depends: git (>> ${source:Upstream-Version}), git (<< ${source:Upstream-Version}-.),
+Depends: git (>= ${source:Upstream-Version}),
  perl, apache2 | httpd | lynx-cur
 Suggests: httpd-cgi | libcgi-fast-perl, git-doc
 Description: fast, scalable, distributed revision control system (web interface)

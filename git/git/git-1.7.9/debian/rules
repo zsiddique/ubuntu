@@ -288,11 +288,11 @@ install-indep-real: build-arch-stamp build-indep-stamp
 	    -init -init-db -log -ls-files -ls-remote -ls-tree \
 	    -mailinfo -mailsplit -merge-base -merge-file -merge-ours \
 	    -mv -name-rev -pack-objects -pack-refs -peek-remote \
-	    -prune -prune-packed -push -read-tree -receive-pack -reflog \
+	    -prune -prune-packed -push -read-tree -reflog \
 	    -repo-config -rerere -reset -revert -rev-list -rev-parse \
 	    -rm -send-pack -shortlog -show -show-branch -show-ref \
 	    -status -stripspace -symbolic-ref -tag -tar-tree \
-	    -unpack-objects -update-index -update-ref -upload-archive \
+	    -unpack-objects -update-index -update-ref \
 	    -verify-pack -verify-tag -whatchanged -write-tree; do \
 	  rm -f debian/git-core/usr/bin/git$$X && \
 	  ln -s git debian/git-core/usr/bin/git$$X; \
