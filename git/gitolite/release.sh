@@ -22,7 +22,7 @@ if [ $# = 0 ]; then
 fi
 
 case $1 in
-    hardy|lucid)
+    lucid)
         DISTRIB_CODENAME=$1
         ;;
     *)
