@@ -1,3 +1,9 @@
+qlc (3.2.1~lucid~ppa2) lucid; urgency=low
+
+  * Fixed build dependancies
+
+ -- Sascha Kettler <kettler@gmx.net>  Sat, 10 Mar 2012 11:05:34 +0100
+
 qlc (3.2.1~lucid~ppa1) lucid; urgency=low
 
   * Converted to PPA
