@@ -1,5 +1,5 @@
 Source: qlc
-Section: Other
+Section: misc
 Priority: optional
 Maintainer: Sascha Kettler <kettler@gmx.net>
 Build-Depends: debhelper (>= 7.0.50), libqt4-dev (>= 4.6.0), libasound2-dev (>= 1.0.16),
@@ -9,7 +9,7 @@ Build-Depends: debhelper (>= 7.0.50), libqt4-dev (>= 4.6.0), libasound2-dev (>= 
 Standards-Version: 3.6.0
 
 Package: qlc
-Section: Other
+Section: misc
 Architecture: i386 amd64
 Replaces: qlc-fixtures, qlc-input-profiles, qlc-output-midi, qlc-output-peperoni,
           qlc-output-udmx, qlc-output-enttec-dmxusb, qlc-output-dmx4linux,
@@ -25,14 +25,14 @@ Description: Q Light Controller - The open DMX lighting desk
   Software lighting desk for controlling professional lighting fixtures.
 
 # Package: qlc-ola
-# Section: Other
+# Section: misc
 # Architecture: i386 amd64
 # Depends: ${shlibs:Depends}, ${misc:Depends}
 # Description: OLA Output plugin for Q Light Controller
 #   Open Lighting Architecture (OLA) output plugin for Q Light Controller.
 
 Package: qlc-artnet
-Section: Other
+Section: misc
 Architecture: i386 amd64
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: ARTNET Output plugin for Q Light Controller
