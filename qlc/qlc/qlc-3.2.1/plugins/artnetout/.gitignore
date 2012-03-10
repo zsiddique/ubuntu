@@ -1,0 +1,11 @@
+# qt userspecific changes
+artnetout.pro.user*
+# qt generated files
+Makefile
+moc_*
+ui_*
+# object files
+*.o
+*.so
+# vim files
+*.swp
