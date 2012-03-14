@@ -1,3 +1,9 @@
+php52 (5.2.17~lucid~ppa12) lucid; urgency=low
+
+  * Switch back from ZEND_VM_KIND_GOTO to ZEND_VM_KIND_CALL
+
+ -- Sascha Kettler <kettler@gmx.net>  Wed, 14 Mar 2012 14:17:44 +0100
+
 php52 (5.2.17~lucid~ppa11) lucid; urgency=low
 
   * Fixed php52-fpm init script 

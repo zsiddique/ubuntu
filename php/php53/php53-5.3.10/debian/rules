@@ -109,8 +109,7 @@ COMMON_CONFIG=--build=$(DEB_BUILD_GNU_TYPE) \
 		--enable-zip \
 		--with-ldap=/usr \
 		--with-pspell=/usr \
-		--with-tidy=/usr \
-		--with-zend-vm=GOTO
+		--with-tidy=/usr
 
 # include the patch/unpatch rules from quilt
 include /usr/share/quilt/quilt.make
