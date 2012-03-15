@@ -1,3 +1,9 @@
+php53-apc (3.1.9~lucid~ppa3) lucid; urgency=low
+
+  * Fixed build dependancy for 8.04 LTS
+
+ -- Sascha Kettler <kettler@gmx.net>  Thu, 15 Mar 2012 09:50:35 +0100
+
 php53-apc (3.1.9~lucid~ppa2) lucid; urgency=low
 
   * Updated package for ZEND_VM change in php53
