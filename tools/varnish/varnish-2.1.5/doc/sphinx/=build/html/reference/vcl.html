@@ -1,0 +1,1047 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>VCL &mdash; Varnish v-trunk documentation</title>
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '-trunk',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Varnish v-trunk documentation" href="../index.html" />
+    <link rel="up" title="The Varnish Reference Manual" href="index.html" />
+    <link rel="next" title="varnishadm" href="varnishadm.html" />
+    <link rel="prev" title="The Varnish Reference Manual" href="index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="varnishadm.html" title="varnishadm"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="The Varnish Reference Manual"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">Varnish v-trunk documentation</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">The Varnish Reference Manual</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="vcl">
+<span id="reference-vcl"></span><h1>VCL<a class="headerlink" href="#vcl" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="varnish-configuration-language">
+<h2>Varnish Configuration Language<a class="headerlink" href="#varnish-configuration-language" title="Permalink to this headline">¶</a></h2>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Author:</th><td class="field-body">Dag-Erling Smørgrav</td>
+</tr>
+<tr class="field"><th class="field-name">Author:</th><td class="field-body">Poul-Henning Kamp</td>
+</tr>
+<tr class="field"><th class="field-name">Author:</th><td class="field-body">Kristian Lyngstøl</td>
+</tr>
+<tr class="field"><th class="field-name">Author:</th><td class="field-body">Per Buer</td>
+</tr>
+<tr class="field"><th class="field-name">Date:</th><td class="field-body">2010-06-02</td>
+</tr>
+<tr class="field"><th class="field-name">Version:</th><td class="field-body">1.0</td>
+</tr>
+<tr class="field"><th class="field-name">Manual section:</th><td class="field-body">7</td>
+</tr>
+</tbody>
+</table>
+<div class="section" id="description">
+<h3>DESCRIPTION<a class="headerlink" href="#description" title="Permalink to this headline">¶</a></h3>
+<p>The VCL language is a small domain-specific language designed to be
+used to define request handling and document caching policies for the
+Varnish HTTP accelerator.</p>
+<p>When a new configuration is loaded, the varnishd management process
+translates the VCL code to C and compiles it to a shared object which
+is then dynamically linked into the server process.</p>
+</div>
+<div class="section" id="syntax">
+<h3>SYNTAX<a class="headerlink" href="#syntax" title="Permalink to this headline">¶</a></h3>
+<p>The VCL syntax is very simple, and deliberately similar to C and Perl.
+Blocks are delimited by curly braces, statements end with semicolons,
+and comments may be written as in C, C++ or Perl according to your own
+preferences.</p>
+<p>In addition to the C-like assignment (=), comparison (==) and boolean
+(!, &amp;&amp; and ||) operators, VCL supports regular expression and ACL
+matching using the ~ operator.</p>
+<p>Unlike C and Perl, the backslash () character has no special meaning
+in strings in VCL, which use the (%xx) escape mechanism just like
+URLs, so it can be freely used in regular expressions without
+doubling.</p>
+<p>Strings are concatenated by just putting them one after each other
+without any operator in between.</p>
+<p>Assignments are introduced with the <em>set</em> keyword.  There are no
+user-defined variables; values can only be assigned to variables
+attached to backend, request or document objects.  Most of these are
+typed, and the values assigned to them must have a compatible unit
+suffix.</p>
+<p>You can use the <em>set</em> keyword to arbitrary HTTP headers. You can
+remove headers with the <em>remove</em> or <em>unset</em> keywords, which are
+synonym.</p>
+<p>The return(action) keyword terminates the subroutine. <em>action</em> can be,
+depending on context one of</p>
+<ul class="simple">
+<li>deliver</li>
+<li>error</li>
+<li>fetch</li>
+<li>hash</li>
+<li>lookup</li>
+<li>pass</li>
+<li>pipe</li>
+<li>restart</li>
+</ul>
+<p>Please see the list of subroutines to see what return actions are
+available where.</p>
+<p>VCL has if tests, but no loops.</p>
+<p>You may log arbitrary strings to the shared memory log with the
+keyword <em>log</em>.</p>
+<p>The contents of another VCL file may be inserted at any point in the
+code by using the <em>include</em> keyword followed by the name of the other
+file as a quoted string.</p>
+<div class="section" id="backend-declarations">
+<h4>Backend declarations<a class="headerlink" href="#backend-declarations" title="Permalink to this headline">¶</a></h4>
+<p>A backend declaration creates and initializes a named backend object::</p>
+<div class="highlight-python"><pre>backend www {
+  .host = "www.example.com";
+  .port = "http";
+}</pre>
+</div>
+<p>The backend object can later be used to select a backend at request time::</p>
+<div class="highlight-python"><pre>if (req.http.host ~ "^(www.)?example.com$") {
+  set req.backend = www;
+}</pre>
+</div>
+<p>To avoid overloading backend servers, .max_connections can be set to
+limit the maximum number of concurrent backend connections.</p>
+<p>The timeout parameters can be overridden in the backend declaration.
+The timeout parameters are .connect_timeout for the time to wait for a
+backend connection, .first_byte_timeout for the time to wait for the
+first byte from the backend and .between_bytes_timeout for time to
+wait between each received byte.</p>
+<p>These can be set in the declaration like this::</p>
+<div class="highlight-python"><pre>backend www {
+  .host = "www.example.com";
+  .port = "http";
+  .connect_timeout = 1s;
+  .first_byte_timeout = 5s;
+  .between_bytes_timeout = 2s;
+}</pre>
+</div>
+<p>To mark a backend as unhealthy after number of items have been added
+to it&#8217;s saintmode list .saintmode_threshold can be set to the maximum
+list size. Setting a value of 0 disables saintmode checking entirely
+for that backend.  The value in the backend declaration overrides the
+parameter.</p>
+</div>
+<div class="section" id="directors">
+<h4>Directors<a class="headerlink" href="#directors" title="Permalink to this headline">¶</a></h4>
+<p>A director is a logical group of backend servers clustered together
+for redundancy. The basic role of the director is to let Varnish
+choose a backend server amongst several so if one is down another can
+be used.</p>
+<p>There are several types of directors. The different director types
+use different algorithms to choose which backend to use.</p>
+<p>Configuring a director may look like this::</p>
+<div class="highlight-python"><pre>director b2 random {
+  .retries = 5;
+  {
+    // We can refer to named backends
+    .backend = b1;
+    .weight  = 7;
+  }
+  {
+    // Or define them inline
+    .backend  = {
+      .host = "fs2";
+    }
+  .weight         = 3;
+  }
+}</pre>
+</div>
+<div class="section" id="the-random-director">
+<h5>The random director<a class="headerlink" href="#the-random-director" title="Permalink to this headline">¶</a></h5>
+<p>The random director takes one per director option .retries.  This
+specifies how many tries it will use to find a working backend.  The
+default is the same as the number of backends defined for the
+director.</p>
+<p>There is also a per-backend option: weight which defines the portion
+of traffic to send to the particular backend.</p>
+</div>
+<div class="section" id="the-round-robin-director">
+<h5>The round-robin director<a class="headerlink" href="#the-round-robin-director" title="Permalink to this headline">¶</a></h5>
+<p>The round-robin director does not take any options.</p>
+</div>
+<div class="section" id="the-client-director">
+<h5>The client director<a class="headerlink" href="#the-client-director" title="Permalink to this headline">¶</a></h5>
+<p>The client director picks a backend based on the clients
+<em>identity</em>. You can set the VCL variable <em>client.identity</em> to identify
+the client by picking up the value of a session cookie or similar.</p>
+<p>Note: in 2.1 <em>client.identity</em> isn&#8217;t available and the director will
+use client.ip to distribute clients across backends.</p>
+<p>The client director takes one option - <em>retries</em> which set the number
+of retries the director should take in order to find a healthy
+backend.</p>
+</div>
+<div class="section" id="the-hash-director">
+<h5>The hash director<a class="headerlink" href="#the-hash-director" title="Permalink to this headline">¶</a></h5>
+<p>The hash director will pick a backend based on the URL hash
+value.</p>
+<p>This is useful is you are using Varnish to load balance in front of
+other Varnish caches or other web accelerators as objects won&#8217;t be
+duplicated across caches.</p>
+<p>The client director takes one option - <em>retries</em> which set the number
+of retries the director should take in order to find a healthy
+backend.</p>
+</div>
+<div class="section" id="the-dns-director">
+<h5>The DNS director<a class="headerlink" href="#the-dns-director" title="Permalink to this headline">¶</a></h5>
+<p>The DNS director can use backends in three different ways. Either like the
+random or round-robin director or using .list:</p>
+<div class="highlight-python"><pre>director directorname dns {
+        .list = {
+                .host_header = "www.example.com";
+                .port = "80";
+                .connect_timeout = 0.4;
+                "192.168.15.0"/24;
+                "192.168.16.128"/25;
+        }
+        .ttl = 5m;
+        .suffix = "internal.example.net";
+}</pre>
+</div>
+<p>This will specify 384 backends, all using port 80 and a connection timeout
+of 0.4s. Options must come before the list of IPs in the .list statement.</p>
+<p>The .ttl defines the cache duration of the DNS lookups.</p>
+<p>The above example will append &#8220;internal.example.net&#8221; to the incoming Host
+header supplied by the client, before looking it up. All settings are
+optional.</p>
+</div>
+</div>
+<div class="section" id="backend-probes">
+<h4>Backend probes<a class="headerlink" href="#backend-probes" title="Permalink to this headline">¶</a></h4>
+<p>Backends can be probed to see whether they should be considered
+healthy or not.  The return status can also be checked by using
+req.backend.healthy .window is how many of the latest polls we
+examine, while .threshold is how many of those must have succeeded for
+us to consider the backend healthy.  .initial is how many of the
+probes are considered good when Varnish starts - defaults to the same
+amount as the threshold.</p>
+<p>A backend with a probe can be defined like this::</p>
+<div class="highlight-python"><pre>backend www {
+  .host = "www.example.com";
+  .port = "http";
+  .probe = {
+    .url = "/test.jpg";
+    .timeout = 0.3 s;
+    .window = 8;
+    .threshold = 3;
+    .initial = 3;
+  }
+}</pre>
+</div>
+<p>It is also possible to specify the raw HTTP request:</p>
+<div class="highlight-python"><pre>backend www {
+  .host = "www.example.com";
+  .port = "http";
+  .probe = {
+    # NB: \r\n automatically inserted after each string!
+    .request =
+      "GET / HTTP/1.1"
+      "Host: www.foo.bar"
+      "Connection: close";
+  }
+}</pre>
+</div>
+</div>
+<div class="section" id="acls">
+<h4>ACLs<a class="headerlink" href="#acls" title="Permalink to this headline">¶</a></h4>
+<p>An ACL declaration creates and initializes a named access control list
+which can later be used to match client addresses::</p>
+<div class="highlight-python"><pre>acl local {
+  "localhost";         // myself
+  "192.0.2.0"/24;      // and everyone on the local network
+  ! "192.0.2.23";      // except for the dialin router
+}</pre>
+</div>
+<p>If an ACL entry specifies a host name which Varnish is unable to
+resolve, it will match any address it is com‐ pared to.  Consequently,
+if it is preceded by a negation mark, it will reject any address it is
+compared to, which may not be what you intended.  If the entry is
+enclosed in parentheses, however, it will simply be ignored.</p>
+<p>To match an IP address against an ACL, simply use the match operator::</p>
+<div class="highlight-python"><pre>if (client.ip ~ local) {
+  return (pipe);
+}</pre>
+</div>
+</div>
+<div class="section" id="functions">
+<h4>Functions<a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h4>
+<p>The following built-in functions are available:</p>
+<dl class="docutils">
+<dt>hash_data(str)</dt>
+<dd>Adds a string to the hash input. In default.vcl hash_data() is
+called on the host and URL of the <em>request</em>.</dd>
+<dt>regsub(str, regex, sub)</dt>
+<dd>Returns a copy of str with the first occurrence of the regular
+expression regex replaced with sub. Within sub, 0 (which can
+also be spelled &amp;) is replaced with the entire matched string,
+and n is replaced with the contents of subgroup n in the
+matched string.</dd>
+<dt>regsuball(str, regex, sub)</dt>
+<dd>As regsuball() but this replaces all occurrences.</dd>
+<dt>purge_url(regex)</dt>
+<dd>Purge all objects in cache whose URLs match regex.</dd>
+</dl>
+<div class="section" id="subroutines">
+<h5>Subroutines<a class="headerlink" href="#subroutines" title="Permalink to this headline">¶</a></h5>
+<p>A subroutine is used to group code for legibility or reusability::</p>
+<div class="highlight-python"><pre>sub pipe_if_local {
+  if (client.ip ~ local) {
+    return (pipe);
+  }
+}</pre>
+</div>
+<p>Subroutines in VCL do not take arguments, nor do they return values.</p>
+<p>To call a subroutine, use the call keyword followed by the subroutine&#8217;s name:</p>
+<p>call pipe_if_local;</p>
+<p>There are a number of special subroutines which hook into the Varnish
+workflow.  These subroutines may inspect and manipulate HTTP headers
+and various other aspects of each request, and to a certain extent
+decide how the request should be handled.  Each subroutine terminates
+by calling one of a small number of keywords which indicates the
+desired outcome.</p>
+<dl class="docutils">
+<dt>vcl_recv</dt>
+<dd><p class="first">Called at the beginning of a request, after the complete request has
+been received and parsed.  Its purpose is to decide whether or not
+to serve the request, how to do it, and, if applicable, which backend
+to use.</p>
+<p>The vcl_recv subroutine may terminate with calling return() on one of
+the following keywords:</p>
+<dl class="last docutils">
+<dt>error code [reason]</dt>
+<dd>Return the specified error code to the client and abandon the request.</dd>
+<dt>pass</dt>
+<dd>Switch to pass mode.  Control will eventually pass to vcl_pass.</dd>
+<dt>pipe</dt>
+<dd>Switch to pipe mode.  Control will eventually pass to vcl_pipe.</dd>
+<dt>lookup</dt>
+<dd>Look up the requested object in the cache.  Control will
+eventually pass to vcl_hit or vcl_miss, depending on whether the
+object is in the cache.</dd>
+</dl>
+</dd>
+<dt>vcl_pipe</dt>
+<dd><p class="first">Called upon entering pipe mode.  In this mode, the request is passed
+on to the backend, and any further data from either client or
+backend is passed on unaltered until either end closes the
+connection.</p>
+<p>The vcl_pipe subroutine may terminate with calling return() with one of
+the following keywords:</p>
+<dl class="last docutils">
+<dt>error code [reason]</dt>
+<dd>Return the specified error code to the client and abandon the request.</dd>
+<dt>pipe</dt>
+<dd>Proceed with pipe mode.</dd>
+</dl>
+</dd>
+<dt>vcl_pass</dt>
+<dd><p class="first">Called upon entering pass mode.  In this mode, the request is passed
+on to the backend, and the backend&#8217;s response is passed on to the
+client, but is not entered into the cache.  Subsequent requests sub‐
+mitted over the same client connection are handled normally.</p>
+<p>The vcl_recv subroutine may terminate with calling return() with one of
+the following keywords:</p>
+<dl class="last docutils">
+<dt>error code [reason]</dt>
+<dd>Return the specified error code to the client and abandon the request.</dd>
+<dt>pass</dt>
+<dd>Proceed with pass mode.</dd>
+<dt>restart</dt>
+<dd>Restart the transaction. Increases the restart counter. If the number
+of restarts is higher than <em>max_restarts</em> varnish emits a guru meditation
+error.</dd>
+</dl>
+</dd>
+<dt>vcl_hash</dt>
+<dd><p class="first">You may call hash_data() on the data you would like to add to the hash.</p>
+<p>The vcl_hash subroutine may terminate with calling return() with one of
+the following keywords:</p>
+<dl class="last docutils">
+<dt>hash</dt>
+<dd>Proceed.</dd>
+</dl>
+</dd>
+<dt>vcl_hit</dt>
+<dd><p class="first">Called after a cache lookup if the requested document was found in the cache.</p>
+<p>The vcl_hit subroutine may terminate with calling return() with one of
+the following keywords:</p>
+<dl class="last docutils">
+<dt>deliver</dt>
+<dd>Deliver the cached object to the client.  Control will eventually
+pass to vcl_deliver.</dd>
+<dt>error code [reason]</dt>
+<dd>Return the specified error code to the client and abandon the request.</dd>
+<dt>pass</dt>
+<dd>Switch to pass mode.  Control will eventually pass to vcl_pass.</dd>
+<dt>restart</dt>
+<dd>Restart the transaction. Increases the restart counter. If the number
+of restarts is higher than <em>max_restarts</em> varnish emits a guru meditation
+error.</dd>
+</dl>
+</dd>
+<dt>vcl_miss</dt>
+<dd><p class="first">Called after a cache lookup if the requested document was not found
+in the cache.  Its purpose is to decide whether or not to attempt to
+retrieve the document from the backend, and which backend to use.</p>
+<p>The vcl_miss subroutine may terminate with calling return() with one of
+the following keywords:</p>
+<dl class="last docutils">
+<dt>error code [reason]</dt>
+<dd>Return the specified error code to the client and abandon the request.</dd>
+<dt>pass</dt>
+<dd>Switch to pass mode.  Control will eventually pass to vcl_pass.</dd>
+<dt>fetch</dt>
+<dd>Retrieve the requested object from the backend.  Control will
+eventually pass to vcl_fetch.</dd>
+</dl>
+</dd>
+<dt>vcl_fetch</dt>
+<dd><p class="first">Called after a document has been successfully retrieved from the backend.</p>
+<p>The vcl_fetch subroutine may terminate with calling return() with
+one of the following keywords:</p>
+<dl class="last docutils">
+<dt>deliver</dt>
+<dd>Possibly insert the object into the cache, then deliver it to the
+client.  Control will eventually pass to vcl_deliver.</dd>
+<dt>error code [reason]</dt>
+<dd>Return the specified error code to the client and abandon the request.</dd>
+<dt>esi</dt>
+<dd>ESI-process the document which has just been fetched.</dd>
+<dt>pass</dt>
+<dd>Switch to pass mode.  Control will eventually pass to vcl_pass.</dd>
+<dt>restart</dt>
+<dd>Restart the transaction. Increases the restart counter. If the number
+of restarts is higher than <em>max_restarts</em> varnish emits a guru meditation
+error.</dd>
+</dl>
+</dd>
+<dt>vcl_deliver</dt>
+<dd><p class="first">Called before a cached object is delivered to the client.</p>
+<p>The vcl_deliver subroutine may terminate with one of the following
+keywords:</p>
+<dl class="last docutils">
+<dt>deliver</dt>
+<dd>Deliver the object to the client.</dd>
+<dt>error code [reason]</dt>
+<dd>Return the specified error code to the client and abandon the request.</dd>
+<dt>restart</dt>
+<dd>Restart the transaction. Increases the restart counter. If the number
+of restarts is higher than <em>max_restarts</em> varnish emits a guru meditation
+error.</dd>
+</dl>
+</dd>
+<dt>vcl_error</dt>
+<dd><p class="first">Called when we hit an error, either explicitly or implicitly due to
+backend or internal errors.</p>
+<p>The vcl_error subroutine may terminate by calling return with one of
+the following keywords:</p>
+<dl class="last docutils">
+<dt>deliver</dt>
+<dd>Deliver the error object to the client.</dd>
+<dt>restart</dt>
+<dd>Restart the transaction. Increases the restart counter. If the number
+of restarts is higher than <em>max_restarts</em> varnish emits a guru meditation
+error.</dd>
+</dl>
+</dd>
+</dl>
+<p>If one of these subroutines is left undefined or terminates without
+reaching a handling decision, control will be handed over to the
+builtin default.  See the EXAMPLES section for a listing of the
+default code.</p>
+</div>
+<div class="section" id="multiple-subroutines">
+<h5>Multiple subroutines<a class="headerlink" href="#multiple-subroutines" title="Permalink to this headline">¶</a></h5>
+<p>If multiple subroutines with the same name are defined, they are
+concatenated in the order in which the appear in the source.</p>
+<p>Example::</p>
+<div class="highlight-python"><pre># in file "main.vcl"
+include "backends.vcl";
+include "purge.vcl";
+
+# in file "backends.vcl"
+sub vcl_recv {
+  if (req.http.host ~ "example.com") {
+    set req.backend = foo;
+  } elsif (req.http.host ~ "example.org") {
+    set req.backend = bar;
+  }
+}
+
+# in file "purge.vcl"
+sub vcl_recv {
+  if (client.ip ~ admin_network) {
+    if (req.http.Cache-Control ~ "no-cache") {
+      purge_url(req.url);
+    }
+  }
+}</pre>
+</div>
+<p>The builtin default subroutines are implicitly appended in this way.</p>
+</div>
+<div class="section" id="variables">
+<h5>Variables<a class="headerlink" href="#variables" title="Permalink to this headline">¶</a></h5>
+<p>Although subroutines take no arguments, the necessary information is
+made available to the handler subroutines through global variables.</p>
+<p>The following variables are always available:</p>
+<dl class="docutils">
+<dt>now</dt>
+<dd>The current time, in seconds since the epoch.</dd>
+</dl>
+<p>The following variables are available in backend declarations:</p>
+<dl class="docutils">
+<dt>.host</dt>
+<dd>Host name or IP address of a backend.</dd>
+<dt>.port</dt>
+<dd>Service name or port number of a backend.</dd>
+</dl>
+<p>The following variables are available while processing a request:</p>
+<dl class="docutils">
+<dt>client.ip</dt>
+<dd>The client&#8217;s IP address.</dd>
+<dt>server.hostname</dt>
+<dd>The host name of the server.</dd>
+<dt>server.identity</dt>
+<dd>The identity of the server, as set by the -i
+parameter.  If the -i parameter is not passed to varnishd,
+server.identity will be set to the name of the instance, as
+specified by the -n parameter.</dd>
+<dt>server.ip</dt>
+<dd>The IP address of the socket on which the client connection was received.</dd>
+<dt>server.port</dt>
+<dd>The port number of the socket on which the client connection was received.</dd>
+<dt>req.request</dt>
+<dd>The request type (e.g. &#8220;GET&#8221;, &#8220;HEAD&#8221;).</dd>
+<dt>req.url</dt>
+<dd>The requested URL.</dd>
+<dt>req.proto</dt>
+<dd>The HTTP protocol version used by the client.</dd>
+<dt>req.backend</dt>
+<dd>The backend to use to service the request.</dd>
+<dt>req.backend.healthy</dt>
+<dd>Whether the backend is healthy or not. Requires an active probe to be set
+on the backend.</dd>
+<dt>req.http.header</dt>
+<dd>The corresponding HTTP header.</dd>
+<dt>req.hash_always_miss</dt>
+<dd>Force a cache miss for this request. If set to true Varnish will disregard
+any existing objects and always (re)fetch from the backend.</dd>
+<dt>req.hash_ignore_busy</dt>
+<dd>Ignore any busy object during cache lookup. You would want to do
+this if you have two server looking up content from each other to
+avoid potential deadlocks.</dd>
+</dl>
+<p>The following variables are available while preparing a backend
+request (either for a cache miss or for pass or pipe mode):</p>
+<dl class="docutils">
+<dt>bereq.request</dt>
+<dd>The request type (e.g. &#8220;GET&#8221;, &#8220;HEAD&#8221;).</dd>
+<dt>bereq.url</dt>
+<dd>The requested URL.</dd>
+<dt>bereq.proto</dt>
+<dd>The HTTP protocol version used to talk to the server.</dd>
+<dt>bereq.http.header</dt>
+<dd>The corresponding HTTP header.</dd>
+<dt>bereq.connect_timeout</dt>
+<dd>The time in seconds to wait for a backend connection.</dd>
+<dt>bereq.first_byte_timeout</dt>
+<dd>The time in seconds to wait for the first byte from the backend.  Not
+available in pipe mode.</dd>
+<dt>bereq.between_bytes_timeout</dt>
+<dd>The time in seconds to wait between each received byte from the
+backend.  Not available in pipe mode.</dd>
+</dl>
+<p>The following variables are available after the requested object has
+been retrieved from the backend, before it is entered into the cache. In
+other words, they are available in vcl_fetch:</p>
+<dl class="docutils">
+<dt>beresp.proto</dt>
+<dd>The HTTP protocol version used when the object was retrieved.</dd>
+<dt>beresp.status</dt>
+<dd>The HTTP status code returned by the server.</dd>
+<dt>beresp.response</dt>
+<dd>The HTTP status message returned by the server.</dd>
+<dt>beresp.cacheable</dt>
+<dd><p class="first">True if the request resulted in a cacheable response. A response is
+considered cacheable if HTTP status code is 200, 203, 300, 301, 302,
+404 or 410 and pass wasn&#8217;t called in vcl_recv. If however, both the
+TTL and the grace time for the response are 0 beresp.cacheable will
+be 0.</p>
+<p class="last">beresp.cacheable is writable.</p>
+</dd>
+<dt>beresp.ttl</dt>
+<dd>The object&#8217;s remaining time to live, in seconds. beresp.ttl is writable.</dd>
+</dl>
+<p>After the object is entered into the cache, the following (mostly
+read-only) variables are available when the object has been located in
+cache, typically in vcl_hit and vcl_deliver.</p>
+<dl class="docutils">
+<dt>obj.proto</dt>
+<dd>The HTTP protocol version used when the object was retrieved.</dd>
+<dt>obj.status</dt>
+<dd>The HTTP status code returned by the server.</dd>
+<dt>obj.response</dt>
+<dd>The HTTP status message returned by the server.</dd>
+<dt>obj.cacheable</dt>
+<dd>True if the object had beresp.cacheable. Unless you&#8217;ve forced delivery
+in your VCL obj.cacheable will always be true.</dd>
+<dt>obj.ttl</dt>
+<dd>The object&#8217;s remaining time to live, in seconds. obj.ttl is writable.</dd>
+<dt>obj.lastuse</dt>
+<dd>The approximate time elapsed since the object was last requests, in
+seconds.</dd>
+<dt>obj.hits</dt>
+<dd>The approximate number of times the object has been delivered. A value
+of 0 indicates a cache miss.</dd>
+</dl>
+<p>The following variables are available while determining the hash key
+of an object:</p>
+<dl class="docutils">
+<dt>req.hash</dt>
+<dd>The hash key used to refer to an object in the cache.  Used when
+both reading from and writing to the cache.</dd>
+</dl>
+<p>The following variables are available while preparing a response to the client:</p>
+<dl class="docutils">
+<dt>resp.proto</dt>
+<dd>The HTTP protocol version to use for the response.</dd>
+<dt>resp.status</dt>
+<dd>The HTTP status code that will be returned.</dd>
+<dt>resp.response</dt>
+<dd>The HTTP status message that will be returned.</dd>
+<dt>resp.http.header</dt>
+<dd>The corresponding HTTP header.</dd>
+</dl>
+<p>Values may be assigned to variables using the set keyword::</p>
+<div class="highlight-python"><pre>sub vcl_recv {
+  # Normalize the Host: header
+  if (req.http.host ~ "^(www.)?example.com$") {
+    set req.http.host = "www.example.com";
+  }
+}</pre>
+</div>
+<p>HTTP headers can be removed entirely using the remove keyword::</p>
+<div class="highlight-python"><pre>sub vcl_fetch {
+  # Don't cache cookies
+  remove beresp.http.Set-Cookie;
+}</pre>
+</div>
+</div>
+</div>
+<div class="section" id="grace-and-saint-mode">
+<h4>Grace and saint mode<a class="headerlink" href="#grace-and-saint-mode" title="Permalink to this headline">¶</a></h4>
+<p>If the backend takes a long time to generate an object there is a risk
+of a thread pile up.  In order to prevent this you can enable <em>grace</em>.
+This allows varnish to serve an expired version of the object while a
+fresh object is being generated by the backend.</p>
+<p>The following vcl code will make Varnish serve expired objects.  All
+object will be kept up to two minutes past their expiration time or a
+fresh object is generated.:</p>
+<div class="highlight-python"><pre>sub vcl_recv {
+  set req.grace = 2m;
+}
+sub vcl_fetch {
+  set beresp.grace = 2m;
+}</pre>
+</div>
+<p>Saint mode is similar to grace mode and relies on the same
+infrastructure but functions differently. You can add VCL code to
+vcl_fetch to see whether or not you <em>like</em> the response coming from
+the backend. If you find that the response is not appropriate you can
+set beresp.saintmode to a time limit and call <em>restart</em>. Varnish will
+then retry other backends to try to fetch the object again.</p>
+<p>If there are no more backends or if you hit <em>max_restarts</em> and we have
+an object that is younger than what you set beresp.saintmode to be
+Varnish will serve the object, even if it is stale.</p>
+</div>
+</div>
+<div class="section" id="examples">
+<h3>EXAMPLES<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h3>
+<p>The following code is the equivalent of the default configuration with
+the backend address set to &#8220;backend.example.com&#8221; and no backend port
+specified::</p>
+<div class="highlight-python"><pre>backend default {
+ .host = "backend.example.com";
+ .port = "http";
+}</pre>
+</div>
+<pre class="literal-block">
+/*-
+ * Copyright (c) 2006 Verdens Gang AS
+ * Copyright (c) 2006-2009 Linpro AS
+ * All rights reserved.
+ *
+ * Author: Poul-Henning Kamp &lt;phk&#64;phk.freebsd.dk&gt;
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions
+ * are met:
+ * 1. Redistributions of source code must retain the above copyright
+ *    notice, this list of conditions and the following disclaimer.
+ * 2. Redistributions in binary form must reproduce the above copyright
+ *    notice, this list of conditions and the following disclaimer in the
+ *    documentation and/or other materials provided with the distribution.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE AUTHOR AND CONTRIBUTORS ``AS IS&#8217;&#8217; AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+ * PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL AUTHOR OR CONTRIBUTORS BE
+ * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+ * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+ * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR 
+ * BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+ * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
+ * OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
+ * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ *
+ * $Id$
+ *
+ * The default VCL code.
+ *
+ * NB! You do NOT need to copy &amp; paste all of these functions into your
+ * own vcl code, if you do not provide a definition of one of these
+ * functions, the compiler will automatically fall back to the default
+ * code from this file.
+ *
+ * This code will be prefixed with a backend declaration built from the
+ * -b argument.
+ */
+
+sub vcl_recv {
+    if (req.restarts == 0) {
+        if (req.http.x-forwarded-for) {
+            set req.http.X-Forwarded-For =
+                req.http.X-Forwarded-For &#8220;, &#8221; client.ip;
+        } else {
+            set req.http.X-Forwarded-For = client.ip;
+        }
+    }
+    if (req.request != &#8220;GET&#8221; &amp;&amp;
+      req.request != &#8220;HEAD&#8221; &amp;&amp;
+      req.request != &#8220;PUT&#8221; &amp;&amp;
+      req.request != &#8220;POST&#8221; &amp;&amp;
+      req.request != &#8220;TRACE&#8221; &amp;&amp;
+      req.request != &#8220;OPTIONS&#8221; &amp;&amp;
+      req.request != &#8220;DELETE&#8221;) {
+        /* Non-RFC2616 or CONNECT which is weird. */
+        return (pipe);
+    }
+    if (req.request != &#8220;GET&#8221; &amp;&amp; req.request != &#8220;HEAD&#8221;) {
+        /* We only deal with GET and HEAD by default */
+        return (pass);
+    }
+    if (req.http.Authorization || req.http.Cookie) {
+        /* Not cacheable by default */
+        return (pass);
+    }
+    return (lookup);
+}
+
+sub vcl_pipe {
+    # Note that only the first request to the backend will have
+    # X-Forwarded-For set.  If you use X-Forwarded-For and want to
+    # have it set for all requests, make sure to have:
+    # set bereq.http.connection = &#8220;close&#8221;;
+    # here.  It is not set by default as it might break some broken web
+    # applications, like IIS with NTLM authentication.
+    return (pipe);
+}
+
+sub vcl_pass {
+    return (pass);
+}
+
+sub vcl_hash {
+    set req.hash += req.url;
+    if (req.http.host) {
+        set req.hash += req.http.host;
+    } else {
+        set req.hash += server.ip;
+    }
+    return (hash);
+}
+
+sub vcl_hit {
+    if (!obj.cacheable) {
+        return (pass);
+    }
+    return (deliver);
+}
+
+sub vcl_miss {
+    return (fetch);
+}
+
+sub vcl_fetch {
+    if (!beresp.cacheable) {
+        return (pass);
+    }
+    if (beresp.http.Set-Cookie) {
+        return (pass);
+    }
+    return (deliver);
+}
+
+sub vcl_deliver {
+    return (deliver);
+}
+
+sub vcl_error {
+    set obj.http.Content-Type = &#8220;text/html; charset=utf-8&#8221;;
+    synthetic {&#8221;
+&lt;?xml version=&#8221;1.0&#8221; encoding=&#8221;utf-8&#8221;?&gt;
+&lt;!DOCTYPE html PUBLIC &#8220;-//W3C//DTD XHTML 1.0 Strict//EN&#8221;
+ &#8220;http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd&#8221;&gt;
+&lt;html&gt;
+  &lt;head&gt;
+    &lt;title&gt;&#8221;} obj.status &#8221; &#8221; obj.response {&#8220;&lt;/title&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;h1&gt;Error &#8220;} obj.status &#8221; &#8221; obj.response {&#8220;&lt;/h1&gt;
+    &lt;p&gt;&#8221;} obj.response {&#8220;&lt;/p&gt;
+    &lt;h3&gt;Guru Meditation:&lt;/h3&gt;
+    &lt;p&gt;XID: &#8220;} req.xid {&#8220;&lt;/p&gt;
+    &lt;hr&gt;
+    &lt;p&gt;Varnish cache server&lt;/p&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+&#8220;};
+    return (deliver);
+}
+
+</pre>
+<p>The following example shows how to support multiple sites running on
+separate backends in the same Varnish instance, by selecting backends
+based on the request URL::</p>
+<div class="highlight-python"><pre>backend www {
+  .host = "www.example.com";
+  .port = "80";
+}
+
+backend images {
+  .host = "images.example.com";
+  .port = "80";
+}
+
+sub vcl_recv {
+  if (req.http.host ~ "^(www.)?example.com$") {
+    set req.http.host = "www.example.com";
+    set req.backend = www;
+  } elsif (req.http.host ~ "^images.example.com$") {
+    set req.backend = images;
+  } else {
+    error 404 "Unknown virtual host";
+  }
+}
+
+The following snippet demonstrates how to force a minimum TTL for
+all documents.  Note that this is not the same as setting the
+default_ttl run-time parameter, as that only affects document for
+which the backend did not specify a TTL:::
+
+sub vcl_fetch {
+  if (beresp.ttl &lt; 120s) {
+    log "Adjusting TTL";
+    set beresp.ttl = 120s;
+  }
+}</pre>
+</div>
+<p>The following snippet demonstrates how to force Varnish to cache
+documents even when cookies are present::</p>
+<div class="highlight-python"><pre>sub vcl_recv {
+  if (req.request == "GET" &amp;&amp; req.http.cookie) {
+     return(lookup);
+  }
+}
+
+sub vcl_fetch {
+  if (beresp.http.Set-Cookie) {
+     return(deliver);
+ }
+}</pre>
+</div>
+<p>The following code implements the HTTP PURGE method as used by Squid
+for object invalidation::</p>
+<div class="highlight-python"><pre>acl purge {
+  "localhost";
+  "192.0.2.1"/24;
+}
+
+sub vcl_recv {
+  if (req.request == "PURGE") {
+    if (!client.ip ~ purge) {
+      error 405 "Not allowed.";
+    }
+    return(lookup);
+  }
+}
+
+sub vcl_hit {
+  if (req.request == "PURGE") {
+    set obj.ttl = 0s;
+    error 200 "Purged.";
+  }
+}
+
+sub vcl_miss {
+  if (req.request == "PURGE") {
+  error 404 "Not in cache.";
+  }
+}</pre>
+</div>
+</div>
+<div class="section" id="see-also">
+<h3>SEE ALSO<a class="headerlink" href="#see-also" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>varnishd(1)</li>
+</ul>
+</div>
+<div class="section" id="history">
+<h3>HISTORY<a class="headerlink" href="#history" title="Permalink to this headline">¶</a></h3>
+<p>The VCL language was developed by Poul-Henning Kamp in cooperation
+with Verdens Gang AS, Linpro AS and Varnish Software.  This manual
+page was written by Dag-Erling Smørgrav and later edited by
+Poul-Henning Kamp and Per Buer.</p>
+</div>
+<div class="section" id="copyright">
+<h3>COPYRIGHT<a class="headerlink" href="#copyright" title="Permalink to this headline">¶</a></h3>
+<p>This document is licensed under the same licence as Varnish
+itself. See LICENCE for details.</p>
+<ul class="simple">
+<li>Copyright (c) 2006 Verdens Gang AS</li>
+<li>Copyright (c) 2006-2008 Linpro AS</li>
+<li>Copyright (c) 2008-2010 Redpill Linpro AS</li>
+<li>Copyright (c) 2010 Varnish Software AS</li>
+</ul>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="../index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference external" href="#">VCL</a><ul>
+<li><a class="reference external" href="#varnish-configuration-language">Varnish Configuration Language</a><ul>
+<li><a class="reference external" href="#description">DESCRIPTION</a></li>
+<li><a class="reference external" href="#syntax">SYNTAX</a><ul>
+<li><a class="reference external" href="#backend-declarations">Backend declarations</a></li>
+<li><a class="reference external" href="#directors">Directors</a><ul>
+<li><a class="reference external" href="#the-random-director">The random director</a></li>
+<li><a class="reference external" href="#the-round-robin-director">The round-robin director</a></li>
+<li><a class="reference external" href="#the-client-director">The client director</a></li>
+<li><a class="reference external" href="#the-hash-director">The hash director</a></li>
+<li><a class="reference external" href="#the-dns-director">The DNS director</a></li>
+</ul>
+</li>
+<li><a class="reference external" href="#backend-probes">Backend probes</a></li>
+<li><a class="reference external" href="#acls">ACLs</a></li>
+<li><a class="reference external" href="#functions">Functions</a><ul>
+<li><a class="reference external" href="#subroutines">Subroutines</a></li>
+<li><a class="reference external" href="#multiple-subroutines">Multiple subroutines</a></li>
+<li><a class="reference external" href="#variables">Variables</a></li>
+</ul>
+</li>
+<li><a class="reference external" href="#grace-and-saint-mode">Grace and saint mode</a></li>
+</ul>
+</li>
+<li><a class="reference external" href="#examples">EXAMPLES</a></li>
+<li><a class="reference external" href="#see-also">SEE ALSO</a></li>
+<li><a class="reference external" href="#history">HISTORY</a></li>
+<li><a class="reference external" href="#copyright">COPYRIGHT</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="index.html"
+                                  title="previous chapter">The Varnish Reference Manual</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="varnishadm.html"
+                                  title="next chapter">varnishadm</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../_sources/reference/vcl.txt"
+                     rel="nofollow">Show Source</a></li>
+            </ul>
+          <div id="searchbox" style="display: none">
+            <h3>Quick search</h3>
+              <form class="search" action="../search.html" method="get">
+                <input type="text" name="q" size="18" />
+                <input type="submit" value="Go" />
+                <input type="hidden" name="check_keywords" value="yes" />
+                <input type="hidden" name="area" value="default" />
+              </form>
+              <p class="searchtip" style="font-size: 90%">
+              Enter search terms or a module, class or function name.
+              </p>
+          </div>
+          <script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="varnishadm.html" title="varnishadm"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="The Varnish Reference Manual"
+             >previous</a> |</li>
+        <li><a href="../index.html">Varnish v-trunk documentation</a> &raquo;</li>
+          <li><a href="index.html" >The Varnish Reference Manual</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2010, Varnish Project.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.6.6.
+    </div>
+  </body>
+</html>

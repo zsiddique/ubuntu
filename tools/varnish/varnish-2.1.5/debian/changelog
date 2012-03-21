@@ -1,0 +1,29 @@
+varnish (2.1.5~lucid~ppa1) lucid; urgency=low
+
+  * Updated to varnish 2.1.5
+
+ -- Sascha Kettler <kettler@gmx.net>  Wed, 21 Mar 2012 10:17:33 +0100
+
+varnish (2.1.4~lucid~ppa4) lucid; urgency=low
+
+  * Remove default EXTRA_DAEMON_OPTS from config file 
+
+ -- Sascha Kettler <kettler@gmx.net>  Thu, 11 Nov 2010 21:03:37 +0100
+
+varnish (2.1.4~lucid~ppa3) lucid; urgency=low
+
+  * Added missing debhelper build requirement 
+
+ -- Sascha Kettler <kettler@gmx.net>  Thu, 11 Nov 2010 17:06:41 +0100
+
+varnish (2.1.4~lucid~ppa2) lucid; urgency=low
+
+  * Fixed build dependancy typo
+
+ -- Sascha Kettler <kettler@gmx.net>  Thu, 11 Nov 2010 16:55:31 +0100
+
+varnish (2.1.4~lucid~ppa1) lucid; urgency=low
+
+  * Initial release
+
+ -- Sascha Kettler <kettler@gmx.net>  Thu, 11 Nov 2010 15:41:28 +0100
