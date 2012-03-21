@@ -1,3 +1,9 @@
+varnish (2.1.5~lucid~ppa2) lucid; urgency=low
+
+  * Fixed whitespace in /etc/default/varnish 
+
+ -- Sascha Kettler <kettler@gmx.net>  Wed, 21 Mar 2012 14:34:03 +0100
+
 varnish (2.1.5~lucid~ppa1) lucid; urgency=low
 
   * Updated to varnish 2.1.5
