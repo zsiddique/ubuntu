@@ -1,0 +1,78 @@
+#!/usr/bin/make -f
+# Sample debian/rules that uses debhelper.
+# GNU copyright 1997 to 1999 by Joey Hess.
+
+
+# Script adapted from Alberto Gonzalez Iniesta's package libapache-mod-dosevasive
+# This is the debhelper compatability version to use.
+#export DH_COMPAT=3
+
+# include the patch/unpatch rules from quilt
+include /usr/share/quilt/quilt.make
+
+prepared: prepared-stamp
+
+prepared-stamp: $(QUILT_STAMPFN)
+	dh_testdir
+	touch prepared-stamp
+
+unprepared:
+	dh_testdir
+	rm -f prepared-stamp
+
+build: build-stamp
+build-stamp: prepared-stamp
+	dh_testdir
+	apxs2 -c -lGeoIP mod_geoip.c
+	touch build-stamp
+
+clean: unprepared unpatch
+	dh_testdir
+	rm -f build-stamp 
+	rm -f mod_geoip.la mod_geoip.lo mod_geoip.slo mod_geoip.o
+	rm -rf .libs
+	dh_clean
+
+install: build 
+	dh_testdir
+	dh_testroot
+	dh_clean -k
+	dh_installdirs
+	dh_install
+
+# Build architecture-independent files here.
+binary-indep: build install
+# We have nothing to do by default.
+
+# Build architecture-dependent files here.
+binary-arch: build install
+	dh_testdir 
+	dh_testroot 
+#	dh_installdebconf 
+	dh_installdocs 
+	dh_installexamples 
+#	dh_installmenu 
+#	dh_installlogrotate 
+#	dh_installemacsen 
+#	dh_installpam 
+#	dh_installmime 
+#	dh_installinit 
+#	dh_installcron 
+#	dh_installman 
+#	dh_installinfo 
+#	dh_undocumented 
+	dh_installchangelogs Changes 
+	dh_link 
+	dh_strip 
+	dh_compress 
+	dh_fixperms 
+#	dh_makeshlibs 
+	dh_installdeb 
+#	dh_perl 
+	dh_shlibdeps 
+	dh_gencontrol 
+	dh_md5sums 
+	dh_builddeb 
+
+binary: binary-indep binary-arch
+.PHONY: build clean binary-indep binary-arch binary install

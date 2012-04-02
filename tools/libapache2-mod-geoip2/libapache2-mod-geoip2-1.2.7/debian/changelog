@@ -1,0 +1,5 @@
+libapache2-mod-geoip2 (1.2.7~ppa~lucid1) lucid; urgency=low
+
+  * Updated to 1.2.7 and renamed to libapache2-mod-geoip2
+
+ -- Sascha Kettler <kettler@gmx.net>  Mon, 02 Apr 2012 14:32:20 +0200

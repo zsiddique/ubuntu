@@ -1,0 +1,23 @@
+diff -urN libapache2-mod-geoip2/mod_geoip.c libapache2-mod-geoip2-patched/mod_geoip.c
+--- libapache2-mod-geoip2/mod_geoip.c	2011-08-23 18:56:34.000000000 +0200
++++ libapache2-mod-geoip2-patched/mod_geoip.c	2012-04-02 15:34:01.849972887 +0200
+@@ -420,7 +420,7 @@
+ 												 * in case file not
+ 												 * found */
+ 		switch (databaseType) {
+-                case GEOIP_NETSPEED_EDITION_REV1:
++                case 32 /* GEOIP_NETSPEED_EDITION_REV1 */:
+                   orgorisp = GeoIP_name_by_addr(cfg->gips[i], ipaddr);
+                   if (orgorisp != NULL) {
+    	            if (cfg->GeoIPOutput & GEOIP_NOTES) {
+@@ -543,8 +543,8 @@
+ 				GeoIPRegion_delete(giregion);
+ 			}
+ 			break;
+-		case GEOIP_CITY_EDITION_REV0_V6:
+-		case GEOIP_CITY_EDITION_REV1_V6:
++		case 31 /* GEOIP_CITY_EDITION_REV0_V6 */:
++		case 30 /* GEOIP_CITY_EDITION_REV1_V6 */:
+ 			gir = GeoIP_record_by_addr_v6(cfg->gips[i], ipaddr);
+ 			if (gir != NULL) {
+ 			        if ( gir->country_code != NULL ) {
