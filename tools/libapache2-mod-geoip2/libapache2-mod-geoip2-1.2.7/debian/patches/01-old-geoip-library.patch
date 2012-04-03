@@ -1,7 +1,21 @@
-diff -urN libapache2-mod-geoip2/mod_geoip.c libapache2-mod-geoip2-patched/mod_geoip.c
---- libapache2-mod-geoip2/mod_geoip.c	2011-08-23 18:56:34.000000000 +0200
-+++ libapache2-mod-geoip2-patched/mod_geoip.c	2012-04-02 15:34:01.849972887 +0200
-@@ -420,7 +420,7 @@
+diff -urN libapache2-mod-geoip2-1.2.7/mod_geoip.c libapache2-mod-geoip2-1.2.7-oldlibrary/mod_geoip.c
+--- libapache2-mod-geoip2-1.2.7/mod_geoip.c	2011-08-23 18:56:34.000000000 +0200
++++ libapache2-mod-geoip2-1.2.7-oldlibrary/mod_geoip.c	2012-04-03 13:11:54.739968067 +0200
+@@ -105,6 +105,13 @@
+ 
+ module AP_MODULE_DECLARE_DATA geoip_module;
+ 
++/* compatibilty function for old libgeoip in Ubuntu Lucid */
++static int GeoIP_country_id_by_addr_v6 (GeoIP* gi, const char *addr) {
++    return GeoIP_id_by_addr_v6(gi, addr);
++}
++
++
++
+ /* create a disabled directory entry */
+ 
+ static void *geoip_create_dir_config(apr_pool_t *p, char *d)
+@@ -420,7 +427,7 @@
  												 * in case file not
  												 * found */
  		switch (databaseType) {
@@ -10,7 +24,7 @@ diff -urN libapache2-mod-geoip2/mod_geoip.c libapache2-mod-geoip2-patched/mod_ge
                    orgorisp = GeoIP_name_by_addr(cfg->gips[i], ipaddr);
                    if (orgorisp != NULL) {
     	            if (cfg->GeoIPOutput & GEOIP_NOTES) {
-@@ -543,8 +543,8 @@
+@@ -543,8 +550,8 @@
  				GeoIPRegion_delete(giregion);
  			}
  			break;

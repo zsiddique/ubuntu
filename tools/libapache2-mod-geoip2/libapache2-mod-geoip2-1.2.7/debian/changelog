@@ -1,3 +1,9 @@
+libapache2-mod-geoip2 (1.2.7~lucid~ppa2) lucid; urgency=low
+
+  * Fixed issue with old libgeoip library in Ubuntu Lucid
+
+ -- Sascha Kettler <kettler@gmx.net>  Tue, 03 Apr 2012 13:13:48 +0200
+
 libapache2-mod-geoip2 (1.2.7~lucid~ppa1) lucid; urgency=low
 
   * Updated to 1.2.7 and renamed to libapache2-mod-geoip2
