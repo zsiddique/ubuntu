@@ -1,7 +1,8 @@
 Source: augeas
 Priority: optional
 Maintainer: Sascha Kettler <kettler@gmx.net>
-Build-Depends: debhelper (>= 5), autotools-dev, libreadline-dev, chrpath
+Build-Depends: debhelper (>= 5), autotools-dev, libreadline-dev, chrpath,
+ bison, flex, pkg-config, libxml2-dev
 Standards-Version: 3.8.1
 Section: libs
 Homepage: http://augeas.net/

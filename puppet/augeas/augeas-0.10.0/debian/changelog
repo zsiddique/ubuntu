@@ -1,3 +1,9 @@
+augeas (0.10.0~lucid~ppa2) lucid; urgency=low
+
+  * Fixed build dependancies
+
+ -- Sascha Kettler <kettler@gmx.net>  Wed, 11 Apr 2012 14:21:40 +0200
+
 augeas (0.10.0~lucid~ppa1) lucid; urgency=low
 
   * Updated augeas to 0.10.0
