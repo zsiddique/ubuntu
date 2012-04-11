@@ -1,0 +1,2 @@
+0 0 * * * root echo hello
+1 0 * * * root echo hi
