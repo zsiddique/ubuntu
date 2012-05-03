@@ -1,8 +1,8 @@
-puppet (2.7.13~lucid~ppa1) lucid; urgency=low
+puppet (2.7.14~lucid~ppa1) lucid; urgency=low
 
   * Updated to puppet 2.7.14
 
- -- Sascha Kettler <kettler@gmx.net>  Thu, 03 May 2012 13:08:58 +0200
+ -- Sascha Kettler <kettler@gmx.net>  Thu, 03 May 2012 13:19:41 +0200
 
 puppet (2.7.13~lucid~ppa1) lucid; urgency=low
 
