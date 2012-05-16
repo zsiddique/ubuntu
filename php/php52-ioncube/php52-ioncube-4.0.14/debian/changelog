@@ -1,3 +1,9 @@
+php52-ioncube (4.0.14~lucid~ppa1) lucid; urgency=low
+
+  * Updated loaders to 4.0.14
+
+ -- Sascha Kettler <kettler@gmx.net>  Wed, 16 May 2012 11:37:39 +0200
+
 php52-ioncube (4.0.12~lucid~ppa1) lucid; urgency=low
 
   * Updated loaders to 4.0.12
