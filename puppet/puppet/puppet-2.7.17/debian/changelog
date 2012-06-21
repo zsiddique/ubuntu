@@ -1,3 +1,9 @@
+puppet (2.7.17~lucid~ppa1) lucid; urgency=low
+
+  * Updated to puppet 2.7.17
+
+ -- Sascha Kettler <kettler@gmx.net>  Thu, 21 Jun 2012 14:30:40 +0200
+
 puppet (2.7.16~lucid~ppa1) lucid; urgency=low
 
   * Updated to puppet 2.7.16
