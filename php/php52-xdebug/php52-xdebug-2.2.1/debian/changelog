@@ -1,3 +1,9 @@
+php52-xdebug (2.2.1~lucid~ppa2) lucid; urgency=low
+
+  * Fixed Changelog file (now NEWS)
+
+ -- Sascha Kettler <kettler@gmx.net>  Fri, 21 Sep 2012 14:56:53 +0200
+
 php52-xdebug (2.2.1~lucid~ppa1) lucid; urgency=low
 
   * Updated Xdebug to 2.2.1 
