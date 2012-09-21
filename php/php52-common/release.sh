@@ -8,6 +8,9 @@ GIT_UBUNTU_RELEASE="lucid"
 PPA_DIRECTORY=`cd .. && basename "${PWD}"`
 PACKAGE=`basename "${PWD}"`
 DIRECTORY=`ls -1d "${PACKAGE}"-* 2> /dev/null | tail -1`
+if [ -z "$DIRECTORY" ]; then
+   DIRECTORY=`ls -1d "${PACKAGE}" 2> /dev/null | tail -1`
+fi
 PROGRAM_VERSION=`echo "${DIRECTORY}" | sed "s/${PACKAGE}-//"`
 
 if [ -z "$PROGRAM_VERSION" ]; then
