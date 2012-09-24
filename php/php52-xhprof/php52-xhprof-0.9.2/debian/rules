@@ -58,7 +58,7 @@ configure-stamp: prepared-stamp
 	dh_testdir
 	if [ -d pecl-build ]; then rm -rf pecl-build; fi
 	-mkdir pecl-build
-	(cd extension && phpize53)
+	(cd extension && phpize52)
 	cd pecl-build && \
 	CFLAGS="$(CFLAGS)" ../extension/configure \
 		--prefix=/usr
@@ -108,7 +108,7 @@ clean: unprepared unpatch
 	rm -f build-stamp
 	rm -f install-stamp
 	rm -rf pecl-build
-	-[ -x /usr/bin/phpize53 ] && (cd extension && phpize53 --clean)
+	-[ -x /usr/bin/phpize52 ] && (cd extension && phpize52 --clean)
 	dh_clean
 
 .PHONY: build clean binary-indep binary-arch binary install configure
