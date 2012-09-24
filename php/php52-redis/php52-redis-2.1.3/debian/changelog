@@ -1,3 +1,9 @@
+php52-redis (2.1.3~lucid~ppa2) lucid; urgency=low
+
+  * Dropped LPIA support for Hardy builds
+
+ -- Sascha Kettler <kettler@gmx.net>  Mon, 24 Sep 2012 10:33:17 +0200
+
 php52-redis (2.1.3~lucid~ppa1) lucid; urgency=low
 
   * Converted to PPA

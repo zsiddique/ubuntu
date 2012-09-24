@@ -1,3 +1,9 @@
+php53-syck (0.9.3~lucid~ppa5) lucid; urgency=low
+
+  * Dropped LPIA support for Hardy builds
+
+ -- Sascha Kettler <kettler@gmx.net>  Mon, 24 Sep 2012 10:34:56 +0200
+
 php53-syck (0.9.3~lucid~ppa4) lucid; urgency=low
 
   * Fixed syck.ini folder 

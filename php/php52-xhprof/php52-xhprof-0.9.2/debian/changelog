@@ -1,3 +1,9 @@
+php52-xhprof (0.9.2~lucid~ppa2) lucid; urgency=low
+
+  * Dropped LPIA support for Hardy builds
+
+ -- Sascha Kettler <kettler@gmx.net>  Mon, 24 Sep 2012 10:36:19 +0200
+
 php52-xhprof (0.9.2~lucid~ppa1) lucid; urgency=low
 
   * Converted to PPA

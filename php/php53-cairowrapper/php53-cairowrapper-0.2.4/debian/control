@@ -7,7 +7,7 @@ Standards-Version: 3.8.3
 Homepage: http://www.php.net/
 
 Package: php53-cairowrapper
-Architecture: any
+Architecture: i386 amd64
 Depends: ${shlibs:Depends}, ${misc:Depends}, php53
 Description: Cairo Wrapper Extension
  A cairo API wrapper. For details about cairo see http://cairographics.org/

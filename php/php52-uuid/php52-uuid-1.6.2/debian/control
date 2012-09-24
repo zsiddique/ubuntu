@@ -8,7 +8,7 @@ Standards-Version: 3.8.3
 Homepage: http://www.ossp.org/pkg/lib/uuid/
 
 Package: php52-uuid
-Architecture: any
+Architecture: i386 amd64
 Depends: ${shlibs:Depends}, ${misc:Depends}, php52
 Description: OSSP uuid module for PHP
  OSSP uuid is an ISO-C and Perl application programming interface (API)

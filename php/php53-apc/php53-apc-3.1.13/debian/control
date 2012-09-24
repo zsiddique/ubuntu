@@ -7,7 +7,7 @@ Standards-Version: 3.8.3
 Homepage: http://www.php.net/
 
 Package: php53-apc
-Architecture: any
+Architecture: i386 amd64
 Depends: ${shlibs:Depends}, ${misc:Depends}, php53 (>= 5.3.10~lucid~ppa3)
 Description: Alternative PHP Cache
  The Alternative PHP Cache (APC) is a free and open opcode cache for PHP. 

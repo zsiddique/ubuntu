@@ -7,7 +7,7 @@ Standards-Version: 3.8.3
 Homepage: http://www.php.net/
 
 Package: php53-memcache
-Architecture: any
+Architecture: i386 amd64
 Depends: ${shlibs:Depends}, ${misc:Depends}, php53
 Description: memcache extension module for PHP
  Memcached is a caching daemon designed especially for dynamic web applications

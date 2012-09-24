@@ -7,7 +7,7 @@ Standards-Version: 3.8.3
 Homepage: http://www.php.net/
 
 Package: php52-xdebug
-Architecture: any
+Architecture: i386 amd64
 Depends: ${shlibs:Depends}, ${misc:Depends}, php52
 Description: Function traces and profiling for PHP
  The Xdebug extension helps you debugging your script by providing a lot of

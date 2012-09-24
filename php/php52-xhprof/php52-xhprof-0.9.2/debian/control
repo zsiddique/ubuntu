@@ -7,7 +7,7 @@ Standards-Version: 3.8.3
 Homepage: http://www.php.net/
 
 Package: php52-xhprof
-Architecture: any
+Architecture: i386 amd64
 Depends: ${shlibs:Depends}, ${misc:Depends}, php52
 Description: A Hierarchical Profiler for PHP
  XHProf is a function-level hierarchical profiler for PHP and has a

@@ -16,7 +16,7 @@ Standards-Version: 3.8.3
 Homepage: http://www.php.net/
 
 Package: php53
-Architecture: any
+Architecture: i386 amd64
 Depends: ${shlibs:Depends}, ${misc:Depends}, mime-support, libmagic1, ucf,
  php53-common, libgd2-xpm
 Provides: php5, php5-cli, php5-cgi, php5-common, php5-mysql, php5-mysqli,
@@ -30,7 +30,7 @@ Description: server-side, HTML-embedded scripting language
  Homepage: http://www.php.net/
 
 Package: php53-dbg
-Architecture: any
+Architecture: i386 amd64
 Depends: ${shlibs:Depends}, ${misc:Depends}, mime-support, libmagic1, ucf,
  php53-common
 Recommends: gdb
@@ -46,7 +46,7 @@ Description: Debug symbols for PHP5
  Homepage: http://www.php.net/
 
 Package: libapache2-mod-php53
-Architecture: any
+Architecture: i386 amd64
 Depends: ${shlibs:Depends}, ${misc:Depends}, php53, apache2-mpm-prefork,
  apache2.2-common
 Conflicts: libapache2-mod-php52
@@ -65,7 +65,7 @@ Description: server-side, HTML-embedded scripting language (Apache 2 module)
  Homepage: http://www.php.net/
 
 Package: php53-fpm
-Architecture: any
+Architecture: i386 amd64
 Depends: ${shlibs:Depends}, ${misc:Depends}, php53
 Description: server-side, HTML-embedded scripting language (FastCGI Manager)
  FastCGI is a high-speed and scalable interface for communicating with the 
@@ -82,7 +82,7 @@ Description: server-side, HTML-embedded scripting language (FastCGI Manager)
  Homepage: http://www.php.net/
 
 Package: php53-dev
-Architecture: any
+Architecture: i386 amd64
 Depends: ${shlibs:Depends}, ${misc:Depends}, php53, autoconf, autoconf2.13, 
  automake, libssl-dev, libtool, shtool, m4, build-essential, libpcre3-dev
 Provides: php5-dev
