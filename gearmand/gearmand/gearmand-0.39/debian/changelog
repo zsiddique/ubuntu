@@ -1,0 +1,5 @@
+gearmand (0.39~lucid~pp1) lucid; urgency=low
+
+  * Converted to PPA
+
+ -- Sascha Kettler <kettler@gmx.net>  Mon, 24 Sep 2012 11:05:14 +0200

@@ -1,0 +1,48 @@
+#!/usr/bin/make -f
+
+include /usr/share/dpatch/dpatch.make
+
+CFLAGS=
+CXXFLAGS=
+
+DEB_BUILD_ARCH := $(shell dpkg-architecture -qDEB_BUILD_ARCH)
+
+TMP=$(CURDIR)/debian/tmp/
+
+configure: patch configure-stamp
+configure-stamp:
+	dh build --before configure
+	dh_auto_configure --
+	make configmake.h
+	sed -i 's~^\(#define GEARMAND_PID\) .*~\1 "/var/run/gearmand.pid"~' configmake.h
+	touch configure-stamp
+
+build: configure-stamp build-stamp
+build-stamp:
+	dh build --after configure
+	make docs
+	touch build-stamp
+
+clean: unpatch
+	dh clean
+	rm -f configure-stamp build-stamp install-stamp
+
+install: build install-stamp
+install-stamp:
+	dh --until auto_install install
+	# Run gensymbols
+	dpkg-gensymbols -c -plibgearman7 -e${TMP}/usr/lib/libgearman.so 
+	dh_install --fail-missing -X DEBIAN/symbols --sourcedir debian/tmp
+	dh --after auto_install install
+	touch install-stamp
+
+
+binary-arch: install
+	dh binary-arch --before strip
+	dh_strip --dbg-package=libgearman-dbg
+	dh binary-arch --after strip
+
+binary-indep: install
+	dh binary-indep
+
+binary: binary-arch binary-indep
