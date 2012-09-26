@@ -1,3 +1,9 @@
+gearmand (0.39~lucid~ppa2) lucid; urgency=low
+
+  * Skipping test due to "Function not implemented" errors
+
+ -- Sascha Kettler <kettler@gmx.net>  Wed, 26 Sep 2012 16:46:14 +0200
+
 gearmand (0.39~lucid~ppa1) lucid; urgency=low
 
   * Converted to PPA

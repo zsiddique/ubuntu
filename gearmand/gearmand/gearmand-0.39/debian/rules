@@ -19,7 +19,8 @@ configure-stamp:
 
 build: configure-stamp build-stamp
 build-stamp:
-	dh build --after configure
+	dh build --after configure --before test
+	dh build --after test
 	make docs
 	touch build-stamp
 
