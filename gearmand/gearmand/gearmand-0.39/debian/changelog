@@ -1,4 +1,4 @@
-gearmand (0.39~lucid~pp1) lucid; urgency=low
+gearmand (0.39~lucid~ppa1) lucid; urgency=low
 
   * Converted to PPA
 
