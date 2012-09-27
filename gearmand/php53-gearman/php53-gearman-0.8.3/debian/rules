@@ -1,0 +1,108 @@
+#!/usr/bin/make -f
+# -*- makefile -*-
+# Sample debian/rules that uses debhelper.
+# This file was originally written by Joey Hess and Craig Small.
+# As a special exception, when this file is copied by dh-make into a
+# dh-make output file, you may use that output file without restriction.
+# This special exception was added by Craig Small in version 0.37 of dh-make.
+
+# Uncomment this to turn on verbose mode.
+#export DH_VERBOSE=1
+
+# This has to be exported to make some magic below work.
+export DH_OPTIONS
+
+DEB_HOST_GNU_TYPE	?= $(shell dpkg-architecture -qDEB_HOST_GNU_TYPE)
+DEB_BUILD_GNU_TYPE	?= $(shell dpkg-architecture -qDEB_BUILD_GNU_TYPE)
+DEB_BUILD_ARCH		?= $(shell dpkg-architecture -qDEB_BUILD_ARCH)
+
+PHP5_HOST_GNU_TYPE	= $(subst gnulp,gnu,$(DEB_HOST_GNU_TYPE))
+PHP5_BUILD_GNU_TYPE	= $(subst gnulp,gnu,$(DEB_BUILD_GNU_TYPE))
+
+PHP5_HOST_GNU_TYPE	:= $(shell echo $(PHP5_HOST_GNU_TYPE) | sed 's/-gnu$$//')
+PHP5_BUILD_GNU_TYPE	:= $(shell echo $(PHP5_BUILD_GNU_TYPE) | sed 's/-gnu$$//')
+
+CFLAGS = -O2 -Wall -fsigned-char -fno-strict-aliasing
+# LFS support
+ifneq (yes,$(PHP5_COMPAT))
+  CFLAGS += $(shell getconf LFS_CFLAGS)
+endif
+
+ifneq (nostrip, $(findstring nostrip, $(DEB_BUILD_OPTIONS)))
+        install_strip = -s
+endif
+
+# include the patch/unpatch rules from quilt
+include /usr/share/quilt/quilt.make
+
+prepared: prepared-stamp
+
+prepared-stamp: $(QUILT_STAMPFN)
+	dh_testdir
+	touch prepared-stamp
+
+unprepared:
+	dh_testdir
+	rm -f prepared-stamp
+
+build: build-stamp
+
+build-stamp: configure-stamp
+	dh_testdir
+	cd pecl-build && $(MAKE)
+	touch build-stamp
+
+configure: configure-stamp
+
+configure-stamp: prepared-stamp
+	dh_testdir
+	if [ -d pecl-build ]; then rm -rf pecl-build; fi
+	-mkdir pecl-build
+	phpize53
+	cd pecl-build && \
+	CFLAGS="$(CFLAGS)" ../configure \
+		--prefix=/usr \
+		--enable-gearman
+	touch configure-stamp
+
+install: DH_OPTIONS=
+install: build
+	dh_testdir
+	dh_testroot
+	dh_clean -k
+	dh_installdirs
+	cd pecl-build && $(MAKE) install INSTALL_IT=/bin/true INSTALL_ROOT=$(PWD)/debian/php53-gearman
+	# Install configuration
+	mkdir -p debian/php53-gearman/etc/php53/conf.d
+	cp debian/phpini.gearman debian/php53-gearman/etc/php53/conf.d/gearman.ini
+	
+	touch install-stamp
+
+binary: binary-arch binary-indep
+
+binary-indep:
+
+binary-arch: build install
+	dh_testdir
+	dh_testroot
+	dh_installchangelogs
+	dh_installdocs
+	dh_strip -s
+	dh_link -s
+	dh_compress -s -X.ini -X.php
+	dh_installdeb -s
+	dh_shlibdeps -s
+	dh_gencontrol -s
+	dh_md5sums -s
+	dh_builddeb -s
+
+clean: unprepared unpatch
+	dh_testdir
+	rm -f configure-stamp
+	rm -f build-stamp
+	rm -f install-stamp
+	rm -rf pecl-build
+	-[ -x /usr/bin/phpize53 ] && phpize53 --clean
+	dh_clean
+
+.PHONY: build clean binary-indep binary-arch binary install configure

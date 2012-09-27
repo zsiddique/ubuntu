@@ -1,0 +1,5 @@
+php52-gearman (0.8.3~lucid~ppa1) lucid; urgency=low
+
+  * Converted to PPA
+
+ -- Sascha Kettler <kettler@gmx.net>  Thu, 27 Sep 2012 15:20:42 +0200
