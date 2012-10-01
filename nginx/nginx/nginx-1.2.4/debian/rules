@@ -215,7 +215,7 @@ config.status.%:
 
 build-arch.%: config.status.%
 	dh_testdir
-	dh_prep
+	dh_clean -k
 	$(MAKE) -j$(NUMJOBS) -C $(BUILDDIR_$*) build
 
 build-arch: $(foreach flavour,$(FLAVOURS),build-arch.$(flavour))
@@ -251,7 +251,7 @@ mime-types:
 install: mime-types
 	dh_testdir
 	dh_testroot
-	dh_prep
+	dh_clean -k
 	dh_installdirs
 	dh_install
 
