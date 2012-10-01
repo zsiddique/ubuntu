@@ -1,3 +1,0 @@
-debian/conf/* etc/nginx
-debian/ufw.profile etc/ufw/applications.d/nginx
-html/* usr/share/nginx/www/
